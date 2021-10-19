@@ -12,6 +12,7 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useForm from '../hooks/useForm';
 import auth from '../utils/auth';
+import { validateEmail, validatePassword } from '../utils/formValidators';
 
 const LOGIN = gql`
   mutation login($data: LoginData) {
@@ -40,7 +41,7 @@ const LoginForm = () => {
     });
     const token = res.data.login.token;
     auth.login(token);
-    clearForm;
+    clearForm();
   };
 
   return (
@@ -51,7 +52,10 @@ const LoginForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">@</InputLeftElement>
             <Input
+              isRequired
               type="email"
+              errorBorderColor="rust"
+              isInvalid={!validateEmail(formState.email)}
               placeholder="bob@youruncle.com"
               value={formState.email}
               onChange={(e) => handleChange(e, 'email')}
@@ -66,8 +70,11 @@ const LoginForm = () => {
               {<LockIcon w={4} h={4} />}
             </InputLeftElement>
             <Input
+              isRequired
               type="password"
               placeholder="password"
+              errorBorderColor="rust"
+              isInvalid={!validatePassword(formState.password)}
               value={formState.password}
               onChange={(e) => handleChange(e, 'password')}
             />

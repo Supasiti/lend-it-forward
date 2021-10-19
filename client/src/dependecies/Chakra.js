@@ -12,7 +12,7 @@ const theme = extendTheme({
     sidecar: '#e9d8a6',
     peel: '#EE9B00',
     tenne: '#CA6702',
-    rust: 'BB3E03',
+    rust: '#BB3E03',
   },
   fonts: {
     heading: 'Josefin Sans',
