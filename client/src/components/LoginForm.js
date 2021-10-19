@@ -11,6 +11,7 @@ import { LockIcon } from '@chakra-ui/icons';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useForm from '../hooks/useForm';
+import auth from '../utils/auth';
 
 const LOGIN = gql`
   mutation login($data: LoginData) {
@@ -28,17 +29,18 @@ const initialState = { email: '', password: '' };
 
 // render
 const LoginForm = () => {
-  const { formState, handleChange } = useForm(initialState);
+  const { formState, handleChange, clearForm } = useForm(initialState);
   const [login] = useMutation(LOGIN);
 
-  const handleSubmitForm = async () => {
-    const data = { data: { ...formState } };
-    const res = await login({
-      variables: data,
-    });
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
 
-    // DO SOMETHING WITH TOKEN
-    console.log(res);
+    const res = await login({
+      variables: { data: { ...formState } },
+    });
+    const token = res.data.login.token;
+    auth.login(token);
+    clearForm;
   };
 
   return (

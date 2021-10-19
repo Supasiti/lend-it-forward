@@ -9,7 +9,10 @@ const useForm = (initialState) => {
     setFormState(newState);
   };
 
-  return { formState, handleChange };
+  const clearForm = () => {
+    setFormState(initialState);
+  };
+  return { formState, handleChange, clearForm };
 };
 
 export default useForm;

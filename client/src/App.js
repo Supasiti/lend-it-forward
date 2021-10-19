@@ -6,6 +6,7 @@ import '@fontsource/montserrat/500.css';
 import { Box, Container } from '@chakra-ui/layout';
 
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
 
@@ -33,6 +34,7 @@ const App = () => (
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/dashboard" component={Dashboard} />
               {/* <Route exact path="/saved" component={SavedBooks} /> 
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
             </Switch>

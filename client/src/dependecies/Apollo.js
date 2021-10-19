@@ -2,32 +2,31 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  // createHttpLink,
-  // ApolloLink,
-  // from,
+  createHttpLink,
+  ApolloLink,
+  from,
 } from '@apollo/client';
 
-// const httpLink = createHttpLink({ uri: '/graphql' });
+const httpLink = createHttpLink({ uri: '/graphql' });
 
-// const authMiddleware = new ApolloLink((operation, forward) => {
-//   // add the authorization to the headers
-//   operation.setContext(({ headers = {} }) => {
-//     const token = localStorage.getItem('id_token');
-//     return {
-//       headers: {
-//         ...headers,
-//         authorization: token ? `Bearer ${token}` : '',
-//       },
-//     };
-//   });
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext(({ headers = {} }) => {
+    const token = localStorage.getItem('id_token');
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
+  });
 
-//   return forward(operation);
-// });
+  return forward(operation);
+});
 
 const client = new ApolloClient({
+  link: from([authMiddleware, httpLink]),
   cache: new InMemoryCache(),
-  // link: from([authMiddleware, httpLink]),
-  uri: '/graphql',
 });
 
 const ApolloContainer = (props) => (

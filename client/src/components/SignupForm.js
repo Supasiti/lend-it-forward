@@ -11,6 +11,7 @@ import { LockIcon } from '@chakra-ui/icons';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useForm from '../hooks/useForm';
+import auth from '../utils/auth';
 
 const SIGNUP = gql`
   mutation addUser($user: UserData) {
@@ -32,7 +33,7 @@ const initialState = {
 
 // render
 const SignupForm = () => {
-  const { formState, handleChange } = useForm(initialState);
+  const { formState, handleChange, clearForm } = useForm(initialState);
   const [signup] = useMutation(SIGNUP);
 
   // handle when
@@ -42,8 +43,9 @@ const SignupForm = () => {
       variables: data,
     });
 
-    // DO SOMETHING WITH TOKEN
-    console.log(res);
+    const token = res.data.login.token;
+    auth.login(token);
+    clearForm();
   };
 
   return (
