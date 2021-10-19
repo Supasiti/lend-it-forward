@@ -2,11 +2,16 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
-    id: ID
+    _id: ID
     username: String
     email: String
     location: String
     imageUrl: String
+  }
+
+  type Auth {
+    token: String
+    user: User
   }
 
   input UserData {
@@ -15,12 +20,19 @@ const typeDefs = gql`
     password: String!
   }
 
+  input LoginData {
+    email: String!
+    password: String!
+  }
+
   type Query {
     users: [User]
+    user: User
   }
 
   type Mutation {
-    addUser(user: UserData): User
+    addUser(user: UserData): Auth
+    login(data: LoginData): Auth
   }
 `;
 

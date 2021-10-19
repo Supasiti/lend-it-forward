@@ -3,14 +3,13 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const getAll = async () => {
-  console.log('getting users');
   const result = await User.find({});
   return result;
 };
 
-const getOne = async ({ id, email, username }) => {
+const getOne = async ({ _id, email }) => {
   const result = await User.findOne({
-    $or: [{ _id: id }, { email }, { username }],
+    $or: [{ _id }, { email }],
   });
   return result;
 };
