@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const messageSchema = new Schema(
+const requestSchema = new Schema(
   {
     from: {
       type: Schema.Types.ObjectId,
@@ -30,10 +30,10 @@ const messageSchema = new Schema(
       type: String,
       default: '',
     },
-    type: {
+    reason: {
       type: String,
-      enum: ['requestToBorrow', 'requestToReturn'],
-      required: [true, 'Please state the purpose of this message'],
+      enum: ['borrow', 'return'],
+      required: [true, 'Please state the purpose of this request'],
     },
   },
   // set this to use virtual below
@@ -44,8 +44,8 @@ const messageSchema = new Schema(
 );
 
 // Duplicate the ID field.
-messageSchema.virtual('id').get(() => this._id);
+requestSchema.virtual('id').get(() => this._id);
 
-const Message = model('Message', messageSchema);
+const Request = model('Request', requestSchema);
 
-module.exports = Message;
+module.exports = Request;
