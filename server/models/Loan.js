@@ -19,18 +19,11 @@ const loanSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    locationHistory: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    allowedToPassOn: {
-      type: Boolean,
-      default: false,
-    },
-    currentLocation: {
+    holder: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },

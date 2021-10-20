@@ -3,8 +3,7 @@ const { Loan } = require('../models');
 const getOne = async ({ _id }) => {
   const result = await Loan.findById(_id).populate([
     'owner',
-    'currentLocation',
-    'locationHistory',
+    'holder',
     'reservedFor',
   ]);
   return result;
@@ -13,8 +12,7 @@ const getOne = async ({ _id }) => {
 const create = async ({ userId, ...loan }) => {
   const data = {
     owner: userId,
-    currentLocation: userId,
-    locationHistory: [userId],
+    holder: userId,
     ...loan,
   };
   const newLoan = await Loan.create(data);
@@ -27,16 +25,15 @@ const getByFilter = async ({ filter = {} }) => {
     const { location, ...newFilter } = filter;
     const result = await Loan.find(newFilter)
       .populate({
-        path: 'currentLocation',
+        path: 'holder',
         match: { location: { $eq: location } },
       })
-      .populate(['owner', 'locationHistory', 'reservedFor']);
+      .populate(['owner', 'reservedFor']);
     return result;
   } else {
     const result = await Loan.find(filter).populate([
       'owner',
-      'currentLocation',
-      'locationHistory',
+      'holder',
       'reservedFor',
     ]);
     return result;
@@ -45,25 +42,16 @@ const getByFilter = async ({ filter = {} }) => {
 
 const updateLoan = async ({ userId, _id, ...loan }) => {
   // restrict who can update loan
-
-  console.log(userId);
-
   const query = {
     $or: [
       { $and: [{ _id }, { owner: userId }] },
-      { $and: [{ _id }, { currentLocation: userId }] },
+      { $and: [{ _id }, { holder: userId }] },
       { $and: [{ _id }, { reservedFor: userId }] },
     ],
   };
+
   const loanToUpdate = await Loan.findOne(query);
   if (!loanToUpdate) return null;
-
-  if ('currentLocation' in loan) {
-    if (loan.currentLocation !== loanToUpdate.currentLocation) {
-      const oldHistory = loanToUpdate.locationHistory;
-      loanToUpdate.locationHistory = [...oldHistory, loan.currentLocation];
-    }
-  }
 
   Object.keys(loan).forEach((key) => {
     loanToUpdate[key] = loan[key];

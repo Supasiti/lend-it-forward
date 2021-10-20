@@ -9,7 +9,7 @@ const loan = gql`
     imageUrl: String
     isAvailable: Boolean!
     owner: User
-    currentLocation: User
+    holder: User
     reservedFor: User
   }
 
@@ -35,7 +35,7 @@ const loan = gql`
     description: String
     cateogory: String
     isAvailable: Boolean
-    currentLocation: ID
+    holder: ID
     reservedFor: ID
   }
 
