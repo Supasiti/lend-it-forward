@@ -11,6 +11,24 @@ import {
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 
+const tabProps = {
+  p: { base: '3', sm: '5' },
+  _hover: {
+    background: 'peel',
+    color: 'blackPearl',
+    boxShadow: 'dark-lg',
+  },
+};
+
+const tabsProps = {
+  maxW: '24rem',
+  mx: 'auto',
+  mt: { base: 8, sm: 32 },
+  isFitted: true,
+  variant: 'soft-rounded',
+  colorScheme: 'green',
+};
+
 const Home = () => {
   return (
     <Container maxW="container.sm" p="0">
@@ -20,35 +38,10 @@ const Home = () => {
         </Text>
       </Box>
 
-      <Tabs
-        maxW="24rem"
-        mx="auto"
-        mt={{ base: 8, sm: 32 }}
-        isFitted
-        variant="soft-rounded"
-        colorScheme="green"
-      >
+      <Tabs {...tabsProps}>
         <TabList bg="sidecar" borderRadius="full">
-          <Tab
-            p={{ base: '3', sm: '5' }}
-            _hover={{
-              background: 'peel',
-              color: 'blackPearl',
-              boxShadow: 'dark-lg',
-            }}
-          >
-            Login
-          </Tab>
-          <Tab
-            p={{ base: '3', sm: '5' }}
-            _hover={{
-              background: 'peel',
-              color: 'blackPearl',
-              boxShadow: 'dark-lg',
-            }}
-          >
-            Sign up
-          </Tab>
+          <Tab {...tabProps}>Login</Tab>
+          <Tab {...tabProps}>Sign up</Tab>
         </TabList>
 
         <TabPanels mt="8" bg="gray.700" borderRadius="3xl" boxShadow="dark-lg">

@@ -21,6 +21,7 @@
     "prettier/prettier": "error", 
     "react/jsx-uses-react": "off", // for modern React webhook versions 
     "react/react-in-jsx-scope": "off", // for modern React webhook versions
+    "react/prop-types": 0,
     "no-console": "off"
   }
 }

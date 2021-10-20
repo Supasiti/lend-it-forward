@@ -5,7 +5,7 @@ const loan = gql`
     _id: ID!
     title: String
     description: String
-    cateogory: String
+    category: String
     imageUrl: String
     isAvailable: Boolean!
     owner: User

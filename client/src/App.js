@@ -6,9 +6,24 @@ import '@fontsource/montserrat/500.css';
 import { Box, Container } from '@chakra-ui/layout';
 
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+import Library from './pages/Library';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
+
+const containerProps = {
+  pos: 'relative',
+  zIndex: 1,
+  flex: true,
+  flexDir: 'column',
+  maxW: {
+    base: 'container.lg',
+    lg: 'container.lg',
+    xl: 'container.xl',
+  },
+  minH: '100vh',
+  fontSize: { base: 'sm', sm: 'md' },
+  color: 'sidecar',
+};
 
 const App = () => (
   <ApolloContainer>
@@ -20,21 +35,11 @@ const App = () => (
           bgGradient="linear(to-r, blackPearl, lagoon)"
         >
           <Wave />
-          <Container
-            pos="relative"
-            zIndex={1}
-            maxW={{
-              base: 'container.md',
-              lg: 'container.lg',
-              xl: 'container.xl',
-            }}
-            minH="100vh"
-            fontSize={{ base: 'sm', sm: 'md' }}
-          >
+          <Container {...containerProps}>
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/library" component={Library} />
               {/* <Route exact path="/saved" component={SavedBooks} /> 
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
             </Switch>
