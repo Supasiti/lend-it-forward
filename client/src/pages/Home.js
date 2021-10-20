@@ -34,6 +34,7 @@ const Home = () => {
             _hover={{
               background: 'peel',
               color: 'blackPearl',
+              boxShadow: 'dark-lg',
             }}
           >
             Login
@@ -43,6 +44,7 @@ const Home = () => {
             _hover={{
               background: 'peel',
               color: 'blackPearl',
+              boxShadow: 'dark-lg',
             }}
           >
             Sign up
