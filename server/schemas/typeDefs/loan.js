@@ -13,14 +13,40 @@ const loan = gql`
     reservedFor: User
   }
 
-  input addLoanInput {
+  input AddLoanInput {
     title: String
     description: String
     cateogory: String
   }
 
+  input LoanFilterInput {
+    _id: ID
+    title: String
+    cateogory: String
+    isAvailable: Boolean
+    owner: ID
+    location: String
+    reservedFor: ID
+  }
+
+  input UpdateLoanInput {
+    _id: ID
+    title: String
+    description: String
+    cateogory: String
+    isAvailable: Boolean
+    currentLocation: ID
+    reservedFor: ID
+  }
+
+  extend type Query {
+    loans(filter: LoanFilterInput): [Loan]
+    loan(_id: ID): Loan
+  }
+
   extend type Mutation {
-    addLoan(loan: addLoanInput): Loan
+    addLoan(loan: AddLoanInput): Loan
+    updateLoan(loan: UpdateLoanInput): Loan
   }
 `;
 
