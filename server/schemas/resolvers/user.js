@@ -2,7 +2,7 @@ const {
   AuthenticationError,
   UserInputError,
 } = require('apollo-server-express');
-const services = require('../services');
+const services = require('../../services');
 
 const getAllUsers = async (parents, args, context) => {
   const result = await services.user.getAll();
@@ -19,7 +19,7 @@ const addUser = async (parents, args, context) => {
 // get user
 const getUser = async (parent, args, context) => {
   if (context.user) {
-    return services.users.getOne({ _id: context.user._id });
+    return services.user.getOne({ _id: context.user._id });
   }
   throw new AuthenticationError('you must be logged in');
 };

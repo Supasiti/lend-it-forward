@@ -1,9 +1,12 @@
+const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 const { auth } = require('../services');
 
-module.exports = {
+const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: auth.authMiddleware,
-};
+});
+
+module.exports = apolloServer;
