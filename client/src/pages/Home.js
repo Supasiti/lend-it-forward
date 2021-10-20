@@ -10,14 +10,10 @@ import {
 } from '@chakra-ui/react';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
+import { primaryBtnColorProps } from '../staticProps/button';
 
 const tabProps = {
   p: { base: '3', sm: '5' },
-  _hover: {
-    background: 'peel',
-    color: 'blackPearl',
-    boxShadow: 'dark-lg',
-  },
 };
 
 const tabsProps = {
@@ -26,7 +22,6 @@ const tabsProps = {
   mt: { base: 8, sm: 32 },
   isFitted: true,
   variant: 'soft-rounded',
-  colorScheme: 'green',
 };
 
 const Home = () => {
@@ -40,11 +35,15 @@ const Home = () => {
 
       <Tabs {...tabsProps}>
         <TabList bg="sidecar" borderRadius="full">
-          <Tab {...tabProps}>Login</Tab>
-          <Tab {...tabProps}>Sign up</Tab>
+          <Tab {...tabProps} {...primaryBtnColorProps}>
+            Login
+          </Tab>
+          <Tab {...tabProps} {...primaryBtnColorProps}>
+            Sign up
+          </Tab>
         </TabList>
 
-        <TabPanels mt="8" bg="gray.700" borderRadius="3xl" boxShadow="dark-lg">
+        <TabPanels mt="8" bg="gunmetal" borderRadius="3xl" boxShadow="dark-lg">
           <TabPanel>
             <LoginForm />
           </TabPanel>

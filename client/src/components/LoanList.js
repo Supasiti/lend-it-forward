@@ -1,7 +1,7 @@
 import { useQuery, gql } from '@apollo/client';
 import { Center, Wrap, WrapItem } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
-import { spinnerProps } from '../staticProps.js/spinner';
+import { spinnerProps } from '../staticProps/spinner';
 
 import auth from '../utils/auth';
 import LoanCard from './LoanCard';
