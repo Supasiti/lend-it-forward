@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ChakraContainer from './dependecies/Chakra';
-import ApolloContainer from './dependecies/Apollo';
 import '@fontsource/josefin-sans/200.css';
 import '@fontsource/montserrat/500.css';
-import { Box, Container } from '@chakra-ui/layout';
+import { Box, Container } from '@chakra-ui/react';
 
+import Dependencies from './dependecies';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import Wave from './components/Wave';
@@ -26,28 +25,22 @@ const containerProps = {
 };
 
 const App = () => (
-  <ApolloContainer>
-    <ChakraContainer>
-      <Router>
-        <Box
-          w="100%"
-          minH="100vh"
-          bgGradient="linear(to-r, blackPearl, lagoon)"
-        >
-          <Wave />
-          <Container {...containerProps}>
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/library" component={Library} />
-              {/* <Route exact path="/saved" component={SavedBooks} /> 
+  <Dependencies>
+    <Router>
+      <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
+        <Wave />
+        <Container {...containerProps}>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/library" component={Library} />
+            {/* <Route exact path="/saved" component={SavedBooks} /> 
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
-            </Switch>
-          </Container>
-        </Box>
-      </Router>
-    </ChakraContainer>
-  </ApolloContainer>
+          </Switch>
+        </Container>
+      </Box>
+    </Router>
+  </Dependencies>
 );
 
 export default App;

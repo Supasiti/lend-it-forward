@@ -2,10 +2,6 @@ import {
   Box,
   Button,
   Heading,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Spacer,
   Tab,
   Tabs,
@@ -16,7 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import BaseModal from '../components/Modal';
+import AddLoanForm from '../components/AddLoanForm';
 import LoanList from '../components/LoanList';
 import { primaryBtnColorProps } from '../staticProps/button';
 
@@ -66,15 +62,7 @@ const Library = () => {
       </Tabs>
 
       {/* modal */}
-
-      <BaseModal onClose={onClose} isOpen={isOpen}>
-        <ModalHeader>Add New Item</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>asdfasdf</ModalBody>
-        <ModalFooter>
-          <Button onClick={onClose}>Close</Button>
-        </ModalFooter>
-      </BaseModal>
+      <AddLoanForm onClose={onClose} isOpen={isOpen} />
     </Box>
   );
 };

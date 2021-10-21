@@ -16,13 +16,13 @@ const loan = gql`
   input AddLoanInput {
     title: String
     description: String
-    cateogory: String
+    category: String
   }
 
   input LoanFilterInput {
     _id: ID
     title: String
-    cateogory: String
+    category: String
     isAvailable: Boolean
     owner: ID
     location: String
@@ -33,7 +33,7 @@ const loan = gql`
     _id: ID
     title: String
     description: String
-    cateogory: String
+    category: String
     isAvailable: Boolean
     holder: ID
     reservedFor: ID

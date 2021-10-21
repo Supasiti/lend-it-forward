@@ -1,4 +1,5 @@
 export const primaryBtnColorProps = {
+  color: 'blackPearl',
   bg: 'sidecar',
   _hover: {
     background: 'peel',

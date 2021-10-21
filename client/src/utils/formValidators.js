@@ -10,3 +10,7 @@ export const validatePassword = (password) => {
 export const validateUsername = (username) => {
   return !!username.length;
 };
+
+export const validateNonEmpty = (text) => {
+  return !!text.length;
+};
