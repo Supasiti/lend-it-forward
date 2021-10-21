@@ -1,26 +1,11 @@
-import { useQuery } from '@apollo/client';
 import { Center, Spinner, Wrap, WrapItem } from '@chakra-ui/react';
-import { useEffect } from 'react';
 
-import { useLoan } from '../dependecies/LoanContext';
-import auth from '../utils/auth';
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
-import { GET_LOANS } from '../gql/loans';
-
-// TODO link each card to edit them
+import { useGetLoans } from '../hooks/useGetLoans';
 
 const LoanList = () => {
-  const { loans, setLoans } = useLoan();
-  const user = auth.getProfile();
-  const variables = { filter: { owner: user._id } };
-  const { data, loading } = useQuery(GET_LOANS, { variables });
-
-  useEffect(() => {
-    if (data?.loans?.length) {
-      setLoans(data.loans);
-    }
-  }, [data]);
+  const { loans, loading } = useGetLoans();
 
   if (loading) {
     return (
