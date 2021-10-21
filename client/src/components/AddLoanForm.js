@@ -1,13 +1,9 @@
 import {
   Button,
-  FormControl,
-  FormLabel,
-  Input,
   ModalHeader,
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  Textarea,
   VStack,
 } from '@chakra-ui/react';
 import gql from 'graphql-tag';
@@ -17,9 +13,8 @@ import BaseModal from './Modal';
 import useForm from '../hooks/useForm';
 import { capitalize } from '../utils/text';
 import { useLoan } from '../dependecies/LoanContext';
-import { validateNonEmpty } from '../utils/formValidators';
 import { primaryBtnColorProps } from '../staticProps/button';
-import { inputProps } from '../staticProps/input';
+import { TextInput, TextArea } from './Input';
 
 const ADD_LOAN = gql`
   mutation addLoan($loan: AddLoanInput) {
@@ -76,46 +71,34 @@ const AddLoanForm = ({ isOpen, onClose }) => {
       <ModalBody>
         <VStack spacing={4} color="peel">
           {/* title */}
-          <FormControl id="loanTitle">
-            <FormLabel>Title</FormLabel>
-            <Input
-              {...inputProps}
-              isRequired
-              type="text"
-              placeholder="Thinking Fast And Slow"
-              isInvalid={!validateNonEmpty(formState.title)}
-              value={formState.title}
-              onChange={(e) => handleChange(e, 'title')}
-            />
-          </FormControl>
+          <TextInput
+            id="loanTitle"
+            label="Title"
+            name="title"
+            value={formState.title}
+            placeholder="Thinking Fast And Slow"
+            onChange={(e) => handleChange(e, 'title')}
+          />
 
           {/* description */}
-          <FormControl id="loanDescription">
-            <FormLabel>Description</FormLabel>
-            <Textarea
-              {...inputProps}
-              isRequired
-              type="text"
-              placeholder="A book by Daniel Kahneman"
-              isInvalid={!validateNonEmpty(formState.description)}
-              value={formState.description}
-              onChange={(e) => handleChange(e, 'description')}
-            />
-          </FormControl>
+          <TextArea
+            id="loanDescription"
+            label="Description"
+            name="description"
+            value={formState.description}
+            placeholder="A book by Daniel Kahneman"
+            onChange={(e) => handleChange(e, 'description')}
+          />
 
           {/* category */}
-          <FormControl id="loanCategory">
-            <FormLabel>Category</FormLabel>
-            <Input
-              {...inputProps}
-              isRequired
-              type="text"
-              placeholder="Books"
-              isInvalid={!validateNonEmpty(formState.category)}
-              value={formState.category}
-              onChange={(e) => handleChange(e, 'category')}
-            />
-          </FormControl>
+          <TextInput
+            id="loanCategory"
+            label="Category"
+            name="category"
+            value={formState.category}
+            placeholder="Books"
+            onChange={(e) => handleChange(e, 'category')}
+          />
         </VStack>
       </ModalBody>
       <ModalFooter>

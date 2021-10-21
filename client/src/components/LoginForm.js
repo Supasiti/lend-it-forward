@@ -13,6 +13,8 @@ import { useMutation } from '@apollo/client';
 import useForm from '../hooks/useForm';
 import auth from '../utils/auth';
 import { validateEmail, validatePassword } from '../utils/formValidators';
+import { inputProps } from './Input';
+import { primaryBtnColorProps } from '../staticProps/button';
 
 const LOGIN = gql`
   mutation login($data: LoginData) {
@@ -52,9 +54,9 @@ const LoginForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">@</InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="email"
-              errorBorderColor="rust"
               isInvalid={!validateEmail(formState.email)}
               placeholder="bob@youruncle.com"
               value={formState.email}
@@ -70,10 +72,10 @@ const LoginForm = () => {
               {<LockIcon w={4} h={4} />}
             </InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="password"
               placeholder="password"
-              errorBorderColor="rust"
               isInvalid={!validatePassword(formState.password)}
               value={formState.password}
               onChange={(e) => handleChange(e, 'password')}
@@ -81,16 +83,7 @@ const LoginForm = () => {
           </InputGroup>
         </FormControl>
 
-        <Button
-          type="submit"
-          w="100%"
-          bg="bermuda"
-          size="md"
-          color="blackPearl"
-          _hover={{
-            background: 'peel',
-          }}
-        >
+        <Button type="submit" size="md" w="100%" {...primaryBtnColorProps}>
           Submit
         </Button>
       </VStack>

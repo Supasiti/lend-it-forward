@@ -12,11 +12,9 @@ import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useForm from '../hooks/useForm';
 import auth from '../utils/auth';
-import {
-  validateEmail,
-  validatePassword,
-  validateUsername,
-} from '../utils/formValidators';
+import { validateNonEmpty, validateEmail } from '../utils/formValidators';
+import { inputProps } from './Input';
+import { primaryBtnColorProps } from '../staticProps/button';
 
 const SIGNUP = gql`
   mutation addUser($user: UserData) {
@@ -61,11 +59,11 @@ const SignupForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">#</InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="text"
               placeholder="bob"
-              errorBorderColor="rust"
-              isInvalid={!validateUsername(formState.username)}
+              isInvalid={!validateNonEmpty(formState.username)}
               value={formState.username}
               onChange={(e) => handleChange(e, 'username')}
             />
@@ -77,10 +75,10 @@ const SignupForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">@</InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="email"
               placeholder="bob@youruncle.com"
-              errorBorderColor="rust"
               isInvalid={!validateEmail(formState.email)}
               value={formState.email}
               onChange={(e) => handleChange(e, 'email')}
@@ -95,27 +93,18 @@ const SignupForm = () => {
               <LockIcon w={4} h={4} />
             </InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="password"
               placeholder="password"
-              errorBorderColor="rust"
-              isInvalid={!validatePassword(formState.password)}
+              isInvalid={!validateNonEmpty(formState.password)}
               value={formState.password}
               onChange={(e) => handleChange(e, 'password')}
             />
           </InputGroup>
         </FormControl>
 
-        <Button
-          type="submit"
-          w="100%"
-          bg="bermuda"
-          size="md"
-          color="blackPearl"
-          _hover={{
-            background: 'peel',
-          }}
-        >
+        <Button type="submit" size="md" w="100%" {...primaryBtnColorProps}>
           Submit
         </Button>
       </VStack>
