@@ -1,11 +1,11 @@
 import { useQuery, gql } from '@apollo/client';
 import { Center, Spinner, Wrap, WrapItem } from '@chakra-ui/react';
-import { spinnerProps } from '../staticProps/spinner';
+import { useEffect } from 'react';
 
 import { useLoan } from '../dependecies/LoanContext';
 import auth from '../utils/auth';
 import LoanCard from './LoanCard';
-import { useEffect } from 'react';
+import { spinnerProps } from '../staticProps/spinner';
 
 const GET_LOANS = gql`
   query getLoans($filter: LoanFilterInput) {

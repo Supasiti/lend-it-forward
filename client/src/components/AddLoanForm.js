@@ -13,6 +13,7 @@ import {
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
+import { useLoan } from '../dependecies/LoanContext';
 import BaseModal from './Modal';
 import { primaryBtnColorProps } from '../staticProps/button';
 import useForm from '../hooks/useForm';
@@ -44,7 +45,8 @@ const initialState = {
 
 // TODO : Suggest categories as you type
 
-const AddLoanForm = ({ isOpen, onClose, onSubmit }) => {
+const AddLoanForm = ({ isOpen, onClose }) => {
+  const { addLoan: addLoanContext } = useLoan();
   const { formState, handleChange } = useForm(initialState);
   const [addLoan] = useMutation(ADD_LOAN);
 
@@ -59,7 +61,7 @@ const AddLoanForm = ({ isOpen, onClose, onSubmit }) => {
 
     // TODO better response handling
     if (res.data) {
-      if (onSubmit) onSubmit(res.data.addLoan);
+      addLoanContext(res.data.addLoan);
       onClose();
     } else {
       console.log(res.errors);
