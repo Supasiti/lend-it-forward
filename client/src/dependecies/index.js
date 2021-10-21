@@ -1,12 +1,12 @@
 import ChakraContainer from './Chakra';
 import ApolloContainer from './Apollo';
-import { LoanContext } from './LoanContext';
+import { LoanProvider } from './LoanContext';
 
 const Dependencies = (props) => {
   return (
-    <ApolloContainer {...props}>
+    <ApolloContainer>
       <ChakraContainer>
-        <LoanContext />
+        <LoanProvider>{props.children}</LoanProvider>
       </ChakraContainer>
     </ApolloContainer>
   );

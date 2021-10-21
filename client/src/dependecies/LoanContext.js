@@ -7,7 +7,7 @@ export const useLoan = () => useContext(LoanContext);
 const initialState = [];
 
 // jsx wrapper
-export default function OwnLoanProvider(props) {
+export const LoanProvider = (props) => {
   const [loans, setLoans] = useState(initialState);
 
   const addLoan = (newLoan) => {
@@ -15,5 +15,7 @@ export default function OwnLoanProvider(props) {
     return setLoans(newLoans);
   };
 
-  return <LoanContext.Provider value={{ loans, addLoan }} {...props} />;
-}
+  return (
+    <LoanContext.Provider value={{ loans, setLoans, addLoan }} {...props} />
+  );
+};
