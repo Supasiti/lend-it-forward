@@ -12,7 +12,7 @@ const useForm = (initialState) => {
   const clearForm = () => {
     setFormState(initialState);
   };
-  return { formState, handleChange, clearForm };
+  return { formState, handleChange, clearForm, setFormState };
 };
 
 export default useForm;

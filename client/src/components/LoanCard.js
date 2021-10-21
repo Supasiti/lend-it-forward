@@ -1,22 +1,13 @@
 import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/layout';
-// import { Link } from 'react-router-dom';
+import { cardProps, clickableProps } from '../staticProps/card';
 
-const squareWrapperProps = {
+const squareProps = {
   w: '100%',
   h: '0px',
   pb: '100%',
   bg: 'gunmetal',
   rounded: 'lg',
   overflow: 'hidden',
-};
-
-const containerProps = {
-  bg: 'gray.600',
-  w: '100%',
-  rounded: '2xl',
-  p: '2',
-  boxShadow: 'dark-lg',
-  _hover: { bg: 'gray.500', cursor: 'pointer' },
 };
 
 // render
@@ -30,10 +21,10 @@ const LoanCard = ({ loan }) => {
   };
 
   return (
-    <Box {...containerProps} onClick={handleClick}>
+    <Box {...cardProps} {...clickableProps} onClick={handleClick}>
       <VStack spacing="2">
         {/* image */}
-        <Box {...squareWrapperProps}>
+        <Box {...squareProps}>
           {loan?.imageUrl && <img src={loan.imageUrl} />}
         </Box>
 

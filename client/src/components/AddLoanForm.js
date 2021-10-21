@@ -19,6 +19,7 @@ import { capitalize } from '../utils/text';
 import { useLoan } from '../dependecies/LoanContext';
 import { validateNonEmpty } from '../utils/formValidators';
 import { primaryBtnColorProps } from '../staticProps/button';
+import { inputProps } from '../staticProps/input';
 
 const ADD_LOAN = gql`
   mutation addLoan($loan: AddLoanInput) {
@@ -78,10 +79,10 @@ const AddLoanForm = ({ isOpen, onClose }) => {
           <FormControl id="loanTitle">
             <FormLabel>Title</FormLabel>
             <Input
+              {...inputProps}
               isRequired
               type="text"
               placeholder="Thinking Fast And Slow"
-              errorBorderColor="rust"
               isInvalid={!validateNonEmpty(formState.title)}
               value={formState.title}
               onChange={(e) => handleChange(e, 'title')}
@@ -92,24 +93,24 @@ const AddLoanForm = ({ isOpen, onClose }) => {
           <FormControl id="loanDescription">
             <FormLabel>Description</FormLabel>
             <Textarea
+              {...inputProps}
               isRequired
               type="text"
               placeholder="A book by Daniel Kahneman"
-              errorBorderColor="rust"
               isInvalid={!validateNonEmpty(formState.description)}
               value={formState.description}
               onChange={(e) => handleChange(e, 'description')}
             />
           </FormControl>
 
-          {/* description */}
+          {/* category */}
           <FormControl id="loanCategory">
             <FormLabel>Category</FormLabel>
             <Input
+              {...inputProps}
               isRequired
               type="text"
               placeholder="Books"
-              errorBorderColor="rust"
               isInvalid={!validateNonEmpty(formState.category)}
               value={formState.category}
               onChange={(e) => handleChange(e, 'category')}

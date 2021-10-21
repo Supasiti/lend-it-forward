@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Library from './pages/Library';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
-import LoanDetail from './pages/LoanDetail';
+import LoanView from './pages/LoanView';
 
 const containerProps = {
   pos: 'relative',
@@ -21,7 +21,7 @@ const containerProps = {
     xl: 'container.xl',
   },
   minH: '100vh',
-  fontSize: { base: 'sm', sm: 'md' },
+  fontSize: { base: 'sm', md: 'md' },
   color: 'sidecar',
 };
 
@@ -35,7 +35,7 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/library" component={Library} />
-            <Route exact path="/library/:loanId" component={LoanDetail} />
+            <Route exact path="/library/:loanId" component={LoanView} />
           </Switch>
         </Container>
       </Box>
