@@ -1,4 +1,5 @@
 import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/layout';
+// import { Link } from 'react-router-dom';
 
 const squareWrapperProps = {
   w: '100%',
@@ -9,12 +10,27 @@ const squareWrapperProps = {
   overflow: 'hidden',
 };
 
+const containerProps = {
+  bg: 'gray.600',
+  w: '100%',
+  rounded: '2xl',
+  p: '2',
+  boxShadow: 'dark-lg',
+  _hover: { bg: 'gray.500', cursor: 'pointer' },
+};
+
 // render
 const LoanCard = ({ loan }) => {
   const isHere = loan?.owner?._id === loan?.holder?._id;
 
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    window.location.replace(`/library/${loan?._id}`);
+  };
+
   return (
-    <Box bg="gray.600" w="100%" rounded="2xl" p="2" boxShadow="dark-lg">
+    <Box {...containerProps} onClick={handleClick}>
       <VStack spacing="2">
         {/* image */}
         <Box {...squareWrapperProps}>

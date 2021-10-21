@@ -13,12 +13,12 @@ import {
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
-import { useLoan } from '../dependecies/LoanContext';
 import BaseModal from './Modal';
-import { primaryBtnColorProps } from '../staticProps/button';
 import useForm from '../hooks/useForm';
-import { validateNonEmpty } from '../utils/formValidators';
 import { capitalize } from '../utils/text';
+import { useLoan } from '../dependecies/LoanContext';
+import { validateNonEmpty } from '../utils/formValidators';
+import { primaryBtnColorProps } from '../staticProps/button';
 
 const ADD_LOAN = gql`
   mutation addLoan($loan: AddLoanInput) {

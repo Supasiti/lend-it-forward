@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Library from './pages/Library';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
+import LoanDetail from './pages/LoanDetail';
 
 const containerProps = {
   pos: 'relative',
@@ -34,8 +35,7 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/library" component={Library} />
-            {/* <Route exact path="/saved" component={SavedBooks} /> 
-            <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
+            <Route exact path="/library/:loanId" component={LoanDetail} />
           </Switch>
         </Container>
       </Box>
