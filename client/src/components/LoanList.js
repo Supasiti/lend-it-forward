@@ -1,4 +1,4 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Center, Spinner, Wrap, WrapItem } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
@@ -6,23 +6,7 @@ import { useLoan } from '../dependecies/LoanContext';
 import auth from '../utils/auth';
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
-
-const GET_LOANS = gql`
-  query getLoans($filter: LoanFilterInput) {
-    loans(filter: $filter) {
-      _id
-      title
-      imageUrl
-      category
-      owner {
-        _id
-      }
-      holder {
-        _id
-      }
-    }
-  }
-`;
+import { GET_LOANS } from '../gql/loans';
 
 // TODO link each card to edit them
 

@@ -1,10 +1,12 @@
 import { Box, Text, VStack, Button } from '@chakra-ui/react';
-// import gql from 'graphql-tag';
 import { useEffect } from 'react';
 
 import useForm from '../hooks/useForm';
 import { TextInput, TextArea, ToggleSwitch } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
+import { useMutation } from '@apollo/client';
+import { useLoan } from '../dependecies/LoanContext';
+import { UPDATE_LOAN } from '../gql/loans';
 
 const initialState = {
   title: '',
@@ -22,12 +24,30 @@ const canEditStatus = (form) => {
 // render
 const UpdateLoanForm = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
+  const [updateLoan, { data }] = useMutation(UPDATE_LOAN);
+  const { updateLoan: updateLoanContext } = useLoan();
+
+  useEffect(() => {
+    if (data?.updateLoan) {
+      console.log(' use effect', data.updateLoan);
+      updateLoanContext(data.updateLoan);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (loan) {
-      setFormState(loan);
+      const { _id, title, description, category, isAvailable } = loan;
+      const newFormState = { _id, title, description, category, isAvailable };
+      setFormState(newFormState);
     }
   }, [loan]);
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+
+    const loanInput = { loan: { ...formState } };
+    updateLoan({ variables: loanInput });
+  };
 
   return (
     <VStack spacing={4} color="peel">
@@ -62,7 +82,7 @@ const UpdateLoanForm = ({ loan }) => {
       />
 
       {/* Status */}
-      {canEditStatus(formState) ? (
+      {canEditStatus(loan) ? (
         <ToggleSwitch
           id="loanAvailability"
           label="Availability"
@@ -78,7 +98,7 @@ const UpdateLoanForm = ({ loan }) => {
         </Box>
       )}
 
-      <Button {...primaryBtnColorProps} w="100%">
+      <Button {...primaryBtnColorProps} w="100%" onClick={handleSubmitForm}>
         Save
       </Button>
     </VStack>

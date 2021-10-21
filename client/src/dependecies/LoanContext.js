@@ -15,7 +15,17 @@ export const LoanProvider = (props) => {
     return setLoans(newLoans);
   };
 
+  const updateLoan = (newLoan) => {
+    console.log(loans);
+    const tempState = loans.filter((loan) => loan._id !== newLoan._id);
+    const newState = [...tempState, newLoan];
+    return setLoans(newState);
+  };
+
   return (
-    <LoanContext.Provider value={{ loans, setLoans, addLoan }} {...props} />
+    <LoanContext.Provider
+      value={{ loans, setLoans, addLoan, updateLoan }}
+      {...props}
+    />
   );
 };

@@ -6,7 +6,6 @@ import {
   ModalFooter,
   VStack,
 } from '@chakra-ui/react';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 
 import BaseModal from './Modal';
@@ -15,23 +14,7 @@ import { capitalize } from '../utils/text';
 import { useLoan } from '../dependecies/LoanContext';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { TextInput, TextArea } from './Input';
-
-const ADD_LOAN = gql`
-  mutation addLoan($loan: AddLoanInput) {
-    addLoan(loan: $loan) {
-      _id
-      title
-      imageUrl
-      category
-      owner {
-        _id
-      }
-      holder {
-        _id
-      }
-    }
-  }
-`;
+import { ADD_LOAN } from '../gql/loans';
 
 const initialState = {
   title: '',
