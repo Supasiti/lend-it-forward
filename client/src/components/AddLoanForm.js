@@ -6,15 +6,14 @@ import {
   ModalFooter,
   VStack,
 } from '@chakra-ui/react';
-import { useMutation } from '@apollo/client';
 
 import BaseModal from './Modal';
 import useForm from '../hooks/useForm';
 import { capitalize } from '../utils/text';
-import { useLoan } from '../dependecies/LoanContext';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { TextInput, TextArea } from './Input';
-import { ADD_LOAN } from '../gql/loans';
+import { useAddLoan } from '../hooks/useAddLoan';
+import { useEffect } from 'react';
 
 const initialState = {
   title: '',
@@ -23,28 +22,27 @@ const initialState = {
 };
 
 // TODO : Suggest categories as you type
+// TODO better response handling
 
 const AddLoanForm = ({ isOpen, onClose }) => {
-  const { addLoan: addLoanContext } = useLoan();
   const { formState, handleChange } = useForm(initialState);
-  const [addLoan] = useMutation(ADD_LOAN);
+  const [addLoan, { data }] = useAddLoan();
+
+  // to close when a loan is added
+  useEffect(() => {
+    if (data?.addLoan) {
+      onClose();
+    }
+  }, [data]);
 
   // handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault();
 
-    const data = {
+    const input = {
       loan: { ...formState, category: capitalize(formState.category) },
     };
-    const res = await addLoan({ variables: data });
-
-    // TODO better response handling
-    if (res.data) {
-      addLoanContext(res.data.addLoan);
-      onClose();
-    } else {
-      console.log(res.errors);
-    }
+    addLoan({ variables: input });
   };
 
   return (

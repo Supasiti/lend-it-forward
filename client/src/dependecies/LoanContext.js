@@ -9,6 +9,7 @@ const initialState = [];
 // jsx wrapper
 export const LoanProvider = (props) => {
   const [loans, setLoans] = useState(initialState);
+  console.log(loans);
 
   const addLoan = (newLoan) => {
     const newLoans = [...loans, newLoan];
@@ -16,7 +17,6 @@ export const LoanProvider = (props) => {
   };
 
   const updateLoan = (newLoan) => {
-    console.log(loans);
     const tempState = loans.filter((loan) => loan._id !== newLoan._id);
     const newState = [...tempState, newLoan];
     return setLoans(newState);

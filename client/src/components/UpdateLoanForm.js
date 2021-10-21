@@ -4,9 +4,7 @@ import { useEffect } from 'react';
 import useForm from '../hooks/useForm';
 import { TextInput, TextArea, ToggleSwitch } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
-import { useMutation } from '@apollo/client';
-import { useLoan } from '../dependecies/LoanContext';
-import { UPDATE_LOAN } from '../gql/loans';
+import { useUpdateLoan } from '../hooks/useUpdateLoan';
 
 const initialState = {
   title: '',
@@ -24,15 +22,7 @@ const canEditStatus = (form) => {
 // render
 const UpdateLoanForm = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
-  const [updateLoan, { data }] = useMutation(UPDATE_LOAN);
-  const { updateLoan: updateLoanContext } = useLoan();
-
-  useEffect(() => {
-    if (data?.updateLoan) {
-      console.log(' use effect', data.updateLoan);
-      updateLoanContext(data.updateLoan);
-    }
-  }, [data]);
+  const [updateLoan] = useUpdateLoan();
 
   useEffect(() => {
     if (loan) {
@@ -44,7 +34,6 @@ const UpdateLoanForm = ({ loan }) => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-
     const loanInput = { loan: { ...formState } };
     updateLoan({ variables: loanInput });
   };
