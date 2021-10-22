@@ -8,25 +8,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import useForm from '../hooks/useForm';
-import auth from '../utils/auth';
 import { validateNonEmpty, validateEmail } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
-
-const SIGNUP = gql`
-  mutation addUser($user: UserData) {
-    addUser(user: $user) {
-      token
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;
+import { useSignupUser } from '../hooks/useSignupUser';
 
 const initialState = {
   username: '',
@@ -37,18 +26,21 @@ const initialState = {
 // render
 const SignupForm = () => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [signup] = useMutation(SIGNUP);
+  const [signup, { data }] = useSignupUser();
+  const history = useHistory();
+
+  // when form is submitted push to library
+  useEffect(() => {
+    if (data?.addUser) {
+      clearForm();
+      history.push('/library');
+    }
+  }, [data]);
 
   // handle when
-  const handleSubmitForm = async () => {
-    const data = { user: { ...formState } };
-    const res = await signup({
-      variables: data,
-    });
-
-    const token = res.data.login.token;
-    auth.login(token);
-    clearForm();
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    signup({ variables: { user: { ...formState } } });
   };
 
   return (
@@ -64,7 +56,7 @@ const SignupForm = () => {
               type="text"
               placeholder="bob"
               isInvalid={!validateNonEmpty(formState.username)}
-              value={formState.username}
+              value={formState.username || ''}
               onChange={(e) => handleChange(e, 'username')}
             />
           </InputGroup>
@@ -80,7 +72,7 @@ const SignupForm = () => {
               type="email"
               placeholder="bob@youruncle.com"
               isInvalid={!validateEmail(formState.email)}
-              value={formState.email}
+              value={formState.email || ''}
               onChange={(e) => handleChange(e, 'email')}
             />
           </InputGroup>
@@ -98,7 +90,7 @@ const SignupForm = () => {
               type="password"
               placeholder="password"
               isInvalid={!validateNonEmpty(formState.password)}
-              value={formState.password}
+              value={formState.password || ''}
               onChange={(e) => handleChange(e, 'password')}
             />
           </InputGroup>

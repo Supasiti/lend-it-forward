@@ -29,14 +29,13 @@ const LoginForm = () => {
   useEffect(() => {
     if (data?.login) {
       clearForm();
-      history.push('./library');
+      history.push('/library');
     }
   }, [data]);
 
   // handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-
     login({ variables: { data: { ...formState } } });
   };
 

@@ -11,3 +11,15 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const SIGNUP = gql`
+  mutation addUser($user: UserData) {
+    addUser(user: $user) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
