@@ -1,6 +1,6 @@
 import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/layout';
 import { cardProps, clickableProps } from '../staticProps/card';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const squareProps = {
   w: '100%',
@@ -12,13 +12,16 @@ const squareProps = {
 };
 
 // render
-const LoanCard = ({ loan }) => {
+const LoanCard = ({ loan, onClick }) => {
   const isHere = loan?.owner?._id === loan?.holder?._id;
-  const history = useHistory();
+  // const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
-    history.push(`./${loan?._id}`);
+    if (typeof onClick === 'function') {
+      onClick();
+    }
+    // history.push(`./${loan?._id}`);
   };
 
   return (

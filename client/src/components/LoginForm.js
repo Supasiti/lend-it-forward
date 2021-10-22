@@ -8,42 +8,36 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import useForm from '../hooks/useForm';
-import auth from '../utils/auth';
 import { validateEmail, validatePassword } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
-
-const LOGIN = gql`
-  mutation login($data: LoginData) {
-    login(data: $data) {
-      token
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;
+import { useLoginUser } from '../hooks/useLoginUser';
 
 const initialState = { email: '', password: '' };
 
 // render
 const LoginForm = () => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [login] = useMutation(LOGIN);
+  const [login, { data }] = useLoginUser();
+  const history = useHistory();
 
+  // when form is submitted push to library
+  useEffect(() => {
+    if (data?.login) {
+      clearForm();
+      history.push('./library');
+    }
+  }, [data]);
+
+  // handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault();
 
-    const res = await login({
-      variables: { data: { ...formState } },
-    });
-    const token = res.data.login.token;
-    auth.login(token);
-    clearForm();
+    login({ variables: { data: { ...formState } } });
   };
 
   return (
@@ -59,7 +53,7 @@ const LoginForm = () => {
               type="email"
               isInvalid={!validateEmail(formState.email)}
               placeholder="bob@youruncle.com"
-              value={formState.email}
+              value={formState.email || ''}
               onChange={(e) => handleChange(e, 'email')}
             />
           </InputGroup>
@@ -77,7 +71,7 @@ const LoginForm = () => {
               type="password"
               placeholder="password"
               isInvalid={!validatePassword(formState.password)}
-              value={formState.password}
+              value={formState.password || ''}
               onChange={(e) => handleChange(e, 'password')}
             />
           </InputGroup>
