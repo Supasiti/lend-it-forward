@@ -22,7 +22,7 @@ const LoanCard = ({ loan }) => {
   };
 
   return (
-    <Box {...cardProps} {...clickableProps} onClick={handleClick}>
+    <Box p="2" {...cardProps} {...clickableProps} onClick={handleClick}>
       <VStack spacing="2">
         {/* image */}
         <Box {...squareProps}>

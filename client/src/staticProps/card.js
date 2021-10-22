@@ -2,8 +2,9 @@ export const cardProps = {
   bg: 'gray.600',
   w: '100%',
   rounded: '2xl',
-  p: '2',
   boxShadow: 'dark-lg',
+  border: '0px',
+  overflow: 'hidden',
 };
 
 export const clickableProps = {
