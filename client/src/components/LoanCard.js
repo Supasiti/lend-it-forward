@@ -1,6 +1,6 @@
-import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/layout';
+import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/react';
 import { cardProps, clickableProps } from '../staticProps/card';
-// import { useHistory } from 'react-router-dom';
+import StatusBadge from './StatusBadge';
 
 const squareProps = {
   w: '100%',
@@ -13,15 +13,12 @@ const squareProps = {
 
 // render
 const LoanCard = ({ loan, onClick }) => {
-  const isHere = loan?.owner?._id === loan?.holder?._id;
-  // const history = useHistory();
-
+  // handle click if it is available
   const handleClick = (e) => {
     e.preventDefault();
     if (typeof onClick === 'function') {
       onClick();
     }
-    // history.push(`./${loan?._id}`);
   };
 
   return (
@@ -36,16 +33,8 @@ const LoanCard = ({ loan, onClick }) => {
         <VStack w="100%" px="3" align="left">
           {/* badges */}
           <HStack spacing="2">
-            {isHere ? (
-              <Badge borderRadius="full" px="2" bg="darkCyan" color="sidecar">
-                available
-              </Badge>
-            ) : (
-              <Badge borderRadius="full" px="2" bg="rust" color="sidecar">
-                on loan
-              </Badge>
-            )}
-            <Badge borderRadius="full" px="2" colorScheme="teal">
+            {loan && <StatusBadge loan={loan} />}
+            <Badge borderRadius="full" px="2" bg="darkCyan" color="sidecar">
               {loan.category}
             </Badge>
           </HStack>

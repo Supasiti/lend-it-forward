@@ -26,7 +26,7 @@ const LoanList = () => {
         >
           <LoanCard
             loan={loan}
-            onClick={() => history.push(`./library/${loan._id}`)}
+            onClick={() => history.push(`/library/${loan._id}`)}
           />
         </WrapItem>
       ))}
