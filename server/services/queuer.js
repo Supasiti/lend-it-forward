@@ -12,7 +12,13 @@ const getByFilter = async ({ filter = {} }) => {
   return result;
 };
 
-const create = async ({ user, loan }) => {
+const findOrCreate = async ({ user, loan }) => {
+  const existingQueuer = await Queuer.findOne({ user, loan }).populate([
+    'user',
+    'loan',
+  ]);
+  if (existingQueuer) return existingQueuer;
+
   const newQueuer = await Queuer.create({ user, loan });
   const result = await getOne(newQueuer);
   return result;
@@ -21,5 +27,5 @@ const create = async ({ user, loan }) => {
 module.exports = {
   getByFilter,
   getOne,
-  create,
+  findOrCreate,
 };
