@@ -38,11 +38,11 @@ export const UPDATE_LOAN = gql`
 `;
 
 export const GET_LOANS = gql`
-query getLoans($filter: LoanFilterInput) {
-  loans(filter: $filter) {
-    ${response}
+  query getLoans($filter: LoanFilterInput) {
+    loans(filter: $filter) {
+      ${response}
+    }
   }
-}
 `;
 
 export const ADD_LOAN = gql`

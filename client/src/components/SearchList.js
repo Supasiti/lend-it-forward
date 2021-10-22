@@ -1,13 +1,13 @@
 import { Center, Spinner, Wrap, WrapItem } from '@chakra-ui/react';
-import { useHistory } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
-import { useGetLoans } from '../hooks/useGetLoans';
+import { GET_LOANS } from '../gql/loans';
 
-const LoanList = () => {
-  const { loans, loading } = useGetLoans();
-  const history = useHistory();
+const SearchList = () => {
+  const variables = { filter: { isAvailable: true } };
+  const { data, loading } = useQuery(GET_LOANS, { variables });
 
   if (loading) {
     return (
@@ -18,8 +18,8 @@ const LoanList = () => {
   }
   return (
     <Wrap w="100%" spacing="0px">
-      {loans &&
-        loans.map((loan) => (
+      {data?.loans &&
+        data?.loans.map((loan) => (
           <WrapItem
             key={loan._id}
             w={{ base: '100%', sm: '50%', md: '33.33%', xl: '25%' }}
@@ -27,7 +27,7 @@ const LoanList = () => {
           >
             <LoanCard
               loan={loan}
-              onClick={() => history.push(`/library/${loan._id}`)}
+              // onClick={() => history.push(`/library/${loan._id}`)}
             />
           </WrapItem>
         ))}
@@ -35,4 +35,4 @@ const LoanList = () => {
   );
 };
 
-export default LoanList;
+export default SearchList;

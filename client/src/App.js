@@ -9,6 +9,7 @@ import Library from './pages/Library';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
 import LoanView from './pages/LoanView';
+import SearchResult from './pages/SearchResult';
 
 const containerProps = {
   pos: 'relative',
@@ -36,6 +37,7 @@ const App = () => (
             <Route exact path="/" component={Home} />
             <Route exact path="/library" component={Library} />
             <Route exact path="/library/:loanId" component={LoanView} />
+            <Route exact path="/search/" component={SearchResult} />
           </Switch>
         </Container>
       </Box>
