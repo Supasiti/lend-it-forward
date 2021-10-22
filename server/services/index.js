@@ -1,11 +1,11 @@
 const user = require('./user');
 const auth = require('./auth');
 const loan = require('./loan');
-const message = require('./message');
+const queuer = require('./queuer');
 
 module.exports = {
   user,
   auth,
   loan,
-  message,
+  queuer,
 };

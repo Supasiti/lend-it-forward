@@ -10,7 +10,6 @@ export const useSignupUser = () => {
 
   useEffect(() => {
     if (data?.addUser) {
-      console.log(data);
       const token = data.addUser.token;
       auth.login(token);
     }

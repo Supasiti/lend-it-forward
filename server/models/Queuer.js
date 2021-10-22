@@ -1,35 +1,26 @@
 const { Schema, model } = require('mongoose');
 
-const meassageSchema = new Schema(
+const queuerSchema = new Schema(
   {
-    from: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-    },
-    to: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    sentOn: {
-      type: Date,
-      default: Date.now,
-    },
-    read: {
-      type: Boolean,
-      default: false,
     },
     loan: {
       type: Schema.Types.ObjectId,
       ref: 'Loan',
     },
-    message: {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    contact: {
       type: String,
       default: '',
     },
-    reason: {
-      type: String,
-      enum: ['borrow', 'return', 'general'],
-      required: [true, 'Please state the purpose of this request'],
+    selected: {
+      type: Boolean,
+      default: false,
     },
   },
   // set this to use virtual below
@@ -40,8 +31,8 @@ const meassageSchema = new Schema(
 );
 
 // Duplicate the ID field.
-meassageSchema.virtual('id').get(() => this._id);
+queuerSchema.virtual('id').get(() => this._id);
 
-const Message = model('Message', meassageSchema);
+const Queuer = model('Queuer', queuerSchema);
 
-module.exports = Message;
+module.exports = Queuer;
