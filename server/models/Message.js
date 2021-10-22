@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const requestSchema = new Schema(
+const meassageSchema = new Schema(
   {
     from: {
       type: Schema.Types.ObjectId,
@@ -22,17 +22,13 @@ const requestSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Loan',
     },
-    subject: {
-      type: String,
-      default: '',
-    },
     message: {
       type: String,
       default: '',
     },
     reason: {
       type: String,
-      enum: ['borrow', 'return'],
+      enum: ['borrow', 'return', 'general'],
       required: [true, 'Please state the purpose of this request'],
     },
   },
@@ -44,8 +40,8 @@ const requestSchema = new Schema(
 );
 
 // Duplicate the ID field.
-requestSchema.virtual('id').get(() => this._id);
+meassageSchema.virtual('id').get(() => this._id);
 
-const Request = model('Request', requestSchema);
+const Message = model('Message', meassageSchema);
 
-module.exports = Request;
+module.exports = Message;
