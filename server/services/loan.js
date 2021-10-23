@@ -1,11 +1,12 @@
 const { Loan, Queuer } = require('../models');
 
 const getOne = async ({ _id }) => {
-  const result = await Loan.findById(_id).populate([
-    'owner',
-    'holder',
-    'reservedFor',
-  ]);
+  const result = await Loan.findById(_id)
+    .populate(['owner', 'holder'])
+    .populate({
+      path: 'reservedFor',
+      populate: { path: 'user' },
+    });
   return result;
 };
 
@@ -70,7 +71,7 @@ const updateLoan = async ({ user, _id, ...loan }) => {
 // check if owner is the owner of loan
 // return null or {queuer, loan}
 const validateReservation = async ({ _id, owner, reservedFor }) => {
-  const promises = [Queuer.findOne({ loan: _id, user: reservedFor })];
+  const promises = [Queuer.findById(reservedFor)];
   promises.push(Loan.findById(_id));
   const [queuer, loan] = await Promise.all(promises);
 
@@ -81,7 +82,7 @@ const validateReservation = async ({ _id, owner, reservedFor }) => {
 
 // execute reservation
 const executeReservation = async (loan, queuer) => {
-  loan.reservedFor = queuer.user;
+  loan.reservedFor = queuer._id;
   loan.status = 'reserved';
   queuer.selected = true;
 

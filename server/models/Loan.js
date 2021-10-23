@@ -30,7 +30,7 @@ const loanSchema = new Schema(
     },
     reservedFor: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Queuer',
     },
   },
   // set this to use virtual below
