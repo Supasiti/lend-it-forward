@@ -44,7 +44,7 @@ const initialState = {
 const ReserveLoanForm = ({ loan }) => {
   const { formState, setFormState } = useForm(initialState);
   const { waitList, getWaitList } = useGetWaitList();
-  const [selectedQueuer, setSelectedQueuer] = useState({});
+  const [selectedBorrower, setSelectedBorrower] = useState({});
 
   // set the form state from props
   useEffect(() => {
@@ -66,7 +66,16 @@ const ReserveLoanForm = ({ loan }) => {
       status: queuerId ? 'reserved' : 'available',
     };
     setFormState(newFormState);
-    setSelectedQueuer(matched);
+    setSelectedBorrower(matched);
+  };
+
+  // handle form sumission
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    if (!formState.reservedFor) return;
+
+    console.log(formState);
+    /// do something with form
   };
 
   return (
@@ -108,7 +117,7 @@ const ReserveLoanForm = ({ loan }) => {
             Contact Details
           </Text>
           <Text as="p" fontSize="md">
-            {selectedQueuer.contact || 'A borrower has not been selected.'}
+            {selectedBorrower.contact || 'A borrower has not been selected.'}
           </Text>
         </Box>
 
@@ -122,7 +131,7 @@ const ReserveLoanForm = ({ loan }) => {
       </Flex>
 
       <Box p="4" w="100%" textAlign="center">
-        <Button {...primaryBtnColorProps}>
+        <Button {...primaryBtnColorProps} onClick={handleSubmitForm}>
           Reserve this item for this borrower
         </Button>
       </Box>

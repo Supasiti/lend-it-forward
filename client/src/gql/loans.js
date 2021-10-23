@@ -52,3 +52,11 @@ export const ADD_LOAN = gql`
     }
   }
 `;
+
+export const RESERVE_LOAN = gql`
+  mutation reserveLoan($loan: ReserveLoanInput) {
+    reserveLoan(loan: $loan) {
+      ${response}
+    }
+  }
+`;

@@ -5,14 +5,24 @@ export const GET_WAIT_LIST = gql`
     waitList(filter: $filter) {
       _id
       user {
+        _id
         username
       }
       loan {
+        _id
         title
       }
       createdAt
       contact
       selected
+    }
+  }
+`;
+
+export const UPDATE_QUEUER = gql`
+  mutation updateQueuer($queuer: UpdateQueuerInput) {
+    updateQueuer(queuer: $queuer) {
+      _id
     }
   }
 `;
