@@ -6,7 +6,7 @@ import { spinnerProps } from '../staticProps/spinner';
 import { GET_LOANS } from '../gql/loans';
 
 const SearchList = () => {
-  const variables = { filter: { isAvailable: true } };
+  const variables = { filter: { status: 'available' } };
   const { data, loading } = useQuery(GET_LOANS, { variables });
 
   if (loading) {

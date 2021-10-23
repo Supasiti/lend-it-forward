@@ -30,7 +30,7 @@ const loan = gql`
   }
 
   input UpdateLoanInput {
-    _id: ID
+    _id: ID!
     title: String
     description: String
     category: String

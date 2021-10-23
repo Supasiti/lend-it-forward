@@ -5,7 +5,7 @@ const response = `
   title
   imageUrl
   description
-  isAvailable
+  status
   category
   owner {
     _id

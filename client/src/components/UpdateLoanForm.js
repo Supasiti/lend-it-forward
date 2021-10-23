@@ -1,22 +1,24 @@
-import { Box, Text, VStack, Button } from '@chakra-ui/react';
+import { VStack, Button } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import useForm from '../hooks/useForm';
-import { TextInput, TextArea, ToggleSwitch } from './Input';
+import { TextInput, TextArea, UserSelect } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useUpdateLoan } from '../hooks/useUpdateLoan';
 
 const initialState = {
+  _id: '',
   title: '',
   description: '',
   category: '',
-  isAvailable: false,
+  status: 'unavailable',
 };
 
-const canEditStatus = (form) => {
-  return form?.owner?._id && form.owner._id === form?.holder?._id
-    ? true
-    : false;
+const extractFormState = (loan, initialState) => {
+  const result = Object.entries(loan).reduce((acc, [key, value]) => {
+    return key in initialState ? { ...acc, [key]: value } : { ...acc };
+  }, initialState);
+  return result;
 };
 
 // render
@@ -24,17 +26,20 @@ const UpdateLoanForm = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
   const [updateLoan] = useUpdateLoan();
 
+  // set the form state from props
   useEffect(() => {
     if (loan) {
-      const { _id, title, description, category, isAvailable } = loan;
-      const newFormState = { _id, title, description, category, isAvailable };
+      const newFormState = extractFormState(loan, initialState);
+      console.log(newFormState);
       setFormState(newFormState);
     }
   }, [loan]);
 
+  // handle form submission
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const loanInput = { loan: { ...formState } };
+    console.log(formState);
     updateLoan({ variables: loanInput });
   };
 
@@ -45,7 +50,7 @@ const UpdateLoanForm = ({ loan }) => {
         id="loanTitle"
         label="Title"
         name="title"
-        value={formState.title}
+        value={formState.title || ''}
         placeholder="Thinking Fast And Slow"
         onChange={(e) => handleChange(e, 'title')}
       />
@@ -55,7 +60,7 @@ const UpdateLoanForm = ({ loan }) => {
         id="loanDescription"
         label="Description"
         name="description"
-        value={formState.description}
+        value={formState.description || ''}
         placeholder="A book by Daniel Kahneman"
         onChange={(e) => handleChange(e, 'description')}
       />
@@ -65,27 +70,21 @@ const UpdateLoanForm = ({ loan }) => {
         id="loanCategory"
         label="Category"
         name="category"
-        value={formState.category}
+        value={formState.category || ''}
         placeholder="Books"
         onChange={(e) => handleChange(e, 'category')}
       />
 
       {/* Status */}
-      {canEditStatus(loan) ? (
-        <ToggleSwitch
-          id="loanAvailability"
-          label="Availability"
-          checked={formState.isAvailable}
-          onChange={(e) => handleChange(e, 'isAvailable')}
-        />
-      ) : (
-        <Box w="100%" align="left">
-          <Text display="inline">Status: </Text>
-          <Text display="inline" color="sidecar">
-            On Loan
-          </Text>
-        </Box>
-      )}
+      <UserSelect
+        id="loanStatus"
+        label="Status"
+        value={formState.status || initialState.status}
+        onChange={(e) => handleChange(e, 'status')}
+      >
+        <option value="unavailable">Unavailable</option>
+        <option value="available">Available</option>
+      </UserSelect>
 
       <Button {...primaryBtnColorProps} w="100%" onClick={handleSubmitForm}>
         Save

@@ -1,5 +1,6 @@
 import { Box, Center, Flex, Spinner, VStack } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
 
 import { cardProps } from '../staticProps/card';
 import { squareProps } from '../staticProps/div';
@@ -7,10 +8,29 @@ import { spinnerProps } from '../staticProps/spinner';
 import UpdateLoanForm from './UpdateLoanForm';
 import { GET_LOAN } from '../gql/loans';
 
+const initialState = {
+  title: '',
+  description: '',
+  category: '',
+  status: 'unavailable',
+  owner: null,
+  holder: null,
+  reservedfor: null,
+};
+
 // render
 const LoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
+  const [loan, setLoan] = useState(initialState);
 
+  // update loan
+  useEffect(() => {
+    if (data?.loan) {
+      setLoan(data.loan);
+    }
+  }, [data]);
+
+  // spinning wheel on loading
   if (loading) {
     return (
       <Center minH="64">
@@ -30,7 +50,7 @@ const LoanDetail = ({ loanId }) => {
           </Box>
 
           <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-            <UpdateLoanForm loan={data?.loan} />
+            <UpdateLoanForm loan={loan} />
           </Box>
         </Flex>
       </Box>

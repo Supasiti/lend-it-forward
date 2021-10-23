@@ -4,6 +4,7 @@ import {
   Input,
   Textarea,
   Switch,
+  Select,
 } from '@chakra-ui/react';
 import { validateNonEmpty } from '../utils/formValidators';
 
@@ -26,39 +27,44 @@ export const inputProps = {
   },
 };
 
-export const TextInput = ({ id, ...props }) => (
+export const TextInput = ({ id, label, ...props }) => (
   <FormControl id={id}>
-    <FormLabel>{props.label}</FormLabel>
+    <FormLabel>{label}</FormLabel>
     <Input
       {...props}
       {...inputProps}
       isRequired
       type="text"
       isInvalid={!validateNonEmpty(props.value)}
-      value={props.value || ''}
     />
   </FormControl>
 );
 
-export const TextArea = ({ id, ...props }) => (
+export const TextArea = ({ id, label, ...props }) => (
   <FormControl id={id}>
-    <FormLabel>{props.label}</FormLabel>
+    <FormLabel>{label}</FormLabel>
     <Textarea
       {...props}
       {...inputProps}
       isRequired
       type="text"
       isInvalid={!validateNonEmpty(props.value)}
-      value={props.value || ''}
     />
   </FormControl>
 );
 
-export const ToggleSwitch = ({ id, ...props }) => (
+export const ToggleSwitch = ({ id, label, ...props }) => (
   <FormControl display="flex" alignItems="center">
     <FormLabel htmlFor={id} mb="0px">
-      {props.label}
+      {label}
     </FormLabel>
     <Switch {...props} id={id} size="md" />
+  </FormControl>
+);
+
+export const UserSelect = ({ id, label, ...props }) => (
+  <FormControl id={id}>
+    <FormLabel>{label}</FormLabel>
+    <Select {...props}> {props.children}</Select>
   </FormControl>
 );
