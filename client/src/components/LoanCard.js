@@ -1,15 +1,7 @@
 import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/react';
 import { cardProps, clickableProps } from '../staticProps/card';
 import StatusBadge from './StatusBadge';
-
-const squareProps = {
-  w: '100%',
-  h: '0px',
-  pb: '100%',
-  bg: 'gunmetal',
-  rounded: 'lg',
-  overflow: 'hidden',
-};
+import { squareProps } from '../staticProps/div';
 
 // render
 const LoanCard = ({ loan, onClick }) => {

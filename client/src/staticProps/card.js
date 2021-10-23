@@ -10,3 +10,11 @@ export const cardProps = {
 export const clickableProps = {
   _hover: { bg: 'gray.500', cursor: 'pointer' },
 };
+
+export const circleProps = {
+  bg: 'gray.600',
+  rounded: 'full',
+  boxShadow: 'dark-lg',
+  border: '0px',
+  overflow: 'hidden',
+};

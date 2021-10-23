@@ -1,12 +1,11 @@
-import { Box, Center, Flex, Spinner, VStack } from '@chakra-ui/react';
+import { Center, Spinner } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
-import { cardProps } from '../staticProps/card';
-import { squareProps } from '../staticProps/div';
 import { spinnerProps } from '../staticProps/spinner';
-import UpdateLoanForm from './UpdateLoanForm';
 import { GET_LOAN } from '../gql/loans';
+import UnavailableLoanDetail from './UnavailableLoanDetail';
+import AvailableLoanDetail from './AvailableLoanDetail';
 
 const initialState = {
   title: '',
@@ -30,6 +29,12 @@ const LoanDetail = ({ loanId }) => {
     }
   }, [data]);
 
+  // handle when the new loan is updated
+  const handleLoanUpdate = (updatedData) => {
+    const newLoan = { ...loan, ...updatedData };
+    setLoan(newLoan);
+  };
+
   // spinning wheel on loading
   if (loading) {
     return (
@@ -39,25 +44,11 @@ const LoanDetail = ({ loanId }) => {
     );
   }
 
-  return (
-    <VStack spacing="4">
-      <Box {...cardProps}>
-        <Flex wrap="wrap" justify="center">
-          <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-            <Box {...squareProps}>
-              <div> image here</div>
-            </Box>
-          </Box>
+  if (loan.status === 'available') {
+    return <AvailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
+  }
 
-          <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-            <UpdateLoanForm loan={loan} />
-          </Box>
-        </Flex>
-      </Box>
-
-      <Box {...cardProps}>location management</Box>
-    </VStack>
-  );
+  return <UnavailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
 };
 
 export default LoanDetail;

@@ -27,6 +27,11 @@ export const inputProps = {
   },
 };
 
+export const helperProps = {
+  as: 'p',
+  fontSize: 'sm',
+};
+
 export const TextInput = ({ id, label, ...props }) => (
   <FormControl id={id}>
     <FormLabel>{label}</FormLabel>

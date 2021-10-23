@@ -5,6 +5,7 @@ import useForm from '../hooks/useForm';
 import { TextInput, TextArea, UserSelect } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useUpdateLoan } from '../hooks/useUpdateLoan';
+import { updateObject } from '../utils/object';
 
 const initialState = {
   _id: '',
@@ -14,23 +15,22 @@ const initialState = {
   status: 'unavailable',
 };
 
-const extractFormState = (loan, initialState) => {
-  const result = Object.entries(loan).reduce((acc, [key, value]) => {
-    return key in initialState ? { ...acc, [key]: value } : { ...acc };
-  }, initialState);
-  return result;
-};
-
 // render
-const UpdateLoanForm = ({ loan }) => {
+const UpdateLoanForm = ({ loan, onLoanUpdated }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
-  const [updateLoan] = useUpdateLoan();
+  const [updateLoan, { data }] = useUpdateLoan();
+
+  // handle when form is submitted
+  useEffect(() => {
+    if (data?.updateLoan && onLoanUpdated) {
+      onLoanUpdated(data.updateLoan);
+    }
+  }, [data]);
 
   // set the form state from props
   useEffect(() => {
     if (loan) {
-      const newFormState = extractFormState(loan, initialState);
-      console.log(newFormState);
+      const newFormState = updateObject(formState, loan);
       setFormState(newFormState);
     }
   }, [loan]);
@@ -39,7 +39,6 @@ const UpdateLoanForm = ({ loan }) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const loanInput = { loan: { ...formState } };
-    console.log(formState);
     updateLoan({ variables: loanInput });
   };
 
