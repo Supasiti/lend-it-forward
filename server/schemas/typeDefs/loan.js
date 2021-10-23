@@ -39,6 +39,11 @@ const loan = gql`
     reservedFor: ID
   }
 
+  input ReserveLoanInput {
+    _id: ID!
+    reservedFor: ID!
+  }
+
   extend type Query {
     loans(filter: LoanFilterInput): [Loan]
     loan(_id: ID): Loan
@@ -47,6 +52,7 @@ const loan = gql`
   extend type Mutation {
     addLoan(loan: AddLoanInput): Loan
     updateLoan(loan: UpdateLoanInput): Loan
+    reserveLoan(loan: ReserveLoanInput): Loan
   }
 `;
 

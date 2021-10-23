@@ -1,4 +1,4 @@
-const { Loan } = require('../models');
+const { Loan, Queuer } = require('../models');
 
 const getOne = async ({ _id }) => {
   const result = await Loan.findById(_id).populate([
@@ -40,6 +40,7 @@ const getByFilter = async ({ filter = {} }) => {
   }
 };
 
+// update the loan
 const updateLoan = async ({ user, _id, ...loan }) => {
   // restrict who can update loan
   const query = {
@@ -61,9 +62,35 @@ const updateLoan = async ({ user, _id, ...loan }) => {
   return result;
 };
 
+//---------------------------------
+// reserve the loan for a borrower
+
+const executeReservation = async (_id, reservedFor, queuer) => {
+  const update = { reservedFor, status: 'reserved' };
+  queuer.selected = true;
+
+  const promises = [Loan.findByIdAndUpdate(_id, update, { new: true })];
+  promises.push(queuer.save());
+  await Promise.all(promises);
+};
+
+const reserveLoan = async ({ _id, reservedFor }) => {
+  // check if not in a wait list
+  const queuer = await Queuer.findOne({ loan: _id, user: reservedFor });
+  if (!queuer) return null;
+
+  // must reset everyone in waiting list
+  await Queuer.updateMany({ loan: _id }, { selected: false });
+  await executeReservation(_id, reservedFor, queuer);
+
+  const result = getOne({ _id });
+  return result;
+};
+
 module.exports = {
   create,
   getOne,
   getByFilter,
   updateLoan,
+  reserveLoan,
 };

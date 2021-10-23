@@ -15,6 +15,7 @@ const resolvers = {
     addUser: user.addUser,
     login: user.login,
     addLoan: loan.addLoan,
+    reserveLoan: loan.reserveLoan,
     updateLoan: loan.updateLoan,
     joinWaitList: queuer.joinWaitList,
     updateQueuer: queuer.updateQueuer,

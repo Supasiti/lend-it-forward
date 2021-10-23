@@ -30,9 +30,17 @@ const updateLoan = async (parent, args, context) => {
   throw new AuthenticationError('you must be logged in');
 };
 
+const reserveLoan = async (parent, args, context) => {
+  if (context.user) {
+    return services.loan.reserveLoan({ ...args.loan });
+  }
+  throw new AuthenticationError('you must be logged in');
+};
+
 module.exports = {
   addLoan,
   getLoan,
   getLoans,
   updateLoan,
+  reserveLoan,
 };
