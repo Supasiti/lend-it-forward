@@ -43,8 +43,6 @@ const ReserveLoanForm = ({ loan }) => {
   const { waitList, getWaitList } = useGetWaitList();
   const { reserveLoan } = useReserveLoan();
 
-  console.log(formState);
-
   // set the form state from props
   useEffect(() => {
     if (loan) {
