@@ -40,6 +40,7 @@ const getByFilter = async ({ filter = {} }) => {
   }
 };
 
+//---------------------------------
 // update the loan
 const updateLoan = async ({ user, _id, ...loan }) => {
   // restrict who can update loan
@@ -65,25 +66,39 @@ const updateLoan = async ({ user, _id, ...loan }) => {
 //---------------------------------
 // reserve the loan for a borrower
 
-const executeReservation = async (_id, reservedFor, queuer) => {
-  const update = { reservedFor, status: 'reserved' };
-  queuer.selected = true;
+// check if not in a wait list
+// check if owner is the owner of loan
+// return null or {queuer, loan}
+const validateReservation = async ({ _id, owner, reservedFor }) => {
+  const promises = [Queuer.findOne({ loan: _id, user: reservedFor })];
+  promises.push(Loan.findById(_id));
+  const [queuer, loan] = await Promise.all(promises);
 
-  const promises = [Loan.findByIdAndUpdate(_id, update, { new: true })];
-  promises.push(queuer.save());
-  await Promise.all(promises);
+  if (!queuer) return null;
+  if (loan.owner.toString() !== owner) return null;
+  return { queuer, loan };
 };
 
-const reserveLoan = async ({ _id, reservedFor }) => {
-  // check if not in a wait list
-  const queuer = await Queuer.findOne({ loan: _id, user: reservedFor });
-  if (!queuer) return null;
+// execute reservation
+const executeReservation = async (loan, queuer) => {
+  loan.reservedFor = queuer.user;
+  loan.status = 'reserved';
+  queuer.selected = true;
+
+  await Promise.all([loan.save(), queuer.save()]);
+};
+
+// expect { owner, _id, reservedFor }
+const reserveLoan = async (args) => {
+  const validation = await validateReservation(args);
+  if (!validation) return null;
+  const { queuer, loan } = validation;
 
   // must reset everyone in waiting list
-  await Queuer.updateMany({ loan: _id }, { selected: false });
-  await executeReservation(_id, reservedFor, queuer);
+  await Queuer.updateMany({ loan: loan._id }, { selected: false });
+  await executeReservation(loan, queuer);
 
-  const result = getOne({ _id });
+  const result = getOne(loan);
   return result;
 };
 

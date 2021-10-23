@@ -32,7 +32,7 @@ const updateLoan = async (parent, args, context) => {
 
 const reserveLoan = async (parent, args, context) => {
   if (context.user) {
-    return services.loan.reserveLoan({ ...args.loan });
+    return services.loan.reserveLoan({ owner: context.user._id, ...args.loan });
   }
   throw new AuthenticationError('you must be logged in');
 };
