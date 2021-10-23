@@ -16,6 +16,7 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import useForm from '../hooks/useForm';
 import { updateObject } from '../utils/object';
 import { useGetWaitList } from '../hooks/useGetWaitList';
+import { useReserveLoan } from '../hooks/useReserveLoan';
 
 // styling
 const containerProps = {
@@ -33,18 +34,15 @@ const helperContainerProps = {
 // initial state
 const initialState = {
   _id: '',
-  status: 'available',
   reservedFor: '',
 };
-
-// TODO handle form submission
-// set reserve  && update queuer to select / all other unselected
 
 // render
 const ReserveLoanForm = ({ loan }) => {
   const { formState, setFormState } = useForm(initialState);
   const { waitList, getWaitList } = useGetWaitList();
   const [selectedBorrower, setSelectedBorrower] = useState({});
+  const { reserveLoan } = useReserveLoan();
 
   // set the form state from props
   useEffect(() => {
@@ -63,7 +61,6 @@ const ReserveLoanForm = ({ loan }) => {
     const newFormState = {
       ...formState,
       reservedFor: matched.user._id,
-      status: queuerId ? 'reserved' : 'available',
     };
     setFormState(newFormState);
     setSelectedBorrower(matched);
@@ -73,9 +70,7 @@ const ReserveLoanForm = ({ loan }) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if (!formState.reservedFor) return;
-
-    console.log(formState);
-    /// do something with form
+    reserveLoan(formState);
   };
 
   return (

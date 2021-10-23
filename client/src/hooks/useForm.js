@@ -12,7 +12,6 @@ const useForm = (initialState) => {
   const handleChange = (e, key) => {
     const value = getValue(e.target);
     const newState = { ...formState, [key]: value };
-    console.log(newState);
     setFormState(newState);
   };
 
