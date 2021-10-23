@@ -10,7 +10,7 @@ const loan = gql`
     status: String
     owner: User
     holder: User
-    reservedFor: User
+    reservedFor: Queuer
   }
 
   input AddLoanInput {
