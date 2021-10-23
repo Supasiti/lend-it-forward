@@ -17,6 +17,7 @@ const resolvers = {
     addLoan: loan.addLoan,
     updateLoan: loan.updateLoan,
     joinWaitList: queuer.joinWaitList,
+    updateQueuer: queuer.updateQueuer,
   },
 };
 

@@ -12,6 +12,7 @@ const getByFilter = async ({ filter = {} }) => {
   return result;
 };
 
+// allow to join the waiting list only once
 const findOrCreate = async ({ user, loan }) => {
   const existingQueuer = await Queuer.findOne({ user, loan }).populate([
     'user',
@@ -24,8 +25,49 @@ const findOrCreate = async ({ user, loan }) => {
   return result;
 };
 
+// update
+
+const isBorrower = (user, queuer) => (queuer.user.toString() === user);
+const isLender = (user, queuer) => (
+  queuer.loan.owner.toString()  = user
+);
+
+const updateIfBorrower = async (args, queuerToUpdate) => {
+  queuerToUpdate.contact = args.contact;
+  await queuerToUpdate.save();
+  const result = getOne(args);
+  return result;
+};
+
+const updateIfLender = async (args, queuerToUpdate) => {
+  queuerToUpdate.selected = args.selected;
+  await queuerToUpdate.save();
+  const result = getOne(args);
+  return result;
+};
+
+// expect {_id, user, contact, selected }
+const update = async (args) => {
+  // make sure that the user has access to it
+  const queuerToUpdate = await Queuer.findById(args._id).populate('loan');
+  if (!queuerToUpdate) return null;
+
+  // borrower - can update contact info
+  if (isBorrower(args.user, queuerToUpdate)) {
+    return updateIfBorrower(args, queuerToUpdate);
+  }
+
+  // lender - can update selected
+  if (isLender(args.user, queuerToUpdate)) {
+    return updateIfLender(args, queuerToUpdate);
+  }
+
+  return null;
+};
+
 module.exports = {
   getByFilter,
   getOne,
   findOrCreate,
+  update,
 };

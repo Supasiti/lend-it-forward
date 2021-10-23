@@ -11,6 +11,7 @@ const queuer = gql`
   }
 
   input WaitListFilterInput {
+    _id: ID
     user: ID
     loan: ID
     selected: Boolean
@@ -20,12 +21,19 @@ const queuer = gql`
     loan: ID!
   }
 
+  input UpdateQueuerInput {
+    _id: ID!
+    selected: Boolean
+    contact: String
+  }
+
   extend type Query {
     waitList(filter: WaitListFilterInput): [Queuer]
   }
 
   extend type Mutation {
     joinWaitList(queuer: JoinWaitListInput): Queuer
+    updateQueuer(queuer: UpdateQueuerInput): Queuer
   }
 `;
 
