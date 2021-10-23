@@ -53,6 +53,15 @@ const ReserveLoanForm = ({ loan }) => {
     }
   }, [loan]);
 
+  // update the selectedBorrower when the wait list is updated
+  useEffect(() => {
+    if (waitList.length && '_id' in formState.reservedFor) {
+      const borrowerId = formState.reservedFor._id;
+      const matched = waitList.find((queuer) => queuer.user._id === borrowerId);
+      setSelectedBorrower(matched);
+    }
+  }, [waitList, loan]);
+
   // handle when the form change state
   const handleChange = (e) => {
     const queuerId = e.target.value;

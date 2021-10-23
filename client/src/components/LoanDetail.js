@@ -14,7 +14,7 @@ const initialState = {
   status: 'unavailable',
   owner: null,
   holder: null,
-  reservedfor: null,
+  reservedFor: null,
 };
 
 // render
@@ -22,6 +22,7 @@ const LoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
 
+  console.log(loan);
   // update loan
   useEffect(() => {
     if (data?.loan) {
@@ -44,7 +45,7 @@ const LoanDetail = ({ loanId }) => {
     );
   }
 
-  if (loan.status === 'available') {
+  if (loan.status === 'available' || loan.status === 'reserved') {
     return <AvailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
   }
 

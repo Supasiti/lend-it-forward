@@ -83,6 +83,7 @@ const UpdateLoanForm = ({ loan, onLoanUpdated }) => {
       >
         <option value="unavailable">Unavailable</option>
         <option value="available">Available</option>
+        <option value="reserved">Reserved</option>
       </UserSelect>
 
       <Button {...primaryBtnColorProps} w="100%" onClick={handleSubmitForm}>

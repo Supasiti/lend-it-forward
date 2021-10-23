@@ -7,6 +7,7 @@ export const GET_WAIT_LIST = gql`
       user {
         _id
         username
+        imageUrl
       }
       loan {
         _id
