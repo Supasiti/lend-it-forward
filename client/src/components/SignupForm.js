@@ -8,27 +8,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
-import useForm from '../hooks/useForm';
-import auth from '../utils/auth';
-import {
-  validateEmail,
-  validatePassword,
-  validateUsername,
-} from '../utils/formValidators';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const SIGNUP = gql`
-  mutation addUser($user: UserData) {
-    addUser(user: $user) {
-      token
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;
+import useForm from '../hooks/useForm';
+import { validateNonEmpty, validateEmail } from '../utils/formValidators';
+import { inputProps } from './Input';
+import { primaryBtnColorProps } from '../staticProps/button';
+import { useSignupUser } from '../hooks/useSignupUser';
 
 const initialState = {
   username: '',
@@ -39,18 +26,21 @@ const initialState = {
 // render
 const SignupForm = () => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [signup] = useMutation(SIGNUP);
+  const [signup, { data }] = useSignupUser();
+  const history = useHistory();
+
+  // when form is submitted push to library
+  useEffect(() => {
+    if (data?.addUser) {
+      clearForm();
+      history.push('/library');
+    }
+  }, [data]);
 
   // handle when
-  const handleSubmitForm = async () => {
-    const data = { user: { ...formState } };
-    const res = await signup({
-      variables: data,
-    });
-
-    const token = res.data.login.token;
-    auth.login(token);
-    clearForm();
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    signup({ variables: { user: { ...formState } } });
   };
 
   return (
@@ -61,12 +51,12 @@ const SignupForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">#</InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="text"
               placeholder="bob"
-              errorBorderColor="rust"
-              isInvalid={!validateUsername(formState.username)}
-              value={formState.username}
+              isInvalid={!validateNonEmpty(formState.username)}
+              value={formState.username || ''}
               onChange={(e) => handleChange(e, 'username')}
             />
           </InputGroup>
@@ -77,12 +67,12 @@ const SignupForm = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">@</InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="email"
               placeholder="bob@youruncle.com"
-              errorBorderColor="rust"
               isInvalid={!validateEmail(formState.email)}
-              value={formState.email}
+              value={formState.email || ''}
               onChange={(e) => handleChange(e, 'email')}
             />
           </InputGroup>
@@ -95,27 +85,18 @@ const SignupForm = () => {
               <LockIcon w={4} h={4} />
             </InputLeftElement>
             <Input
+              {...inputProps}
               isRequired
               type="password"
               placeholder="password"
-              errorBorderColor="rust"
-              isInvalid={!validatePassword(formState.password)}
-              value={formState.password}
+              isInvalid={!validateNonEmpty(formState.password)}
+              value={formState.password || ''}
               onChange={(e) => handleChange(e, 'password')}
             />
           </InputGroup>
         </FormControl>
 
-        <Button
-          type="submit"
-          w="100%"
-          bg="bermuda"
-          size="md"
-          color="blackPearl"
-          _hover={{
-            background: 'peel',
-          }}
-        >
+        <Button type="submit" size="md" w="100%" {...primaryBtnColorProps}>
           Submit
         </Button>
       </VStack>

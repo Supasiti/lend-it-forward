@@ -1,9 +1,9 @@
 const User = require('./User');
 const Loan = require('./Loan');
-const Request = require('./Request');
+const Queuer = require('./Queuer');
 
 module.exports = {
   User,
   Loan,
-  Request,
+  Queuer,
 };

@@ -5,9 +5,9 @@ const loan = gql`
     _id: ID!
     title: String
     description: String
-    cateogory: String
+    category: String
     imageUrl: String
-    isAvailable: Boolean!
+    status: String
     owner: User
     holder: User
     reservedFor: User
@@ -16,27 +16,32 @@ const loan = gql`
   input AddLoanInput {
     title: String
     description: String
-    cateogory: String
+    category: String
   }
 
   input LoanFilterInput {
     _id: ID
     title: String
-    cateogory: String
-    isAvailable: Boolean
+    category: String
+    status: String
     owner: ID
     location: String
     reservedFor: ID
   }
 
   input UpdateLoanInput {
-    _id: ID
+    _id: ID!
     title: String
     description: String
-    cateogory: String
-    isAvailable: Boolean
+    category: String
+    status: String
     holder: ID
     reservedFor: ID
+  }
+
+  input ReserveLoanInput {
+    _id: ID!
+    reservedFor: ID!
   }
 
   extend type Query {
@@ -47,6 +52,7 @@ const loan = gql`
   extend type Mutation {
     addLoan(loan: AddLoanInput): Loan
     updateLoan(loan: UpdateLoanInput): Loan
+    reserveLoan(loan: ReserveLoanInput): Loan
   }
 `;
 

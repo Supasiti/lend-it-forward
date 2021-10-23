@@ -4,9 +4,13 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password) => {
-  return !!password.length;
+  return !!password?.length;
 };
 
 export const validateUsername = (username) => {
-  return !!username.length;
+  return !!username?.length;
+};
+
+export const validateNonEmpty = (text) => {
+  return !!text?.length;
 };

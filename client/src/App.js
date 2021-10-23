@@ -1,48 +1,48 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ChakraContainer from './dependecies/Chakra';
-import ApolloContainer from './dependecies/Apollo';
 import '@fontsource/josefin-sans/200.css';
 import '@fontsource/montserrat/500.css';
-import { Box, Container } from '@chakra-ui/layout';
+import { Box, Container } from '@chakra-ui/react';
 
+import Dependencies from './dependecies';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+import Library from './pages/Library';
 import Wave from './components/Wave';
 import Navbar from './components/Navbar';
+import LoanView from './pages/LoanView';
+import SearchResult from './pages/SearchResult';
+
+const containerProps = {
+  pos: 'relative',
+  zIndex: 1,
+  flex: true,
+  flexDir: 'column',
+  maxW: {
+    base: 'container.lg',
+    lg: 'container.lg',
+    xl: 'container.xl',
+  },
+  minH: '100vh',
+  fontSize: { base: 'sm', md: 'md' },
+  color: 'sidecar',
+};
 
 const App = () => (
-  <ApolloContainer>
-    <ChakraContainer>
-      <Router>
-        <Box
-          w="100%"
-          minH="100vh"
-          bgGradient="linear(to-r, blackPearl, lagoon)"
-        >
-          <Wave />
-          <Container
-            pos="relative"
-            zIndex={1}
-            maxW={{
-              base: 'container.md',
-              lg: 'container.lg',
-              xl: 'container.xl',
-            }}
-            minH="100vh"
-            fontSize={{ base: 'sm', sm: 'md' }}
-          >
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/dashboard" component={Dashboard} />
-              {/* <Route exact path="/saved" component={SavedBooks} /> 
-            <Route render={() => <h1 className="display-2">Wrong page!</h1>} /> */}
-            </Switch>
-          </Container>
-        </Box>
-      </Router>
-    </ChakraContainer>
-  </ApolloContainer>
+  <Dependencies>
+    <Router>
+      <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
+        <Wave />
+        <Container {...containerProps}>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/library" component={Library} />
+            <Route exact path="/library/:loanId" component={LoanView} />
+            <Route exact path="/search/" component={SearchResult} />
+          </Switch>
+        </Container>
+      </Box>
+    </Router>
+  </Dependencies>
 );
 
 export default App;

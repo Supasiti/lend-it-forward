@@ -10,6 +10,19 @@ import {
 } from '@chakra-ui/react';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
+import { primaryBtnColorProps } from '../staticProps/button';
+
+const tabProps = {
+  p: { base: '3', sm: '5' },
+};
+
+const tabsProps = {
+  maxW: '24rem',
+  mx: 'auto',
+  mt: { base: 8, sm: 32 },
+  isFitted: true,
+  variant: 'soft-rounded',
+};
 
 const Home = () => {
   return (
@@ -20,38 +33,17 @@ const Home = () => {
         </Text>
       </Box>
 
-      <Tabs
-        maxW="24rem"
-        mx="auto"
-        mt={{ base: 8, sm: 32 }}
-        isFitted
-        variant="soft-rounded"
-        colorScheme="green"
-      >
+      <Tabs {...tabsProps}>
         <TabList bg="sidecar" borderRadius="full">
-          <Tab
-            p={{ base: '3', sm: '5' }}
-            _hover={{
-              background: 'peel',
-              color: 'blackPearl',
-              boxShadow: 'dark-lg',
-            }}
-          >
+          <Tab {...tabProps} {...primaryBtnColorProps}>
             Login
           </Tab>
-          <Tab
-            p={{ base: '3', sm: '5' }}
-            _hover={{
-              background: 'peel',
-              color: 'blackPearl',
-              boxShadow: 'dark-lg',
-            }}
-          >
+          <Tab {...tabProps} {...primaryBtnColorProps}>
             Sign up
           </Tab>
         </TabList>
 
-        <TabPanels mt="8" bg="gray.700" borderRadius="3xl" boxShadow="dark-lg">
+        <TabPanels mt="8" bg="gunmetal" borderRadius="3xl" boxShadow="dark-lg">
           <TabPanel>
             <LoginForm />
           </TabPanel>

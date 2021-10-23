@@ -1,4 +1,4 @@
-const { Loan } = require('../models');
+const { Loan, Queuer } = require('../models');
 
 const getOne = async ({ _id }) => {
   const result = await Loan.findById(_id).populate([
@@ -9,10 +9,10 @@ const getOne = async ({ _id }) => {
   return result;
 };
 
-const create = async ({ userId, ...loan }) => {
+const create = async ({ user, ...loan }) => {
   const data = {
-    owner: userId,
-    holder: userId,
+    owner: user,
+    holder: user,
     ...loan,
   };
   const newLoan = await Loan.create(data);
@@ -40,13 +40,15 @@ const getByFilter = async ({ filter = {} }) => {
   }
 };
 
-const updateLoan = async ({ userId, _id, ...loan }) => {
+//---------------------------------
+// update the loan
+const updateLoan = async ({ user, _id, ...loan }) => {
   // restrict who can update loan
   const query = {
     $or: [
-      { $and: [{ _id }, { owner: userId }] },
-      { $and: [{ _id }, { holder: userId }] },
-      { $and: [{ _id }, { reservedFor: userId }] },
+      { $and: [{ _id }, { owner: user }] },
+      { $and: [{ _id }, { holder: user }] },
+      { $and: [{ _id }, { reservedFor: user }] },
     ],
   };
 
@@ -61,9 +63,49 @@ const updateLoan = async ({ userId, _id, ...loan }) => {
   return result;
 };
 
+//---------------------------------
+// reserve the loan for a borrower
+
+// check if not in a wait list
+// check if owner is the owner of loan
+// return null or {queuer, loan}
+const validateReservation = async ({ _id, owner, reservedFor }) => {
+  const promises = [Queuer.findOne({ loan: _id, user: reservedFor })];
+  promises.push(Loan.findById(_id));
+  const [queuer, loan] = await Promise.all(promises);
+
+  if (!queuer) return null;
+  if (loan.owner.toString() !== owner) return null;
+  return { queuer, loan };
+};
+
+// execute reservation
+const executeReservation = async (loan, queuer) => {
+  loan.reservedFor = queuer.user;
+  loan.status = 'reserved';
+  queuer.selected = true;
+
+  await Promise.all([loan.save(), queuer.save()]);
+};
+
+// expect { owner, _id, reservedFor }
+const reserveLoan = async (args) => {
+  const validation = await validateReservation(args);
+  if (!validation) return null;
+  const { queuer, loan } = validation;
+
+  // must reset everyone in waiting list
+  await Queuer.updateMany({ loan: loan._id }, { selected: false });
+  await executeReservation(loan, queuer);
+
+  const result = getOne(loan);
+  return result;
+};
+
 module.exports = {
   create,
   getOne,
   getByFilter,
   updateLoan,
+  reserveLoan,
 };
