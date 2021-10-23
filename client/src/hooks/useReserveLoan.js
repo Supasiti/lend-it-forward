@@ -16,8 +16,12 @@ export const useReserveLoan = () => {
   }, [data]);
 
   // for easier usage
+  // expect : {_id, reservedFor}
+  // allow reservedFor : ID or { _id }
   const reserveLoan = (input) => {
-    const loanData = { loan: { ...input } };
+    const { _id, reservedFor } = input;
+    const borrowerId = '_id' in reservedFor ? reservedFor._id : reservedFor;
+    const loanData = { loan: { _id, reservedFor: borrowerId } };
     execMutation({ variables: loanData });
   };
 

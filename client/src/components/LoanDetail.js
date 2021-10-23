@@ -48,6 +48,10 @@ const LoanDetail = ({ loanId }) => {
     return <AvailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
   }
 
+  // if (loan.status === 'reserved') {
+  //   return <ReservedLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
+  // }
+
   return <UnavailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
 };
 

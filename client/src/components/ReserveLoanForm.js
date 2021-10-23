@@ -60,7 +60,7 @@ const ReserveLoanForm = ({ loan }) => {
 
     const newFormState = {
       ...formState,
-      reservedFor: matched.user._id,
+      reservedFor: matched?.user ? matched.user : '',
     };
     setFormState(newFormState);
     setSelectedBorrower(matched);
@@ -85,7 +85,7 @@ const ReserveLoanForm = ({ loan }) => {
             </Box>
 
             <Select
-              value={formState.reservedFor || initialState.reservedFor}
+              value={selectedBorrower._id || ''}
               onChange={(e) => handleChange(e, 'reservedFor')}
             >
               <option value="">Please select a borrower</option>
