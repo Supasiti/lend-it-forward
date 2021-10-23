@@ -27,6 +27,15 @@ const queuer = gql`
     contact: String
   }
 
+  input RemoveFromWaitListInput {
+    _id: ID!
+  }
+
+  type RemoveFromWaitListResponse {
+    success: Boolean
+    _id: ID
+  }
+
   extend type Query {
     waitList(filter: WaitListFilterInput): [Queuer]
   }
@@ -34,6 +43,9 @@ const queuer = gql`
   extend type Mutation {
     joinWaitList(queuer: JoinWaitListInput): Queuer
     updateQueuer(queuer: UpdateQueuerInput): Queuer
+    removeFromWaitList(
+      queuer: RemoveFromWaitListInput
+    ): RemoveFromWaitListResponse
   }
 `;
 
