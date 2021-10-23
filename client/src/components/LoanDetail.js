@@ -22,7 +22,6 @@ const LoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
 
-  console.log(loan);
   // update loan
   useEffect(() => {
     if (data?.loan) {

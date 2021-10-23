@@ -9,7 +9,7 @@ import {
   FormHelperText,
   Select,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { helperProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
@@ -34,15 +34,16 @@ const helperContainerProps = {
 // initial state
 const initialState = {
   _id: '',
-  reservedFor: '',
+  reservedFor: null,
 };
 
 // render
 const ReserveLoanForm = ({ loan }) => {
   const { formState, setFormState } = useForm(initialState);
   const { waitList, getWaitList } = useGetWaitList();
-  const [selectedBorrower, setSelectedBorrower] = useState({});
   const { reserveLoan } = useReserveLoan();
+
+  console.log(formState);
 
   // set the form state from props
   useEffect(() => {
@@ -53,15 +54,6 @@ const ReserveLoanForm = ({ loan }) => {
     }
   }, [loan]);
 
-  // update the selectedBorrower when the wait list is updated
-  useEffect(() => {
-    if (waitList.length && '_id' in formState.reservedFor) {
-      const borrowerId = formState.reservedFor._id;
-      const matched = waitList.find((queuer) => queuer.user._id === borrowerId);
-      setSelectedBorrower(matched);
-    }
-  }, [waitList, loan]);
-
   // handle when the form change state
   const handleChange = (e) => {
     const queuerId = e.target.value;
@@ -69,10 +61,9 @@ const ReserveLoanForm = ({ loan }) => {
 
     const newFormState = {
       ...formState,
-      reservedFor: matched?.user ? matched.user : '',
+      reservedFor: matched || null,
     };
     setFormState(newFormState);
-    setSelectedBorrower(matched);
   };
 
   // handle form sumission
@@ -94,7 +85,7 @@ const ReserveLoanForm = ({ loan }) => {
             </Box>
 
             <Select
-              value={selectedBorrower._id || ''}
+              value={formState?.reservedFor?._id || ''}
               onChange={(e) => handleChange(e, 'reservedFor')}
             >
               <option value="">Please select a borrower</option>
@@ -121,7 +112,8 @@ const ReserveLoanForm = ({ loan }) => {
             Contact Details
           </Text>
           <Text as="p" fontSize="md">
-            {selectedBorrower.contact || 'A borrower has not been selected.'}
+            {formState?.reservedFor?.contact ||
+              'A borrower has not been selected.'}
           </Text>
         </Box>
 

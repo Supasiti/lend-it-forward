@@ -1,11 +1,12 @@
 const { Loan, Queuer } = require('../models');
 
 const getOne = async ({ _id }) => {
-  const result = await Loan.findById(_id).populate([
-    'owner',
-    'holder',
-    'reservedFor',
-  ]);
+  const result = await Loan.findById(_id)
+    .populate(['owner', 'holder'])
+    .populate({
+      path: 'reservedFor',
+      populate: { path: 'user' },
+    });
   return result;
 };
 

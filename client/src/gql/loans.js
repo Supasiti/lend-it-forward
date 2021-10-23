@@ -17,7 +17,10 @@ const response = `
   }
   reservedFor {
     _id
-    username
+    user {
+      _id
+      username
+    }
   }
 `;
 
