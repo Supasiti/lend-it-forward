@@ -15,9 +15,10 @@ const loanSchema = new Schema(
     imageUrl: {
       type: String,
     },
-    isAvailable: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      default: 'unavailable',
+      enum: ['unavailable', 'available', 'reserved', 'onLoan', 'returning'],
     },
     owner: {
       type: Schema.Types.ObjectId,

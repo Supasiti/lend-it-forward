@@ -70,10 +70,9 @@ const update = async (args) => {
 const remove = async ({ user, _id }) => {
   const queuerToRemove = await Queuer.findById(_id).populate('loan');
   if (!queuerToRemove) return null;
-  
+
   if (isBorrower(user, queuerToRemove) || isLender(user, queuerToRemove)) {
     const result = await Queuer.findByIdAndRemove(_id);
-    console.log(result)
     return result;
   }
 

@@ -9,10 +9,10 @@ const getOne = async ({ _id }) => {
   return result;
 };
 
-const create = async ({ userId, ...loan }) => {
+const create = async ({ user, ...loan }) => {
   const data = {
-    owner: userId,
-    holder: userId,
+    owner: user,
+    holder: user,
     ...loan,
   };
   const newLoan = await Loan.create(data);
@@ -40,13 +40,13 @@ const getByFilter = async ({ filter = {} }) => {
   }
 };
 
-const updateLoan = async ({ userId, _id, ...loan }) => {
+const updateLoan = async ({ user, _id, ...loan }) => {
   // restrict who can update loan
   const query = {
     $or: [
-      { $and: [{ _id }, { owner: userId }] },
-      { $and: [{ _id }, { holder: userId }] },
-      { $and: [{ _id }, { reservedFor: userId }] },
+      { $and: [{ _id }, { owner: user }] },
+      { $and: [{ _id }, { holder: user }] },
+      { $and: [{ _id }, { reservedFor: user }] },
     ],
   };
 

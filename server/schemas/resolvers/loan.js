@@ -2,7 +2,7 @@ const services = require('../../services');
 
 const addLoan = async (parent, args, context) => {
   if (context.user) {
-    const data = { userId: context.user._id, ...args.loan };
+    const data = { user: context.user._id, ...args.loan };
     return services.loan.create(data);
   }
   throw new AuthenticationError('you must be logged in');
@@ -24,7 +24,7 @@ const getLoans = async (parent, args, context) => {
 
 const updateLoan = async (parent, args, context) => {
   if (context.user) {
-    const data = { userId: context.user._id, ...args.loan };
+    const data = { user: context.user._id, ...args.loan };
     return services.loan.updateLoan(data);
   }
   throw new AuthenticationError('you must be logged in');
