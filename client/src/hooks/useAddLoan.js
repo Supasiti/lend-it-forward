@@ -12,7 +12,7 @@ export const useAddLoan = () => {
 
   useEffect(() => {
     if (data?.addLoan) {
-      addLoanContext(data.addLoan);
+      addLoanContext(data.addLoan, 'own');
     }
   }, [data]);
 

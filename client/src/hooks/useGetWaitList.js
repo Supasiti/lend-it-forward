@@ -2,6 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { GET_WAIT_LIST } from '../gql/waitList';
 
+//  get the waiting list filtered by optional criteria
 export const useGetWaitList = () => {
   const [waitList, setWaitList] = useState([]);
   const [execQuery, { data }] = useLazyQuery(GET_WAIT_LIST);
