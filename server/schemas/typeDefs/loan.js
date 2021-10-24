@@ -53,6 +53,7 @@ const loan = gql`
     addLoan(loan: AddLoanInput): Loan
     updateLoan(loan: UpdateLoanInput): Loan
     reserveLoan(loan: ReserveLoanInput): Loan
+    returnLoan(_id: ID): Loan
   }
 `;
 

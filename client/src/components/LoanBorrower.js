@@ -4,8 +4,7 @@ import { useGetWaitList } from '../hooks/useGetWaitList';
 
 import { helperProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
-import { updateObject } from '../utils/object';
-import { useUpdateLoan } from '../hooks/useUpdateLoan';
+import { useReturnLoan } from '../hooks/useReturnLoan';
 
 // styling
 const containerProps = {
@@ -28,44 +27,28 @@ const headerProps = {
   w: '100%',
 };
 
-// TODO - set status to available when click
-const initialState = {
-  _id: '',
-  owner: null,
-  holder: null,
-  reservedFor: null,
-  status: 'onLoan',
-};
-
 //render
 const LoanBorrower = ({ loan }) => {
-  const [loanState, setLoanState] = useState(initialState);
+  const [loanId, setLoanId] = useState('');
   const { waitList, getWaitList } = useGetWaitList();
-  const { updateLoan } = useUpdateLoan();
+  const { returnLoan } = useReturnLoan();
 
   // update the list of queuer
   useEffect(() => {
     if (loan?.holder) {
-      const newLoanState = updateObject(loanState, loan);
       const filter = {
         user: loan.holder._id,
         loan: loan._id,
       };
       getWaitList(filter);
-      setLoanState(newLoanState);
+      setLoanId(loan._id);
     }
   }, [loan]);
 
   // handling when an item is returned
   const handleClick = (e) => {
     e.preventDefault();
-    const newLoan = {
-      _id: loanState._id,
-      status: 'available',
-      holder: loanState.owner._id,
-      reservedFor: null,
-    };
-    updateLoan(newLoan);
+    returnLoan(loanId);
   };
 
   return (

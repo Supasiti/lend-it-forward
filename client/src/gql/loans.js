@@ -64,3 +64,11 @@ export const RESERVE_LOAN = gql`
     }
   }
 `;
+
+export const RETURN_LOAN = gql`
+  mutation returnLoan($id: ID) {
+    returnLoan(_id: $id){
+      ${response}
+    }
+  }
+`;

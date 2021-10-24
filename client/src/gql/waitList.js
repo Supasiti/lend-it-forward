@@ -22,11 +22,3 @@ export const GET_WAIT_LIST = gql`
     }
   }
 `;
-
-export const GET_QUEUER = gql`
-  query getQueuer($id: ID) {
-    getQueuer(id: $id) {
-      ${response}
-    }
-  }
-`;
