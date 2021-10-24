@@ -8,7 +8,6 @@ export const useUpdateLoan = () => {
   const [execMutation, { data, error, loading }] = useMutation(UPDATE_LOAN);
   const { updateLoan: updateLoanContext } = useLoan();
 
-  console.log(data);
   useEffect(() => {
     if (data?.updateLoan) {
       updateLoanContext(data.updateLoan);
@@ -27,7 +26,6 @@ export const useUpdateLoan = () => {
   // }
   const updateLoan = (input) => {
     const loanInput = { loan: { ...input } };
-    console.log(loanInput);
     execMutation({ variables: loanInput });
   };
 

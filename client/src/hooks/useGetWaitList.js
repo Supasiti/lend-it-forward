@@ -14,8 +14,8 @@ export const useGetWaitList = () => {
   }, [data]);
 
   // for executing lazy query
-  const getWaitList = (loanId) => {
-    const filter = { filter: { loan: loanId } };
+  const getWaitList = (input) => {
+    const filter = { filter: { ...input } };
     execQuery({ variables: filter });
   };
 

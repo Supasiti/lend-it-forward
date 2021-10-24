@@ -10,6 +10,7 @@ const resolvers = {
     loan: loan.getLoan,
     loans: loan.getLoans,
     waitList: queuer.getWaitList,
+    queuer: queuer.getQueuer,
   },
   Mutation: {
     addUser: user.addUser,

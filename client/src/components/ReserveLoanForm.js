@@ -48,7 +48,7 @@ const ReserveLoanForm = ({ loan }) => {
     if (loan) {
       const newFormState = updateObject(formState, loan);
       setFormState(newFormState);
-      getWaitList(newFormState._id);
+      getWaitList({ loan: newFormState._id });
     }
   }, [loan]);
 
