@@ -9,6 +9,8 @@ import ReserveLoanForm from './ReserveLoanForm';
 import { cardProps } from '../staticProps/card';
 import { squareProps } from '../staticProps/div';
 import CollectLoan from './CollectLoan';
+import LoanDescription from './LoanDescription';
+import LoanBorrower from './LoanBorrower';
 
 const initialState = {
   title: '',
@@ -78,6 +80,29 @@ const LoanDetail = ({ loanId }) => {
             </Box>
           </Flex>
         </Box>
+      )}
+
+      {/* visible when status is onLoan */}
+      {['onLoan'].includes(loan?.status) && (
+        <>
+          <Box {...cardProps}>
+            <LoanBorrower loan={loan} />
+          </Box>
+
+          <Box {...cardProps}>
+            <Flex wrap="wrap" justify="center">
+              <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
+                <Box {...squareProps}>
+                  <div> image here</div>
+                </Box>
+              </Box>
+
+              <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">
+                <LoanDescription loan={loan} />
+              </Box>
+            </Flex>
+          </Box>
+        </>
       )}
     </VStack>
   );

@@ -20,7 +20,7 @@ export const GET_WAIT_LIST = gql`
   }
 `;
 
-export const UPDATE_QUEUER = gql`
+export const GET_QUEUER = gql`
   mutation updateQueuer($queuer: UpdateQueuerInput) {
     updateQueuer(queuer: $queuer) {
       _id

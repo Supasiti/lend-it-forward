@@ -8,3 +8,8 @@ export const capitalize = (text) => {
     .map((word) => capitalizeFirstLetter(word))
     .join(' ');
 };
+
+export const camelToNormal = (text) => {
+  const result = text.replace(/[A-Z]/, (x) => ` ${x.toLowerCase()}`);
+  return result;
+};
