@@ -13,14 +13,14 @@ const getByFilter = async ({ filter = {} }) => {
 };
 
 // allow to join the waiting list only once
-const findOrCreate = async ({ user, loan }) => {
+const findOrCreate = async ({ user, loan, contact }) => {
   const existingQueuer = await Queuer.findOne({ user, loan }).populate([
     'user',
     'loan',
   ]);
   if (existingQueuer) return existingQueuer;
 
-  const newQueuer = await Queuer.create({ user, loan });
+  const newQueuer = await Queuer.create({ user, loan, contact });
   const result = await getOne(newQueuer);
   return result;
 };

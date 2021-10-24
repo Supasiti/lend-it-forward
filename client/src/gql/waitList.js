@@ -22,3 +22,11 @@ export const GET_WAIT_LIST = gql`
     }
   }
 `;
+
+export const JOIN_WAIT_LIST = gql`
+  mutation joinWaitList($queuer: JoinWaitListInput) {
+    joinWaitList(queuer: $queuer) {
+      ${response}
+    }
+  }
+`;
