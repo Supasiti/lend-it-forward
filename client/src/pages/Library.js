@@ -49,6 +49,7 @@ const Library = () => {
         <TabList>
           <Tab {...tabProps}>Own</Tab>
           <Tab {...tabProps}>Borrowed</Tab>
+          <Tab {...tabProps}>Waiting List</Tab>
         </TabList>
 
         <TabPanels>
@@ -57,6 +58,9 @@ const Library = () => {
           </TabPanel>
           <TabPanel>
             <p>two!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>Wait list</p>
           </TabPanel>
         </TabPanels>
       </Tabs>

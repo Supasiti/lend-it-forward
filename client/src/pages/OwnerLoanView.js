@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import LoanDetail from '../components/LoanDetail';
 
-const LoanView = () => {
+const OwnerLoanView = () => {
   const { loanId } = useParams();
   return (
     <Box w="100%">
@@ -18,4 +18,4 @@ const LoanView = () => {
     </Box>
   );
 };
-export default LoanView;
+export default OwnerLoanView;

@@ -19,6 +19,7 @@ const queuer = gql`
 
   input JoinWaitListInput {
     loan: ID!
+    contact: String!
   }
 
   input UpdateQueuerInput {
