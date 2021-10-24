@@ -1,11 +1,14 @@
-import { Center, Spinner } from '@chakra-ui/react';
+import { Center, Spinner, Box, Flex, VStack } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
 import { spinnerProps } from '../staticProps/spinner';
 import { GET_LOAN } from '../gql/loans';
-import UnavailableLoanDetail from './UnavailableLoanDetail';
-import AvailableLoanDetail from './AvailableLoanDetail';
+import UpdateLoanForm from './UpdateLoanForm';
+import ReserveLoanForm from './ReserveLoanForm';
+import { cardProps } from '../staticProps/card';
+import { squareProps } from '../staticProps/div';
+import CollectLoan from './CollectLoan';
 
 const initialState = {
   title: '',
@@ -44,15 +47,40 @@ const LoanDetail = ({ loanId }) => {
     );
   }
 
-  if (loan.status === 'available' || loan.status === 'reserved') {
-    return <AvailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
-  }
+  return (
+    <VStack spacing="6">
+      {/* for reserved */}
+      {['reserved'].includes(loan?.status) && (
+        <Box {...cardProps}>
+          <CollectLoan loan={loan} />
+        </Box>
+      )}
 
-  // if (loan.status === 'reserved') {
-  //   return <ReservedLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
-  // }
+      {/* for available, reserved */}
+      {['available', 'reserved'].includes(loan?.status) && (
+        <Box {...cardProps}>
+          <ReserveLoanForm loan={loan} onLoanUpdated={handleLoanUpdate} />
+        </Box>
+      )}
 
-  return <UnavailableLoanDetail loan={loan} onLoanUpdated={handleLoanUpdate} />;
+      {/* see when status is unavailable, available, reserved */}
+      {['unavailable', 'available', 'reserved'].includes(loan?.status) && (
+        <Box {...cardProps}>
+          <Flex wrap="wrap" justify="center">
+            <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
+              <Box {...squareProps}>
+                <div> image here</div>
+              </Box>
+            </Box>
+
+            <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">
+              <UpdateLoanForm loan={loan} onLoanUpdated={handleLoanUpdate} />
+            </Box>
+          </Flex>
+        </Box>
+      )}
+    </VStack>
+  );
 };
 
 export default LoanDetail;

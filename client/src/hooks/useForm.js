@@ -6,7 +6,7 @@ const getValue = (input) => {
   return null;
 };
 
-const useForm = (initialState) => {
+export const useForm = (initialState) => {
   const [formState, setFormState] = useState(initialState);
 
   const handleChange = (e, key) => {
@@ -20,5 +20,3 @@ const useForm = (initialState) => {
   };
   return { formState, handleChange, clearForm, setFormState };
 };
-
-export default useForm;

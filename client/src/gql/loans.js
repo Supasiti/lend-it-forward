@@ -21,6 +21,7 @@ const response = `
       _id
       username
     }
+    contact
   }
 `;
 

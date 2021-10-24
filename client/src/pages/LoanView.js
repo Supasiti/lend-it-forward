@@ -11,7 +11,7 @@ const LoanView = () => {
       </Heading>
 
       <Flex w="100%" mt="4" align="start">
-        <Box w={{ base: '100%', lg: '66.67%', xl: '75%' }} p="2">
+        <Box w={{ base: '100%', lg: '75%' }} p="2">
           <LoanDetail loanId={loanId} />
         </Box>
       </Flex>

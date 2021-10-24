@@ -11,7 +11,7 @@ import { LockIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import useForm from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 import { validateNonEmpty, validateEmail } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';

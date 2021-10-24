@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 
 import BaseModal from './Modal';
-import useForm from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 import { capitalize } from '../utils/text';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { TextInput, TextArea } from './Input';
