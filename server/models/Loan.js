@@ -18,7 +18,7 @@ const loanSchema = new Schema(
     status: {
       type: String,
       default: 'unavailable',
-      enum: ['unavailable', 'available', 'reserved', 'onLoan', 'returning'],
+      enum: ['unavailable', 'available', 'reserved', 'onLoan'],
     },
     owner: {
       type: Schema.Types.ObjectId,

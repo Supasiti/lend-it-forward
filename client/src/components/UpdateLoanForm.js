@@ -1,7 +1,7 @@
 import { VStack, Button } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
-import useForm from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 import { TextInput, TextArea, UserSelect } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useUpdateLoan } from '../hooks/useUpdateLoan';
@@ -18,7 +18,7 @@ const initialState = {
 // render
 const UpdateLoanForm = ({ loan, onLoanUpdated }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
-  const [updateLoan, { data }] = useUpdateLoan();
+  const { updateLoan, data } = useUpdateLoan();
 
   // handle when form is submitted
   useEffect(() => {
@@ -38,8 +38,7 @@ const UpdateLoanForm = ({ loan, onLoanUpdated }) => {
   // handle form submission
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    const loanInput = { loan: { ...formState } };
-    updateLoan({ variables: loanInput });
+    updateLoan(formState);
   };
 
   return (

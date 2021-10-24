@@ -21,6 +21,7 @@ const response = `
       _id
       username
     }
+    contact
   }
 `;
 
@@ -59,6 +60,14 @@ export const ADD_LOAN = gql`
 export const RESERVE_LOAN = gql`
   mutation reserveLoan($loan: ReserveLoanInput) {
     reserveLoan(loan: $loan) {
+      ${response}
+    }
+  }
+`;
+
+export const RETURN_LOAN = gql`
+  mutation returnLoan($id: ID) {
+    returnLoan(_id: $id){
       ${response}
     }
   }

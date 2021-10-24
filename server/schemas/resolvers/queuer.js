@@ -42,7 +42,15 @@ const removeFromWaitList = async (parent, args, context) => {
   throw new AuthenticationError('you must be logged in');
 };
 
+const getQueuer = async (parent, args, context) => {
+  if (context.user) {
+    return services.queuer.getOne(args);
+  }
+  throw new AuthenticationError('you must be logged in');
+};
+
 module.exports = {
+  getQueuer,
   joinWaitList,
   getWaitList,
   updateQueuer,

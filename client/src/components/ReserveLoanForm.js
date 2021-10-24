@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 
 import { helperProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
-import useForm from '../hooks/useForm';
+import { useForm } from '../hooks/useForm';
 import { updateObject } from '../utils/object';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import { useReserveLoan } from '../hooks/useReserveLoan';
@@ -48,7 +48,7 @@ const ReserveLoanForm = ({ loan }) => {
     if (loan) {
       const newFormState = updateObject(formState, loan);
       setFormState(newFormState);
-      getWaitList(newFormState._id);
+      getWaitList({ loan: newFormState._id });
     }
   }, [loan]);
 
@@ -116,7 +116,8 @@ const ReserveLoanForm = ({ loan }) => {
         </Box>
 
         <Box {...helperContainerProps}>
-          <Text {...helperProps}>
+          <Text color="peel">Instruction</Text>
+          <Text {...helperProps} mt="3">
             Select a borrower from a waiting list. Once selected, their contact
             details will be shown. Please discuss any logistic before click
             `reserved` below.
@@ -126,7 +127,7 @@ const ReserveLoanForm = ({ loan }) => {
 
       <Box p="4" w="100%" textAlign="center">
         <Button {...primaryBtnColorProps} onClick={handleSubmitForm}>
-          Reserve this item for this borrower
+          Reserve the item for this borrower
         </Button>
       </Box>
     </>

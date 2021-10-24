@@ -38,6 +38,7 @@ const queuer = gql`
 
   extend type Query {
     waitList(filter: WaitListFilterInput): [Queuer]
+    queuer(_id: ID): Queuer
   }
 
   extend type Mutation {

@@ -5,7 +5,7 @@ import { useLoan } from '../dependecies/LoanContext';
 import { UPDATE_LOAN } from '../gql/loans';
 
 export const useUpdateLoan = () => {
-  const [updateLoan, { data, error, loading }] = useMutation(UPDATE_LOAN);
+  const [execMutation, { data, error, loading }] = useMutation(UPDATE_LOAN);
   const { updateLoan: updateLoanContext } = useLoan();
 
   useEffect(() => {
@@ -14,5 +14,20 @@ export const useUpdateLoan = () => {
     }
   }, [data]);
 
-  return [updateLoan, { data, error, loading }];
+  // for easy execution
+  // expect {
+  //   _id: ID!
+  //   title: String
+  //   description: String
+  //   category: String
+  //   status: String
+  //   holder: ID
+  //   reservedFor: ID
+  // }
+  const updateLoan = (input) => {
+    const loanInput = { loan: { ...input } };
+    execMutation({ variables: loanInput });
+  };
+
+  return { updateLoan, data, error, loading };
 };
