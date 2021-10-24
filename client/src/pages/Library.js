@@ -53,13 +53,13 @@ const Library = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel px="0px">
+          <TabPanel px="0px" id="loanList">
             <LoanList />
           </TabPanel>
-          <TabPanel>
+          <TabPanel id="borrow">
             <p>two!</p>
           </TabPanel>
-          <TabPanel>
+          <TabPanel id="waitList">
             <p>Wait list</p>
           </TabPanel>
         </TabPanels>

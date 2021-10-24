@@ -47,7 +47,7 @@ const JoinLoanWaitList = ({ loan }) => {
 
   useEffect(() => {
     if (data?.joinWaitList) {
-      history.push('/Library');
+      history.push('/Library/#');
     }
   }, [data]);
 
