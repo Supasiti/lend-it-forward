@@ -8,9 +8,10 @@ export const useUpdateLoan = () => {
   const [execMutation, { data, error, loading }] = useMutation(UPDATE_LOAN);
   const { updateLoan: updateLoanContext } = useLoan();
 
+  // update loanContext
   useEffect(() => {
     if (data?.updateLoan) {
-      updateLoanContext(data.updateLoan);
+      updateLoanContext(data.updateLoan, 'own');
     }
   }, [data]);
 

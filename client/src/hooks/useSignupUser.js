@@ -8,6 +8,7 @@ import auth from '../utils/auth';
 export const useSignupUser = () => {
   const [signup, { data, error, loading }] = useMutation(SIGNUP);
 
+  // store the token in localStorage
   useEffect(() => {
     if (data?.addUser) {
       const token = data.addUser.token;

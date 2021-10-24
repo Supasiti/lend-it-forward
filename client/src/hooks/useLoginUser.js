@@ -8,6 +8,7 @@ import auth from '../utils/auth';
 export const useLoginUser = () => {
   const [login, { data, error, loading }] = useMutation(LOGIN);
 
+  // save to localStorage
   useEffect(() => {
     if (data?.login) {
       const token = data.login.token;

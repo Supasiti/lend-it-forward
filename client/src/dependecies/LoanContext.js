@@ -4,25 +4,51 @@ export const LoanContext = React.createContext();
 
 export const useLoan = () => useContext(LoanContext);
 
-const initialState = [];
+const initialState = {
+  own: [],
+  borrow: [],
+  pending: [],
+};
+
 // jsx wrapper
 export const LoanProvider = (props) => {
-  const [loans, setLoans] = useState(initialState);
+  const [loans, setGlobalLoans] = useState(initialState);
+  const globalLoans = loans;
 
-  const addLoan = (newLoan) => {
-    const newLoans = [...loans, newLoan];
-    return setLoans(newLoans);
+  // add to loans
+  const addLoan = (newLoan, key) => {
+    if (!(key in initialState)) {
+      throw Error('incorrect key');
+    }
+    const newState = { ...loans, [key]: [...loans[key], newLoan] };
+    return setGlobalLoans(newState);
   };
 
-  const updateLoan = (newLoan) => {
-    const tempState = loans.filter((loan) => loan._id !== newLoan._id);
-    const newState = [...tempState, newLoan];
-    return setLoans(newState);
+  // update loan
+  const updateLoan = (newLoan, key) => {
+    if (!(key in initialState)) {
+      throw Error('incorrect key');
+    }
+
+    const tempArr = loans[key].filter((loan) => loan._id !== newLoan._id);
+    const newArr = [...tempArr, newLoan];
+    const newState = { ...loans, [key]: newArr };
+    return setGlobalLoans(newState);
+  };
+
+  // set loans
+  const setLoans = (newLoans, key) => {
+    if (!(key in initialState)) {
+      throw Error('incorrect key');
+    }
+
+    const newState = { ...loans, [key]: newLoans };
+    return setGlobalLoans(newState);
   };
 
   return (
     <LoanContext.Provider
-      value={{ loans, setLoans, addLoan, updateLoan }}
+      value={{ globalLoans, setLoans, addLoan, updateLoan }}
       {...props}
     />
   );

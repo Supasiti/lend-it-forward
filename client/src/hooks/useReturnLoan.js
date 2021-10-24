@@ -10,7 +10,7 @@ export const useReturnLoan = () => {
 
   useEffect(() => {
     if (data?.returnLoan) {
-      updateLoanContext(data.returnLoan);
+      updateLoanContext(data.returnLoan, 'own');
     }
   }, [data]);
 

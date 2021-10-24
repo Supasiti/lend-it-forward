@@ -11,7 +11,7 @@ export const useReserveLoan = () => {
 
   useEffect(() => {
     if (data?.reserveLoan) {
-      updateLoanContext(data.reserveLoan);
+      updateLoanContext(data.reserveLoan, 'own');
     }
   }, [data]);
 
