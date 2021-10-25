@@ -10,6 +10,8 @@ const response = `
   loan {
     _id
     title
+    status
+    category
   }
   createdAt
   contact

@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useForm } from '../hooks/useForm';
 import { validateNonEmpty, validateEmail } from '../utils/formValidators';
@@ -24,16 +23,17 @@ const initialState = {
 };
 
 // render
-const SignupForm = () => {
+const SignupForm = ({ onSignup }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
   const [signup, { data }] = useSignupUser();
-  const history = useHistory();
 
   // when form is submitted push to library
   useEffect(() => {
     if (data?.addUser) {
       clearForm();
-      history.push('/library');
+      if (onSignup) {
+        onSignup();
+      }
     }
   }, [data]);
 

@@ -13,7 +13,6 @@ export const useLoginUser = () => {
   useEffect(() => {
     if (data?.login) {
       contextLogin(data.login);
-      // auth.login(token);
     }
   }, [data]);
 

@@ -1,6 +1,7 @@
 import {
   Container,
   Text,
+  Button,
   Box,
   Tab,
   Tabs,
@@ -8,6 +9,8 @@ import {
   TabPanel,
   TabPanels,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
+
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import { primaryBtnColorProps } from '../staticProps/button';
@@ -25,11 +28,24 @@ const tabsProps = {
 };
 
 const Home = () => {
+  const history = useHistory();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    history.push('/search');
+  };
+
+  const onLogin = () => {
+    history.push('/library');
+  };
+
   return (
     <Container maxW="container.sm" p="0">
       <Box bg="bermuda" borderRadius="full">
         <Text color="blackPearl" p={{ base: '3', sm: '5' }}>
-          Search bar here
+          <Button w="100%" {...primaryBtnColorProps} onClick={handleSearch}>
+            Search bar here
+          </Button>
         </Text>
       </Box>
 
@@ -45,10 +61,10 @@ const Home = () => {
 
         <TabPanels mt="8" bg="gunmetal" borderRadius="3xl" boxShadow="dark-lg">
           <TabPanel>
-            <LoginForm />
+            <LoginForm onLogin={onLogin} />
           </TabPanel>
           <TabPanel>
-            <SignupForm />
+            <SignupForm onSignup={onLogin} />
           </TabPanel>
         </TabPanels>
       </Tabs>

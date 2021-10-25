@@ -38,7 +38,7 @@ const App = () => (
             <Route exact path="/" component={Home} />
             <Route exact path="/library" component={Library} />
             <Route exact path="/library/:loanId" component={OwnerLoanView} />
-            <Route exact path="/search/" component={SearchResult} />
+            <Route exact path="/search" component={SearchResult} />
             <Route exact path="/items/:loanId" component={BorrowerLoanView} />
           </Switch>
         </Container>

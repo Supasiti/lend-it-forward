@@ -12,7 +12,7 @@ export const useSignupUser = () => {
   // store the token in localStorage
   useEffect(() => {
     if (data?.addUser) {
-      contextLogin(data.login);
+      contextLogin(data.addUser);
     }
   }, [data]);
 

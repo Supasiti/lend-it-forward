@@ -14,6 +14,7 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import AddLoanForm from '../components/AddLoanForm';
 import LoanList from '../components/LoanList';
+import PendingLoanList from '../components/PendingLoanList';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { redirectIfNotLoggedIn } from '../utils/logging';
 
@@ -62,7 +63,7 @@ const Library = () => {
             <p>two!</p>
           </TabPanel>
           <TabPanel id="waitList">
-            <p>Wait list</p>
+            <PendingLoanList />
           </TabPanel>
         </TabPanels>
       </Tabs>

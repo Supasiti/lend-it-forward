@@ -8,7 +8,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
-import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { useForm } from '../hooks/useForm';
@@ -20,16 +19,17 @@ import { useLoginUser } from '../hooks/useLoginUser';
 const initialState = { email: '', password: '' };
 
 // render
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
   const [login, { data }] = useLoginUser();
-  const history = useHistory();
 
   // when form is submitted push to library
   useEffect(() => {
     if (data?.login) {
       clearForm();
-      history.push('/library');
+      if (onLogin) {
+        onLogin();
+      }
     }
   }, [data]);
 
