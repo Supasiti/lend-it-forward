@@ -12,9 +12,11 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
+
 import AddLoanForm from '../components/AddLoanForm';
 import LoanList from '../components/LoanList';
 import PendingLoanList from '../components/PendingLoanList';
+import BorrowedLoanList from '../components/BorrowedLoanList';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { redirectIfNotLoggedIn } from '../utils/logging';
 
@@ -60,7 +62,7 @@ const Library = () => {
             <LoanList />
           </TabPanel>
           <TabPanel px="0px" id="borrow">
-            <p>two!</p>
+            <BorrowedLoanList />
           </TabPanel>
           <TabPanel px="0px" id="waitList">
             <PendingLoanList />

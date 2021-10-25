@@ -114,7 +114,8 @@ const JoinLoanWaitList = ({ loan }) => {
 
       <Box mt="4" w="100%" textAlign="center">
         <Button {...primaryBtnColorProps} onClick={handleSubmitForm}>
-          Join the waiting list
+          {(waitList.length && 'Update your contact details') ||
+            'Join the waiting list'}
         </Button>
       </Box>
     </>

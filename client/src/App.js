@@ -29,21 +29,19 @@ const containerProps = {
 
 const App = () => (
   <Dependencies>
-    <Router>
-      <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
-        <Wave />
-        <Container {...containerProps}>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/library" component={Library} />
-            <Route exact path="/library/:loanId" component={OwnerLoanView} />
-            <Route exact path="/search" component={SearchResult} />
-            <Route exact path="/items/:loanId" component={BorrowerLoanView} />
-          </Switch>
-        </Container>
-      </Box>
-    </Router>
+    <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
+      <Wave />
+      <Container {...containerProps}>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/library" component={Library} />
+          <Route exact path="/library/:loanId" component={OwnerLoanView} />
+          <Route exact path="/search" component={SearchResult} />
+          <Route exact path="/items/:loanId" component={BorrowerLoanView} />
+        </Switch>
+      </Container>
+    </Box>
   </Dependencies>
 );
 

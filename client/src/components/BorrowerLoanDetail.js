@@ -23,7 +23,9 @@ const initialState = {
 
 // if the loan is status is 'reserved' for this user
 const isReservedFor = (loan, userId) => {
-  return loan && !!loan.reservedFor && loan.reservedFor.user._id === userId;
+  const isReserved = loan?.status === 'reserved';
+  const forThisUser = loan?.reservedFor?.user?._id === userId;
+  return loan && isReserved && forThisUser;
 };
 
 // render
@@ -50,17 +52,32 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
   return (
     <VStack spacing="6">
+      {/* message */}
       {isReservedFor(loan, logging.user._id) && (
         <Box {...cardProps} p="4">
-          <Text color="peel">Congralution!</Text>
+          <Text fontSize="3xl" color="peel">
+            Congratulation!
+          </Text>
           <Text {...helperProps} mt="3">
             The item below have been reserved for you! There is no need for you
-            to do anything the owner will contact you. In the meantime, if you
+            to do anything. The owner will contact you. In the meantime, if you
             want to update your contact details, can you do so below.
           </Text>
         </Box>
       )}
 
+      {loan.status === 'onLoan' && (
+        <Box {...cardProps} p="4">
+          <Text fontSize="3xl" color="peel">
+            Please Enjoy the Use of This Item!
+          </Text>
+          <Text {...helperProps} mt="3">
+            Now that you have the item, please enjoy it responsibly.
+          </Text>
+        </Box>
+      )}
+
+      {/* Item info */}
       <Box {...cardProps}>
         <Flex wrap="wrap" justify="center">
           <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
@@ -75,6 +92,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
         </Flex>
       </Box>
 
+      {/* for contact */}
       <Box {...cardProps} py="4">
         <JoinLoanWaitList loan={loan} />
       </Box>

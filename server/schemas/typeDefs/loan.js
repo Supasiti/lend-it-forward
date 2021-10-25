@@ -27,6 +27,7 @@ const loan = gql`
     owner: ID
     location: String
     reservedFor: ID
+    holder: ID
   }
 
   input UpdateLoanInput {

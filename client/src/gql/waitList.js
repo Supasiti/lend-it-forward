@@ -12,6 +12,9 @@ const response = `
     title
     status
     category
+    holder {
+      _id
+    }
   }
   createdAt
   contact

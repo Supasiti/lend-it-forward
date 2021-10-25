@@ -21,7 +21,10 @@ export const useGetPendingLoans = () => {
   useEffect(() => {
     if (waitList?.length) {
       const newLoans = waitList.map(({ loan }) => loan);
-      setLoans(newLoans, 'pending');
+      const dontHave = newLoans.filter((loan) => {
+        return loan.holder._id !== logging.user._id;
+      });
+      setLoans(dontHave, 'pending');
     }
   }, [waitList]);
 
