@@ -2,8 +2,8 @@ const { Loan } = require('../models');
 const { getOne } = require('./loan');
 
 // expect { owner : string }
-const searchLoan = async ({ owner }) => {
-  const result = await Loan.find()
+const searchLoan = async ({ status, owner }) => {
+  const result = await Loan.find({ status })
     .populate({
       path: 'owner',
       match: { username: { $regex: `.*${owner}.*`, $options: 'i' } },

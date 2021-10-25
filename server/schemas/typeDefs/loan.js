@@ -47,6 +47,7 @@ const loan = gql`
 
   input SearchInput {
     owner: String
+    status: String
   }
 
   extend type Query {
