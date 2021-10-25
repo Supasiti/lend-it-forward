@@ -34,7 +34,8 @@ export const LoggingProvider = (props) => {
     }
   }, [logging]);
 
-  const checkToken = () => {
+  // check local storage for any decrepency on logging status
+  const checkLocalStorage = () => {
     const isLoggedIn = auth.isLoggedIn();
     if (isLoggedIn && !logging.isLoggedIn) {
       const profile = auth.getProfile();
@@ -83,7 +84,7 @@ export const LoggingProvider = (props) => {
     return setLogging(initialState);
   };
 
-  checkToken();
+  checkLocalStorage();
 
   return (
     <LoggingContext.Provider value={{ logging, login, logout }} {...props} />
