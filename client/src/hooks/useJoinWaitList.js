@@ -6,12 +6,12 @@ import { useLoan } from '../dependecies/LoanContext';
 
 export const useJoinWaitList = () => {
   const [execMutation, { data, error, loading }] = useMutation(JOIN_WAIT_LIST);
-  const { setLoans } = useLoan();
+  const { updateLoan } = useLoan();
 
   // update the waiting list
   useEffect(() => {
     if (data?.joinWaitList) {
-      setLoans(data.joinWaitList, 'pending');
+      updateLoan(data.joinWaitList.loan, 'pending');
     }
   }, [data]);
 

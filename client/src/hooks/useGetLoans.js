@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoan } from '../dependecies/LoanContext';
-// import auth from '../utils/auth';
 import { GET_LOANS } from '../gql/loans';
 import { useLogging } from '../dependecies/LoggingContext';
 

@@ -13,15 +13,12 @@ const getByFilter = async ({ filter = {} }) => {
 };
 
 // allow to join the waiting list only once
-const findOrCreate = async ({ user, loan, contact }) => {
-  const existingQueuer = await Queuer.findOne({ user, loan }).populate([
-    'user',
-    'loan',
-  ]);
-  if (existingQueuer) return existingQueuer;
-
-  const newQueuer = await Queuer.create({ user, loan, contact });
-  const result = await getOne(newQueuer);
+const updateOrCreate = async ({ user, loan, contact }) => {
+  const result = await Queuer.findOneAndUpdate(
+    { user, loan }, 
+    { user, loan, contact }, 
+    {new: true, upsert: true }
+  ).populate([ 'user','loan']);
   return result;
 };
 
@@ -82,7 +79,7 @@ const remove = async ({ user, _id }) => {
 module.exports = {
   getByFilter,
   getOne,
-  findOrCreate,
+  updateOrCreate,
   update,
   remove
 };

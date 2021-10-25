@@ -1,6 +1,5 @@
 import { Center, Spinner, Wrap, WrapItem } from '@chakra-ui/react';
-
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
@@ -8,7 +7,8 @@ import { useGetPendingLoans } from '../hooks/useGetPendingLoans';
 
 const PendingLoanList = () => {
   const { loans, loading } = useGetPendingLoans();
-  // const history = useHistory();
+  const history = useHistory();
+  console.log(loans);
 
   if (loading) {
     return (
@@ -28,7 +28,7 @@ const PendingLoanList = () => {
           >
             <LoanCard
               loan={loan}
-              // onClick={() => history.push(`/library/${loan._id}`)}
+              onClick={() => history.push(`/items/${loan._id}`)}
             />
           </WrapItem>
         ))}
