@@ -6,6 +6,8 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { helperProps, TextArea } from './Input';
 import { useForm } from '../hooks/useForm';
 import { useJoinWaitList } from '../hooks/useJoinWaitList';
+import { useGetWaitList } from '../hooks/useGetWaitList';
+import { useLogging } from '../dependecies/LoggingContext';
 
 // styling
 
@@ -35,16 +37,28 @@ const initialState = {
 const JoinLoanWaitList = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
   const { joinWaitList, data } = useJoinWaitList();
+  const { waitList, getWaitList } = useGetWaitList();
+  const { logging } = useLogging();
   const history = useHistory();
 
-  // handle when form is submitted
+  // update form once fetch the queuer data (if exist)
+  useEffect(() => {
+    if (waitList.length) {
+      const newFormState = { ...formState, contact: waitList[0].contact };
+      setFormState(newFormState);
+    }
+  }, [waitList]);
+
+  // when loan is passed in
   useEffect(() => {
     if (loan) {
       const newFormState = { ...formState, loan: loan._id };
       setFormState(newFormState);
+      getWaitList({ loan: loan._id, user: logging.user._id });
     }
   }, [loan]);
 
+  // when the form is submitted
   useEffect(() => {
     if (data?.joinWaitList) {
       history.push('/Library/#');

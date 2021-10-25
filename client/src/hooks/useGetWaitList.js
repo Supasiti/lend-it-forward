@@ -9,7 +9,7 @@ export const useGetWaitList = () => {
 
   // set waiting list
   useEffect(() => {
-    if (data?.waitList?.length) {
+    if (data?.waitList.length) {
       setWaitList(data.waitList);
     }
   }, [data]);

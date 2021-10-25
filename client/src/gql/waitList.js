@@ -32,3 +32,5 @@ export const JOIN_WAIT_LIST = gql`
     }
   }
 `;
+
+// export const GET_QUEUER
