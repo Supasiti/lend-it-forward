@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import '@fontsource/josefin-sans/200.css';
 import '@fontsource/montserrat/500.css';
 import { Box, Container } from '@chakra-ui/react';

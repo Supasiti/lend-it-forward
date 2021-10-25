@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import auth from '../utils/auth';
 
@@ -16,6 +17,7 @@ const initialState = {
 export const LoggingProvider = (props) => {
   const [logging, setLogging] = useState(initialState);
   const [timeoutId, setTimeoutId] = useState(null);
+  const history = useHistory();
 
   // set up a timeout for automatic logout
   useEffect(() => {
@@ -64,7 +66,7 @@ export const LoggingProvider = (props) => {
     auth.logout();
     window.alert('Your session expires. Please log in back again.');
     clearTimeoutIfExist();
-    window.location.assign('/');
+    history.push('/');
     return setLogging(initialState);
   };
 
@@ -80,7 +82,7 @@ export const LoggingProvider = (props) => {
   const logout = () => {
     auth.logout();
     clearTimeoutIfExist();
-    window.location.assign('/');
+    history.push('/');
     return setLogging(initialState);
   };
 

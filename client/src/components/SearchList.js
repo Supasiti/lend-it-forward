@@ -5,9 +5,24 @@ import { useHistory } from 'react-router-dom';
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
 import { GET_LOANS } from '../gql/loans';
+import { useUrlQuery } from '../hooks/useUrlQuery';
 
+const getFilter = (urlQuery) => {
+  const keys = ['owner'];
+  const result = keys.reduce(
+    (acc, key) => {
+      if (urlQuery.get(key)) return { ...acc, [key]: urlQuery.get(key) };
+      return { ...acc };
+    },
+    { status: 'available' },
+  );
+  return result;
+};
+
+// render
 const SearchList = () => {
-  const variables = { filter: { status: 'available' } };
+  const urlQuery = useUrlQuery();
+  const variables = { filter: getFilter(urlQuery) };
   const { data, loading } = useQuery(GET_LOANS, { variables });
   const history = useHistory();
 

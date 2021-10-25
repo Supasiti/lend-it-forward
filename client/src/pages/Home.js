@@ -1,7 +1,5 @@
 import {
   Container,
-  Text,
-  Button,
   Box,
   Tab,
   Tabs,
@@ -14,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import { primaryBtnColorProps } from '../staticProps/button';
+import SearchForm from '../components/SearchForm';
 
 const tabProps = {
   p: { base: '3', sm: '5' },
@@ -30,23 +29,14 @@ const tabsProps = {
 const Home = () => {
   const history = useHistory();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    history.push('/search');
-  };
-
   const onLogin = () => {
     history.push('/library');
   };
 
   return (
     <Container maxW="container.sm" p="0">
-      <Box bg="bermuda" borderRadius="full">
-        <Text color="blackPearl" p={{ base: '3', sm: '5' }}>
-          <Button w="100%" {...primaryBtnColorProps} onClick={handleSearch}>
-            Search bar here
-          </Button>
-        </Text>
+      <Box bg="bermuda" borderRadius="full" w="fit-content" mx="auto">
+        <SearchForm />
       </Box>
 
       <Tabs {...tabsProps}>
