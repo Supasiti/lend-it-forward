@@ -15,6 +15,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import AddLoanForm from '../components/AddLoanForm';
 import LoanList from '../components/LoanList';
 import { primaryBtnColorProps } from '../staticProps/button';
+import { redirectIfNotLoggedIn } from '../utils/logging';
 
 const tabsProps = {
   mt: { base: 2 },
@@ -31,6 +32,7 @@ const tabProps = {
 
 // render
 const Library = () => {
+  redirectIfNotLoggedIn();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

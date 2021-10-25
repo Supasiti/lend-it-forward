@@ -10,6 +10,8 @@ const initialState = {
   pending: [],
 };
 
+// keep track of all loans
+
 // jsx wrapper
 export const LoanProvider = (props) => {
   const [loans, setGlobalLoans] = useState(initialState);
