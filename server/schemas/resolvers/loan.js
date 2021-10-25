@@ -46,6 +46,11 @@ const returnLoan = async (parent, args, context) => {
   throw new AuthenticationError('you must be logged in');
 };
 
+// expect arg = { search : { owner } }
+const searchLoan = async (parent, args, context) => {
+  return services.searchLoan({ ...args.search });
+};
+
 module.exports = {
   addLoan,
   getLoan,
@@ -53,4 +58,5 @@ module.exports = {
   updateLoan,
   reserveLoan,
   returnLoan,
+  searchLoan,
 };

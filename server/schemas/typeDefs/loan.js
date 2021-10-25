@@ -45,9 +45,14 @@ const loan = gql`
     reservedFor: ID!
   }
 
+  input SearchInput {
+    owner: String
+  }
+
   extend type Query {
     loans(filter: LoanFilterInput): [Loan]
     loan(_id: ID): Loan
+    searchLoan(search: SearchInput): [Loan]
   }
 
   extend type Mutation {

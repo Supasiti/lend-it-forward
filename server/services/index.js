@@ -4,6 +4,7 @@ const loan = require('./loan');
 const queuer = require('./queuer');
 const reserveLoan = require('./reserveLoan');
 const returnLoan = require('./returnLoan');
+const searchLoan = require('./searchLoan');
 
 module.exports = {
   user,
@@ -12,4 +13,5 @@ module.exports = {
   queuer,
   reserveLoan,
   returnLoan,
+  searchLoan,
 };

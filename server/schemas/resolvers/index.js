@@ -9,6 +9,7 @@ const resolvers = {
     user: user.getUser,
     loan: loan.getLoan,
     loans: loan.getLoans,
+    searchLoan: loan.searchLoan,
     waitList: queuer.getWaitList,
     queuer: queuer.getQueuer,
   },
