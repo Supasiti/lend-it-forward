@@ -34,6 +34,23 @@ export const LoggingProvider = (props) => {
     }
   }, [logging]);
 
+  const checkToken = () => {
+    const isLoggedIn = auth.isLoggedIn();
+    if (isLoggedIn && !logging.isLoggedIn) {
+      const profile = auth.getProfile();
+      const newState = {
+        user: profile.data,
+        isLoggedIn: true,
+        expiry: profile.exp * 1000,
+      };
+      setLogging(newState);
+    }
+
+    if (!isLoggedIn && logging.isLoggedIn) {
+      logout();
+    }
+  };
+
   const clearTimeoutIfExist = () => {
     if (!timeoutId) {
       window.clearTimeout(timeoutId);
@@ -65,6 +82,8 @@ export const LoggingProvider = (props) => {
     window.location.assign('/');
     return setLogging(initialState);
   };
+
+  checkToken();
 
   return (
     <LoggingContext.Provider value={{ logging, login, logout }} {...props} />

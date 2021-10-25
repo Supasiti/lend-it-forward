@@ -8,7 +8,6 @@ import { useGetPendingLoans } from '../hooks/useGetPendingLoans';
 const PendingLoanList = () => {
   const { loans, loading } = useGetPendingLoans();
   const history = useHistory();
-  console.log(loans);
 
   if (loading) {
     return (

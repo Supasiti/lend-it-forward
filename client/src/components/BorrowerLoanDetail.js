@@ -8,6 +8,7 @@ import { cardProps } from '../staticProps/card';
 import { squareProps } from '../staticProps/div';
 import LoanDescription from './LoanDescription';
 import JoinLoanWaitList from './JoinLoanWaitList';
+import { useLogging } from '../dependecies/LoggingContext';
 
 const initialState = {
   title: '',
@@ -19,9 +20,22 @@ const initialState = {
   reservedFor: null,
 };
 
+const isReservedFor = (loan, userId) => {
+  if (loan && !!loan.reservedFor) {
+    console.log(loan.reservedFor.user._id, userId);
+  }
+  return loan && !!loan.reservedFor && loan.reservedFor.user._id === userId;
+};
+
+// render
 const BorrowerLoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
+  const { logging } = useLogging();
+
+  // console.log(logging.user?._id);
+  // console.log(loan?.reservedFor?._id);
+  console.log(isReservedFor(loan, logging.user._id));
 
   // update loan
   useEffect(() => {
@@ -41,6 +55,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
   return (
     <VStack spacing="6">
+      {['reserved']}
       <Box {...cardProps}>
         <Flex wrap="wrap" justify="center">
           <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
