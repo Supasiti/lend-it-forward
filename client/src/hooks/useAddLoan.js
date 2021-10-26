@@ -9,12 +9,12 @@ import { ADD_LOAN } from '../gql/loans';
 export const useAddLoan = () => {
   const [error, setError] = useState('');
   const [execMutation, { data, loading }] = useMutation(ADD_LOAN);
-  const { addLoan: addLoanContext } = useLoan();
+  const { updateLoan: updateLoanContext } = useLoan();
 
   // add loan to the loan context
   useEffect(() => {
     if (data?.addLoan) {
-      addLoanContext(data.addLoan, 'own');
+      updateLoanContext(data.addLoan, 'own');
     }
   }, [data]);
 

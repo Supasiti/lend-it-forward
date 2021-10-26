@@ -8,6 +8,7 @@ import { useForm } from '../hooks/useForm';
 import { useJoinWaitList } from '../hooks/useJoinWaitList';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 // styling
 
@@ -34,12 +35,16 @@ const initialState = {
   contact: '',
 };
 
+// TODO - do a login before submit
+
+// render
 const JoinLoanWaitList = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
-  const { joinWaitList, data } = useJoinWaitList();
+  const { joinWaitList, newQueuer, error, setError } = useJoinWaitList();
   const { waitList, getWaitList } = useGetWaitList();
   const { logging } = useLogging();
   const history = useHistory();
+  const { chakraToast } = useChakraToast(error, setError);
 
   // update form once fetch the queuer data (if exist)
   useEffect(() => {
@@ -58,12 +63,13 @@ const JoinLoanWaitList = ({ loan }) => {
     }
   }, [loan]);
 
-  // when the form is submitted
+  // when the form is successfully submitted
   useEffect(() => {
-    if (data?.joinWaitList) {
-      history.push('/Library/#');
+    if (newQueuer) {
+      chakraToast('success', 'You are now on the waiting list!');
+      history.push('/Library');
     }
-  }, [data]);
+  }, [newQueuer]);
 
   // join the waiting list
   const handleSubmitForm = (e) => {

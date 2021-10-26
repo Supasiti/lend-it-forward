@@ -6,7 +6,6 @@ import {
   Input,
   InputGroup,
   Button,
-  useToast,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
@@ -16,7 +15,7 @@ import { validateNonEmpty, validateEmail } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useSignupUser } from '../hooks/useSignupUser';
-import { toastParams } from '../constants/toast';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 const initialState = {
   username: '',
@@ -28,21 +27,13 @@ const initialState = {
 const SignupForm = ({ onSignup }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
   const { signup, data, error, setError } = useSignupUser();
-  const toast = useToast();
-
-  // on login error
-  useEffect(() => {
-    if (error) {
-      toast(toastParams('error', error));
-      setError('');
-    }
-  }, [error]);
+  const { chakraToast } = useChakraToast(error, setError);
 
   // when form is submitted push to library
   useEffect(() => {
     if (data?.addUser) {
       clearForm();
-      toast(toastParams('success', `We've created your account for you.`));
+      chakraToast('success', `We've created your account for you.`);
       if (onSignup) {
         onSignup();
       }

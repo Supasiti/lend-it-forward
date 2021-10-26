@@ -17,6 +17,7 @@ import { useForm } from '../hooks/useForm';
 import { updateObject } from '../utils/object';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import { useReserveLoan } from '../hooks/useReserveLoan';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 // styling
 const containerProps = {
@@ -41,7 +42,15 @@ const initialState = {
 const ReserveLoanForm = ({ loan }) => {
   const { formState, setFormState } = useForm(initialState);
   const { waitList, getWaitList } = useGetWaitList();
-  const { reserveLoan } = useReserveLoan();
+  const { reserveLoan, newLoan, error, setError } = useReserveLoan();
+  const { chakraToast } = useChakraToast(error, setError);
+
+  // on successfully reserved a loan for someone
+  useEffect(() => {
+    if (newLoan) {
+      chakraToast('success', 'This item is now reserved!');
+    }
+  }, [newLoan]);
 
   // set the form state from props
   useEffect(() => {

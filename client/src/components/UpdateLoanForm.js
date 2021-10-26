@@ -6,6 +6,7 @@ import { TextInput, TextArea, UserSelect } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useUpdateLoan } from '../hooks/useUpdateLoan';
 import { updateObject } from '../utils/object';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 const initialState = {
   _id: '',
@@ -18,14 +19,16 @@ const initialState = {
 // render
 const UpdateLoanForm = ({ loan, onLoanUpdated }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
-  const { updateLoan, data } = useUpdateLoan();
+  const { updateLoan, newLoan, error, setError } = useUpdateLoan();
+  const { chakraToast } = useChakraToast(error, setError);
 
   // handle when form is submitted
   useEffect(() => {
-    if (data?.updateLoan && onLoanUpdated) {
-      onLoanUpdated(data.updateLoan);
+    if (newLoan && onLoanUpdated) {
+      chakraToast('success', `You've successfully updated the new details!`);
+      onLoanUpdated(newLoan);
     }
-  }, [data]);
+  }, [newLoan]);
 
   // set the form state from props
   useEffect(() => {

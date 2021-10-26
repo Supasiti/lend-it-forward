@@ -5,7 +5,6 @@ import {
   ModalBody,
   ModalFooter,
   VStack,
-  useToast,
 } from '@chakra-ui/react';
 
 import BaseModal from './Modal';
@@ -15,7 +14,7 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { TextInput, TextArea } from './Input';
 import { useAddLoan } from '../hooks/useAddLoan';
 import { useEffect } from 'react';
-import { toastParams } from '../constants/toast';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 const initialState = {
   title: '',
@@ -28,20 +27,12 @@ const initialState = {
 const AddLoanForm = ({ isOpen, onClose }) => {
   const { formState, handleChange } = useForm(initialState);
   const { addLoan, data, error, setError } = useAddLoan();
-  const toast = useToast();
-
-  // on login error
-  useEffect(() => {
-    if (error) {
-      toast(toastParams('error', error));
-      setError('');
-    }
-  }, [error]);
+  const { chakraToast } = useChakraToast(error, setError);
 
   // to close when a loan is added
   useEffect(() => {
     if (data?.addLoan) {
-      toast(toastParams('success', `We've create a new item for you!`));
+      chakraToast('success', `We've create a new item for you!`);
       onClose();
     }
   }, [data]);
