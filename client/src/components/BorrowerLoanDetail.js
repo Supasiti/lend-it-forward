@@ -11,6 +11,7 @@ import JoinLoanWaitList from './JoinLoanWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
 import { helperProps } from './Input';
 import { useGetWaitList } from '../hooks/useGetWaitList';
+import LeaveWaitList from './LeaveWaitList';
 
 const initialState = {
   title: '',
@@ -75,6 +76,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
         </Box>
       )}
 
+      {/* show when you have the item */}
       {loan.status === 'onLoan' && (
         <Box {...cardProps} p="4">
           <Text fontSize="3xl" color="peel">
@@ -83,6 +85,13 @@ const BorrowerLoanDetail = ({ loanId }) => {
           <Text {...helperProps} mt="3">
             Now that you have the item, please enjoy it responsibly.
           </Text>
+        </Box>
+      )}
+
+      {/* show when you have joined the waiting list but is not reserved for you */}
+      {waitList[0] && !waitList[0].selected && (
+        <Box {...cardProps} py="4">
+          <LeaveWaitList queuer={waitList[0]} />
         </Box>
       )}
 

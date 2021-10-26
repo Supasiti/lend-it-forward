@@ -50,9 +50,19 @@ export const LoanProvider = (props) => {
     return setGlobalLoans(newState);
   };
 
+  // remove loan
+  const removeLoan = (loanId, key) => {
+    if (!(key in initialState)) {
+      throw Error('incorrect key');
+    }
+    const tempArr = loans[key].filter((loan) => loan._id !== loanId);
+    const newState = { ...loans, [key]: tempArr };
+    return setGlobalLoans(newState);
+  };
+
   return (
     <LoanContext.Provider
-      value={{ globalLoans, setLoans, addLoan, updateLoan }}
+      value={{ globalLoans, setLoans, addLoan, updateLoan, removeLoan }}
       {...props}
     />
   );

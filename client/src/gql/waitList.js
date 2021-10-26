@@ -36,4 +36,11 @@ export const JOIN_WAIT_LIST = gql`
   }
 `;
 
-// export const GET_QUEUER
+export const LEAVE_WAIT_LIST = gql`
+  mutation removeFromWaitList($queuer: RemoveFromWaitListInput) {
+    removeFromWaitList(queuer: $queuer) {
+      success
+      _id
+    }
+  }
+`;
