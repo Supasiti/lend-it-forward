@@ -9,17 +9,11 @@ const addLoan = async (parent, args, context) => {
 };
 
 const getLoan = async (parent, args, context) => {
-  if (context.user) {
-    return services.loan.getOne(args);
-  }
-  throw new AuthenticationError('you must be logged in');
+  return services.loan.getOne(args);
 };
 
 const getLoans = async (parent, args, context) => {
-  if (context.user) {
-    return services.loan.getByFilter(args);
-  }
-  throw new AuthenticationError('you must be logged in');
+  return services.loan.getByFilter(args);
 };
 
 const updateLoan = async (parent, args, context) => {
