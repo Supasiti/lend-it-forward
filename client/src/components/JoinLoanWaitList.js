@@ -1,4 +1,16 @@
-import { Flex, Box, Heading, Text, Avatar, Button } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Avatar,
+  Button,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -9,6 +21,8 @@ import { useJoinWaitList } from '../hooks/useJoinWaitList';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
 import { useChakraToast } from '../hooks/useChakraToast';
+import BaseModal from './Modal';
+import LoginOrSignupForm from './LoginOrSignupForm';
 
 // styling
 
@@ -45,6 +59,7 @@ const JoinLoanWaitList = ({ loan }) => {
   const { logging } = useLogging();
   const history = useHistory();
   const { chakraToast } = useChakraToast(error, setError);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // update form once fetch the queuer data (if exist)
   useEffect(() => {
@@ -54,7 +69,7 @@ const JoinLoanWaitList = ({ loan }) => {
     }
   }, [waitList]);
 
-  // when loan is passed in
+  // if loan is passed in
   useEffect(() => {
     if (loan) {
       const newFormState = { ...formState, loan: loan._id };
@@ -72,11 +87,25 @@ const JoinLoanWaitList = ({ loan }) => {
   }, [newQueuer]);
 
   // join the waiting list
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
+  const handleSubmitForm = () => {
+    if (!formState.contact) {
+      chakraToast('error', 'Please fill in your contact details');
+      return;
+    }
+    if (!logging.isLoggedIn) {
+      onOpen();
+      return;
+    }
     if (formState.loan && formState.contact) {
+      console.log('joining...');
       joinWaitList(formState);
     }
+  };
+
+  // call when user logins
+  const onLogin = () => {
+    onClose();
+    handleSubmitForm();
   };
 
   return (
@@ -124,6 +153,20 @@ const JoinLoanWaitList = ({ loan }) => {
             'Join the waiting list'}
         </Button>
       </Box>
+
+      {/* login modal */}
+      <BaseModal onClose={onClose} isOpen={isOpen}>
+        <ModalHeader>Login or Signup</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <LoginOrSignupForm
+            variant="none"
+            onLogin={onLogin}
+            onSignup={onLogin}
+          />
+        </ModalBody>
+        <ModalFooter />
+      </BaseModal>
     </>
   );
 };

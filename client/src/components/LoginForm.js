@@ -31,6 +31,7 @@ const LoginForm = ({ onLogin }) => {
       clearForm();
       chakraToast('success', 'You are now logged in!');
       if (onLogin) {
+        console.log('calling onLogin');
         onLogin();
       }
     }
