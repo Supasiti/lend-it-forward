@@ -16,7 +16,7 @@ const getByFilter = async ({ filter = {} }) => {
 const updateOrCreate = async ({ user, loan, contact }) => {
   const result = await Queuer.findOneAndUpdate(
     { user, loan }, 
-    { user, loan, contact }, 
+    { user, loan, contact, selected: false }, 
     {new: true, upsert: true }
   ).populate([ 'user','loan']);
   return result;

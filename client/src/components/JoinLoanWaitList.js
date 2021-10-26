@@ -49,8 +49,6 @@ const initialState = {
   contact: '',
 };
 
-// TODO - do a login before submit
-
 // render
 const JoinLoanWaitList = ({ loan }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
