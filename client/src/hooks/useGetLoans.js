@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoan } from '../dependecies/LoanContext';
@@ -7,16 +7,21 @@ import { useLogging } from '../dependecies/LoggingContext';
 
 // get all loans owned by a user
 export const useGetLoans = () => {
+  const [error, setError] = useState('');
   const { globalLoans, setLoans } = useLoan();
-  const [execQuery, { data, error, loading }] = useLazyQuery(GET_LOANS);
+  const [execQuery, { data, loading }] = useLazyQuery(GET_LOANS);
   const { logging } = useLogging();
   const loans = globalLoans.own;
 
   // when it is logged otherwise don't do anything
-  useEffect(() => {
+  useEffect(async () => {
     if (logging.isLoggedIn) {
       const variables = { filter: { owner: logging.user._id } };
-      execQuery({ variables });
+      try {
+        await execQuery({ variables });
+      } catch (e) {
+        setError(e.message);
+      }
     }
   }, [logging]);
 

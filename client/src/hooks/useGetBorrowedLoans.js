@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoan } from '../dependecies/LoanContext';
@@ -6,16 +6,21 @@ import { useLogging } from '../dependecies/LoggingContext';
 import { GET_LOANS } from '../gql/loans';
 
 export const useGetBorrowedLoans = () => {
+  const [error, setError] = useState('');
   const { globalLoans, setLoans } = useLoan();
   const { logging } = useLogging();
-  const [execQuery, { data, error, loading }] = useLazyQuery(GET_LOANS);
+  const [execQuery, { data, loading }] = useLazyQuery(GET_LOANS);
   const loans = globalLoans.borrow;
 
   // when it is logged
-  useEffect(() => {
+  useEffect(async () => {
     if (logging.isLoggedIn) {
       const variables = { filter: { holder: logging.user._id } };
-      execQuery({ variables });
+      try {
+        await execQuery({ variables });
+      } catch (e) {
+        setError(e.message);
+      }
     }
   }, [logging]);
 
@@ -29,5 +34,5 @@ export const useGetBorrowedLoans = () => {
     }
   }, [data]);
 
-  return { loans, loading, error };
+  return { loans, loading, error, setError };
 };

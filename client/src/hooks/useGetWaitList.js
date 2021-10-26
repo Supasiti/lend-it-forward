@@ -4,8 +4,9 @@ import { GET_WAIT_LIST } from '../gql/waitList';
 
 //  get the waiting list filtered by optional criteria
 export const useGetWaitList = () => {
+  const [error, setError] = useState('');
   const [waitList, setWaitList] = useState([]);
-  const [execQuery, { data, error, loading }] = useLazyQuery(GET_WAIT_LIST);
+  const [execQuery, { data, loading }] = useLazyQuery(GET_WAIT_LIST);
 
   // set waiting list
   useEffect(() => {
@@ -17,8 +18,12 @@ export const useGetWaitList = () => {
   // for executing lazy query
   const getWaitList = (input) => {
     const filter = { filter: { ...input } };
-    execQuery({ variables: filter });
+    try {
+      execQuery({ variables: filter });
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
-  return { waitList, getWaitList, error, loading };
+  return { waitList, getWaitList, error, loading, setError };
 };
