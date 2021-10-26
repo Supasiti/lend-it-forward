@@ -10,7 +10,7 @@ const getWaitList = async (parent, args, context) => {
 const joinWaitList = async (parent, args, context) => {
   if (context.user) {
     const data = { user: context.user._id, ...args.queuer };
-    return services.queuer.findOrCreate(data);
+    return services.queuer.updateOrCreate(data);
   }
   throw new AuthenticationError('you must be logged in');
 };

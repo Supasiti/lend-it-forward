@@ -5,6 +5,7 @@ import { useGetWaitList } from '../hooks/useGetWaitList';
 import { helperProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useReturnLoan } from '../hooks/useReturnLoan';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 // styling
 const containerProps = {
@@ -31,7 +32,15 @@ const headerProps = {
 const LoanBorrower = ({ loan }) => {
   const [loanId, setLoanId] = useState('');
   const { waitList, getWaitList } = useGetWaitList();
-  const { returnLoan } = useReturnLoan();
+  const { returnLoan, newLoan, error, setError } = useReturnLoan();
+  const { chakraToast } = useChakraToast(error, setError);
+
+  // on successfully receive a loan from borrower
+  useEffect(() => {
+    if (newLoan) {
+      chakraToast('success', 'This item is now back in your library!');
+    }
+  }, [newLoan]);
 
   // update the list of queuer
   useEffect(() => {

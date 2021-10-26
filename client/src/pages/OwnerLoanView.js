@@ -1,8 +1,11 @@
 import { useParams } from 'react-router';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import LoanDetail from '../components/LoanDetail';
+import { redirectIfNotLoggedIn } from '../utils/logging';
 
 const OwnerLoanView = () => {
+  redirectIfNotLoggedIn();
+
   const { loanId } = useParams();
   return (
     <Box w="100%">

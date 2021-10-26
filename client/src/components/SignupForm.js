@@ -9,13 +9,13 @@ import {
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useForm } from '../hooks/useForm';
 import { validateNonEmpty, validateEmail } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useSignupUser } from '../hooks/useSignupUser';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 const initialState = {
   username: '',
@@ -24,23 +24,26 @@ const initialState = {
 };
 
 // render
-const SignupForm = () => {
+const SignupForm = ({ onSignup }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [signup, { data }] = useSignupUser();
-  const history = useHistory();
+  const { signup, data, error, setError } = useSignupUser();
+  const { chakraToast } = useChakraToast(error, setError);
 
   // when form is submitted push to library
   useEffect(() => {
     if (data?.addUser) {
       clearForm();
-      history.push('/library');
+      chakraToast('success', `We've created your account for you.`);
+      if (onSignup) {
+        onSignup();
+      }
     }
   }, [data]);
 
-  // handle when
+  // handle when submit form
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    signup({ variables: { user: { ...formState } } });
+    signup(formState);
   };
 
   return (

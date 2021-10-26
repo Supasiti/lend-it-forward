@@ -5,6 +5,7 @@ import { helperProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useUpdateLoan } from '../hooks/useUpdateLoan';
 import { updateObject } from '../utils/object';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 // styling
 const containerProps = {
@@ -30,7 +31,15 @@ const initialState = {
 //render
 const CollectLoan = ({ loan }) => {
   const [loanState, setLoanState] = useState(initialState);
-  const { updateLoan } = useUpdateLoan();
+  const { updateLoan, newLoan, error, setError } = useUpdateLoan();
+  const { chakraToast } = useChakraToast(error, setError);
+
+  // handle when loan is collect
+  useEffect(() => {
+    if (newLoan) {
+      chakraToast('success', `Your item has been collected`);
+    }
+  }, [newLoan]);
 
   // set formState from props
   useEffect(() => {

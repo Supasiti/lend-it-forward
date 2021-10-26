@@ -8,7 +8,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { LockIcon } from '@chakra-ui/icons';
-import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { useForm } from '../hooks/useForm';
@@ -16,27 +15,31 @@ import { validateEmail, validatePassword } from '../utils/formValidators';
 import { inputProps } from './Input';
 import { primaryBtnColorProps } from '../staticProps/button';
 import { useLoginUser } from '../hooks/useLoginUser';
+import { useChakraToast } from '../hooks/useChakraToast';
 
 const initialState = { email: '', password: '' };
 
 // render
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [login, { data }] = useLoginUser();
-  const history = useHistory();
+  const { login, data, error, setError } = useLoginUser();
+  const { chakraToast } = useChakraToast(error, setError);
 
   // when form is submitted push to library
   useEffect(() => {
     if (data?.login) {
       clearForm();
-      history.push('/library');
+      chakraToast('success', 'You are now logged in!');
+      if (onLogin) {
+        onLogin();
+      }
     }
   }, [data]);
 
   // handle form submission
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    login({ variables: { data: { ...formState } } });
+    login(formState);
   };
 
   return (

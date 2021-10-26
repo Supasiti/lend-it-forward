@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import '@fontsource/josefin-sans/200.css';
 import '@fontsource/montserrat/500.css';
 import { Box, Container } from '@chakra-ui/react';
@@ -29,21 +29,19 @@ const containerProps = {
 
 const App = () => (
   <Dependencies>
-    <Router>
-      <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
-        <Wave />
-        <Container {...containerProps}>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/library" component={Library} />
-            <Route exact path="/library/:loanId" component={OwnerLoanView} />
-            <Route exact path="/search/" component={SearchResult} />
-            <Route exact path="/items/:loanId" component={BorrowerLoanView} />
-          </Switch>
-        </Container>
-      </Box>
-    </Router>
+    <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
+      <Wave />
+      <Container {...containerProps}>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/library" component={Library} />
+          <Route exact path="/library/:loanId" component={OwnerLoanView} />
+          <Route exact path="/search" component={SearchResult} />
+          <Route exact path="/items/:loanId" component={BorrowerLoanView} />
+        </Switch>
+      </Container>
+    </Box>
   </Dependencies>
 );
 

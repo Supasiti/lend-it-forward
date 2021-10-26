@@ -2,21 +2,20 @@ import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoan } from '../dependecies/LoanContext';
-import { GET_LOANS } from '../gql/loans';
 import { useLogging } from '../dependecies/LoggingContext';
+import { GET_LOANS } from '../gql/loans';
 
-// get all loans owned by a user
-export const useGetLoans = () => {
+export const useGetBorrowedLoans = () => {
   const [error, setError] = useState('');
   const { globalLoans, setLoans } = useLoan();
-  const [execQuery, { data, loading }] = useLazyQuery(GET_LOANS);
   const { logging } = useLogging();
-  const loans = globalLoans.own;
+  const [execQuery, { data, loading }] = useLazyQuery(GET_LOANS);
+  const loans = globalLoans.borrow;
 
-  // when it is logged otherwise don't do anything
+  // when it is logged
   useEffect(async () => {
     if (logging.isLoggedIn) {
-      const variables = { filter: { owner: logging.user._id } };
+      const variables = { filter: { holder: logging.user._id } };
       try {
         await execQuery({ variables });
       } catch (e) {
@@ -25,11 +24,15 @@ export const useGetLoans = () => {
     }
   }, [logging]);
 
+  // get more details loand
   useEffect(() => {
     if (data?.loans?.length) {
-      setLoans(data.loans, 'own');
+      const newLoans = data.loans.filter(
+        ({ owner }) => owner._id !== logging.user._id,
+      );
+      setLoans(newLoans, 'borrow');
     }
   }, [data]);
 
-  return { loans, loading, error };
+  return { loans, loading, error, setError };
 };

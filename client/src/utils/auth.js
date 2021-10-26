@@ -4,6 +4,25 @@ const getProfile = () => {
   return decode(getToken());
 };
 
+const getToken = () => {
+  // Retrieves the user token from localStorage
+  return localStorage.getItem('id_token');
+};
+
+const getExpiry = (token) => {
+  if (token) {
+    // if token is passed in
+    const decoded = decode(token);
+    return decoded.exp * 1000;
+  }
+  const savedToken = getToken();
+  if (savedToken) {
+    const decoded = decode(savedToken);
+    return decoded.exp * 1000;
+  }
+  return null;
+};
+
 const isLoggedIn = () => {
   // Checks if there is a saved token and it's still valid
   const token = getToken();
@@ -21,11 +40,6 @@ const isTokenExpired = (token) => {
   }
 };
 
-const getToken = () => {
-  // Retrieves the user token from localStorage
-  return localStorage.getItem('id_token');
-};
-
 const login = (idToken) => {
   // Saves user token to localStorage
   localStorage.setItem('id_token', idToken);
@@ -34,8 +48,6 @@ const login = (idToken) => {
 const logout = () => {
   // Clear user token and profile data from localStorage
   localStorage.removeItem('id_token');
-  // this will reload the page and reset the state of the application
-  window.location.assign('/');
 };
 
 const auth = {
@@ -43,6 +55,7 @@ const auth = {
   getProfile,
   isTokenExpired,
   getToken,
+  getExpiry,
   login,
   logout,
 };

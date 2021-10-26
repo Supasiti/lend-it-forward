@@ -72,3 +72,11 @@ export const RETURN_LOAN = gql`
     }
   }
 `;
+
+export const SEARCH_LOAN = gql`
+  query searchLoan ($search: SearchInput){
+    searchLoan(search: $search) {
+      ${response}
+    }
+  }
+`;

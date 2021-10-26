@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
-import { useSearchLoan } from '../hooks/useSearchLoan';
 
-// render
-const SearchList = () => {
-  const { loans, loading } = useSearchLoan();
+import { useGetBorrowedLoans } from '../hooks/useGetBorrowedLoans';
+
+const BorrowedLoanList = () => {
+  const { loans, loading } = useGetBorrowedLoans();
   const history = useHistory();
 
   if (loading) {
@@ -36,4 +36,4 @@ const SearchList = () => {
   );
 };
 
-export default SearchList;
+export default BorrowedLoanList;

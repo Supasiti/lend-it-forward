@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { darkBtnColorProps } from '../staticProps/button';
 import { cardProps } from '../staticProps/card';
-import auth from '../utils/auth';
+import { useLogging } from '../dependecies/LoggingContext';
 
 const navItemProps = {
   px: '4',
@@ -12,12 +12,14 @@ const navItemProps = {
 // render
 const NavList = () => {
   const history = useHistory();
+  const { logging, logout: contextLogout } = useLogging();
 
   const handleLinkClick = (location) => {
     history.push(location);
   };
 
-  if (auth.isLoggedIn()) {
+  if (logging.isLoggedIn) {
+    // if login
     return (
       <MenuList {...cardProps}>
         <MenuItem
@@ -31,7 +33,7 @@ const NavList = () => {
         <MenuItem
           {...darkBtnColorProps}
           {...navItemProps}
-          onClick={() => auth.logout()}
+          onClick={() => contextLogout()}
         >
           Log Out
         </MenuItem>

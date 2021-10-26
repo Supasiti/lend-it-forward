@@ -24,6 +24,10 @@ export const inputProps = {
       boxShadow: `0 0 0px 1000px ${color.gray[600]} inset`,
       WebkitTextFillColor: `${color.sidecar}`,
     },
+    ':-webkit-autofill:hover': {
+      boxShadow: `0 0 0px 1000px ${color.gray[600]} inset`,
+      WebkitTextFillColor: `${color.sidecar}`,
+    },
   },
 };
 

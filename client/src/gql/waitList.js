@@ -10,6 +10,11 @@ const response = `
   loan {
     _id
     title
+    status
+    category
+    holder {
+      _id
+    }
   }
   createdAt
   contact
@@ -30,3 +35,5 @@ export const JOIN_WAIT_LIST = gql`
     }
   }
 `;
+
+// export const GET_QUEUER
