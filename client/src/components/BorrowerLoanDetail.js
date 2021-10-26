@@ -10,6 +10,7 @@ import LoanDescription from './LoanDescription';
 import JoinLoanWaitList from './JoinLoanWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
 import { helperProps } from './Input';
+import { useGetWaitList } from '../hooks/useGetWaitList';
 
 const initialState = {
   title: '',
@@ -33,6 +34,14 @@ const BorrowerLoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
   const { logging } = useLogging();
+  const { waitList, getWaitList } = useGetWaitList();
+
+  // check if user is in a waiting list
+  useEffect(() => {
+    if (logging.isLoggedIn) {
+      getWaitList({ loan: loanId, user: logging.user._id });
+    }
+  }, [logging]);
 
   // update loan
   useEffect(() => {
@@ -94,7 +103,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
       {/* for contact */}
       <Box {...cardProps} py="4">
-        <JoinLoanWaitList loan={loan} />
+        <JoinLoanWaitList loan={loan} queuer={waitList[0]} />
       </Box>
     </VStack>
   );

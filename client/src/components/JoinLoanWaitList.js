@@ -18,7 +18,6 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { helperProps, TextArea } from './Input';
 import { useForm } from '../hooks/useForm';
 import { useJoinWaitList } from '../hooks/useJoinWaitList';
-import { useGetWaitList } from '../hooks/useGetWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
 import { useChakraToast } from '../hooks/useChakraToast';
 import BaseModal from './Modal';
@@ -50,36 +49,31 @@ const initialState = {
 };
 
 // render
-const JoinLoanWaitList = ({ loan }) => {
+const JoinLoanWaitList = ({ loan, queuer }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
   const { joinWaitList, newQueuer, error, setError } = useJoinWaitList();
-  const { waitList, getWaitList } = useGetWaitList();
   const { logging } = useLogging();
   const history = useHistory();
   const { chakraToast } = useChakraToast(error, setError);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // update form once fetch the queuer data (if exist)
+  // if loan or queuer is passed in
   useEffect(() => {
-    if (waitList.length) {
-      const newFormState = { ...formState, contact: waitList[0].contact };
-      setFormState(newFormState);
-    }
-  }, [waitList]);
-
-  // if loan is passed in
-  useEffect(() => {
-    if (loan) {
-      const newFormState = { ...formState, loan: loan._id };
-      setFormState(newFormState);
-      getWaitList({ loan: loan._id, user: logging.user._id });
-    }
-  }, [loan]);
+    const newFormState = {
+      ...formState,
+      loan: loan?._id || null,
+      contact: queuer?.contact || '',
+    };
+    setFormState(newFormState);
+  }, [loan, queuer]);
 
   // when the form is successfully submitted
   useEffect(() => {
     if (newQueuer) {
-      chakraToast('success', 'You are now on the waiting list!');
+      const message =
+        (queuer && 'Your contact details are updated!') ||
+        'You are now on the waiting list!';
+      chakraToast('success', message);
       history.push('/Library');
     }
   }, [newQueuer]);
@@ -147,8 +141,7 @@ const JoinLoanWaitList = ({ loan }) => {
 
       <Box mt="4" w="100%" textAlign="center">
         <Button {...primaryBtnColorProps} onClick={handleSubmitForm}>
-          {(waitList.length && 'Update your contact details') ||
-            'Join the waiting list'}
+          {(queuer && 'Update your contact details') || 'Join the waiting list'}
         </Button>
       </Box>
 
