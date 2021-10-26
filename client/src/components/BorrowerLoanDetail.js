@@ -10,6 +10,8 @@ import LoanDescription from './LoanDescription';
 import JoinLoanWaitList from './JoinLoanWaitList';
 import { useLogging } from '../dependecies/LoggingContext';
 import { helperProps } from './Input';
+import { useGetWaitList } from '../hooks/useGetWaitList';
+import LeaveWaitList from './LeaveWaitList';
 
 const initialState = {
   title: '',
@@ -33,6 +35,14 @@ const BorrowerLoanDetail = ({ loanId }) => {
   const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
   const { logging } = useLogging();
+  const { waitList, getWaitList } = useGetWaitList();
+
+  // check if user is in a waiting list
+  useEffect(() => {
+    if (logging.isLoggedIn) {
+      getWaitList({ loan: loanId, user: logging.user._id });
+    }
+  }, [logging]);
 
   // update loan
   useEffect(() => {
@@ -66,6 +76,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
         </Box>
       )}
 
+      {/* show when you have the item */}
       {loan.status === 'onLoan' && (
         <Box {...cardProps} p="4">
           <Text fontSize="3xl" color="peel">
@@ -74,6 +85,13 @@ const BorrowerLoanDetail = ({ loanId }) => {
           <Text {...helperProps} mt="3">
             Now that you have the item, please enjoy it responsibly.
           </Text>
+        </Box>
+      )}
+
+      {/* show when you have joined the waiting list but is not reserved for you */}
+      {waitList[0] && !waitList[0].selected && (
+        <Box {...cardProps} py="4">
+          <LeaveWaitList queuer={waitList[0]} />
         </Box>
       )}
 
@@ -94,7 +112,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
       {/* for contact */}
       <Box {...cardProps} py="4">
-        <JoinLoanWaitList loan={loan} />
+        <JoinLoanWaitList loan={loan} queuer={waitList[0]} />
       </Box>
     </VStack>
   );
