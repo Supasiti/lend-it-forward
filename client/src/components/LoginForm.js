@@ -23,7 +23,7 @@ const initialState = { email: '', password: '' };
 // render
 const LoginForm = ({ onLogin }) => {
   const { formState, handleChange, clearForm } = useForm(initialState);
-  const [login, { data, error, setError }] = useLoginUser();
+  const { login, data, error, setError } = useLoginUser();
   const toast = useToast();
 
   // on login error

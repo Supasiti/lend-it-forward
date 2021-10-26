@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLoan } from '../dependecies/LoanContext';
 import { ADD_LOAN } from '../gql/loans';
@@ -7,14 +7,26 @@ import { ADD_LOAN } from '../gql/loans';
 // create a new loan for other to borrow
 
 export const useAddLoan = () => {
-  const [addLoan, { data, error, loading }] = useMutation(ADD_LOAN);
+  const [error, setError] = useState('');
+  const [execMutation, { data, loading }] = useMutation(ADD_LOAN);
   const { addLoan: addLoanContext } = useLoan();
 
+  // add loan to the loan context
   useEffect(() => {
     if (data?.addLoan) {
       addLoanContext(data.addLoan, 'own');
     }
   }, [data]);
 
-  return [addLoan, { data, error, loading }];
+  // expect { title, description, category  }
+  const addLoan = async (input) => {
+    const addLoanInput = { variables: { loan: { ...input } } };
+    try {
+      await execMutation(addLoanInput);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  return { addLoan, data, error, setError, loading };
 };

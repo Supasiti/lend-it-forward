@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalFooter,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 
 import BaseModal from './Modal';
@@ -14,6 +15,7 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { TextInput, TextArea } from './Input';
 import { useAddLoan } from '../hooks/useAddLoan';
 import { useEffect } from 'react';
+import { toastParams } from '../constants/toast';
 
 const initialState = {
   title: '',
@@ -22,15 +24,24 @@ const initialState = {
 };
 
 // TODO : Suggest categories as you type
-// TODO better response handling
 
 const AddLoanForm = ({ isOpen, onClose }) => {
   const { formState, handleChange } = useForm(initialState);
-  const [addLoan, { data }] = useAddLoan();
+  const { addLoan, data, error, setError } = useAddLoan();
+  const toast = useToast();
+
+  // on login error
+  useEffect(() => {
+    if (error) {
+      toast(toastParams('error', error));
+      setError('');
+    }
+  }, [error]);
 
   // to close when a loan is added
   useEffect(() => {
     if (data?.addLoan) {
+      toast(toastParams('success', `We've create a new item for you!`));
       onClose();
     }
   }, [data]);
@@ -39,10 +50,8 @@ const AddLoanForm = ({ isOpen, onClose }) => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
 
-    const input = {
-      loan: { ...formState, category: capitalize(formState.category) },
-    };
-    addLoan({ variables: input });
+    const input = { ...formState, category: capitalize(formState.category) };
+    addLoan(input);
   };
 
   return (
@@ -56,7 +65,7 @@ const AddLoanForm = ({ isOpen, onClose }) => {
             id="loanTitle"
             label="Title"
             name="title"
-            value={formState.title}
+            value={formState.title || initialState.title}
             placeholder="Thinking Fast And Slow"
             onChange={(e) => handleChange(e, 'title')}
           />
@@ -66,7 +75,7 @@ const AddLoanForm = ({ isOpen, onClose }) => {
             id="loanDescription"
             label="Description"
             name="description"
-            value={formState.description}
+            value={formState.description || initialState.description}
             placeholder="A book by Daniel Kahneman"
             onChange={(e) => handleChange(e, 'description')}
           />
@@ -76,7 +85,7 @@ const AddLoanForm = ({ isOpen, onClose }) => {
             id="loanCategory"
             label="Category"
             name="category"
-            value={formState.category}
+            value={formState.category || initialState.category}
             placeholder="Books"
             onChange={(e) => handleChange(e, 'category')}
           />

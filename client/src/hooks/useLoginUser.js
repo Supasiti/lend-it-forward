@@ -17,7 +17,7 @@ export const useLoginUser = () => {
     }
   }, [data]);
 
-  // expect { username, password  }
+  // expect { email, password  }
   const login = async (input) => {
     const loginInput = { variables: { data: { ...input } } };
     try {
@@ -27,5 +27,5 @@ export const useLoginUser = () => {
     }
   };
 
-  return [login, { data, error, setError, loading }];
+  return { login, data, error, setError, loading };
 };
