@@ -16,8 +16,7 @@ const processPhoto = async (parent, { upload }, context) => {
       _id,
       imageUrl,
     };
-    const updated = await updaterMap[model](dataToUpdate);
-    console.log(updated);
+    await updaterMap[model](dataToUpdate);
     return {
       success: true,
       imageUrl,

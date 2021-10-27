@@ -12,6 +12,7 @@ import CollectLoan from './CollectLoan';
 import LoanDescription from './LoanDescription';
 import LoanBorrower from './LoanBorrower';
 import UploadImage from './UploadImage';
+import Square from './Square';
 
 const initialState = {
   title: '',
@@ -71,10 +72,9 @@ const LoanDetail = ({ loanId }) => {
         <Box {...cardProps}>
           <Flex wrap="wrap" justify="center">
             <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-              <Box {...squareProps}>
-                <div> image here</div>
+              <Square>
                 <UploadImage id={loanId} model="loan" />
-              </Box>
+              </Square>
             </Box>
 
             <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">
