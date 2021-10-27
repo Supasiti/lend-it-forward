@@ -7,6 +7,7 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: auth.authMiddleware,
+  uploads: false,
 });
 
 module.exports = apolloServer;

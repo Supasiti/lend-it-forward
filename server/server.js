@@ -2,10 +2,17 @@ const express = require('express');
 const path = require('path');
 
 const apolloServer = require('./schemas');
+const { graphqlUploadExpress } = require('graphql-upload');
 const db = require('./config/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// This middleware should be added before calling `applyMiddleware`.
+app.use(
+  '/graphql',
+  graphqlUploadExpress({ maxFileSize: 5000000, maxFiles: 10 }),
+);
 
 // apply apollo server middleware before app
 apolloServer.applyMiddleware({ app });

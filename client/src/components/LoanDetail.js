@@ -11,6 +11,7 @@ import { squareProps } from '../staticProps/div';
 import CollectLoan from './CollectLoan';
 import LoanDescription from './LoanDescription';
 import LoanBorrower from './LoanBorrower';
+import UploadImage from './UploadImage';
 
 const initialState = {
   title: '',
@@ -72,6 +73,7 @@ const LoanDetail = ({ loanId }) => {
             <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
               <Box {...squareProps}>
                 <div> image here</div>
+                <UploadImage />
               </Box>
             </Box>
 

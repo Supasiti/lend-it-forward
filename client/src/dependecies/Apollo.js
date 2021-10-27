@@ -2,12 +2,13 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
+  // createHttpLink,
   ApolloLink,
   from,
 } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
 
-const httpLink = createHttpLink({ uri: '/graphql' });
+const httpLink = createUploadLink({ uri: '/graphql' });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
