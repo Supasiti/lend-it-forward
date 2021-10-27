@@ -1,7 +1,7 @@
 import { useUploadPhoto } from '../hooks/useUploadPhoto';
 
 // render
-const UploadImage = () => {
+const UploadImage = ({ id, model }) => {
   const { uploadPhoto } = useUploadPhoto();
 
   const onInput = ({ target }) => {
@@ -9,9 +9,13 @@ const UploadImage = () => {
       validity,
       files: [photo],
     } = target;
-    console.log(validity.valid);
-    console.log(photo.name);
-    if (validity.valid) uploadPhoto(photo);
+
+    const photoData = {
+      photo,
+      model,
+      _id: id,
+    };
+    if (validity.valid) uploadPhoto(photoData);
   };
 
   return (
@@ -21,7 +25,7 @@ const UploadImage = () => {
       <input
         type="file"
         id="imagePicker"
-        accept="image/*"
+        accept="image/jpeg, image/png"
         onInput={onInput}
         required
       />

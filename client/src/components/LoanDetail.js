@@ -73,7 +73,7 @@ const LoanDetail = ({ loanId }) => {
             <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
               <Box {...squareProps}>
                 <div> image here</div>
-                <UploadImage />
+                <UploadImage id={loanId} model="loan" />
               </Box>
             </Box>
 

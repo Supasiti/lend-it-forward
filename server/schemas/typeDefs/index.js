@@ -6,8 +6,15 @@ const queuer = require('./queuer');
 const root = gql`
   scalar Upload
 
+  input UploadPhotoInput {
+    photo: Upload!
+    _id: ID!
+    model: String!
+  }
+
   type PhotoResponse {
-    message: String
+    success: Boolean
+    imageUrl: String
   }
   type Query {
     root: String
@@ -15,7 +22,7 @@ const root = gql`
 
   type Mutation {
     root: String
-    uploadPhoto(photo: Upload!): PhotoResponse
+    uploadPhoto(upload: UploadPhotoInput!): PhotoResponse
   }
 `;
 

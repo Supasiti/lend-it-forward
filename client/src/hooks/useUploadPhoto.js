@@ -11,14 +11,15 @@ export const useUploadPhoto = () => {
   // on successful upload
   useEffect(() => {
     if (data) {
+      console.log(data);
       setRes(data);
     }
   }, [data]);
 
   // for easy execution
-  // expect : _id
-  const uploadPhoto = async (photo) => {
-    const variables = { photo };
+  // expect : {photo, _id, model}
+  const uploadPhoto = async (input) => {
+    const variables = { upload: { ...input } };
     try {
       await execMutation({ variables });
     } catch (e) {

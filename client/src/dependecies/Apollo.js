@@ -2,7 +2,6 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  // createHttpLink,
   ApolloLink,
   from,
 } from '@apollo/client';
