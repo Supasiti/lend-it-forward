@@ -24,9 +24,13 @@ const UploadImage = ({ id, model }) => {
   //   // if (validity.valid) uploadPhoto(photoData);
   // };
 
+  const handleFilesAdded = (files) => {
+    console.log(files);
+  };
+
   return (
     <>
-      <Dropzone />
+      <Dropzone accept="image/jpeg image/png" onFilesAdded={handleFilesAdded} />
     </>
   );
 };
