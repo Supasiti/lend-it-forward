@@ -12,9 +12,10 @@ const root = gql`
     model: String!
   }
 
-  type PhotoResponse {
+  type UploadPhotoResponse {
     success: Boolean
     imageUrl: String
+    _id: ID
   }
   type Query {
     root: String
@@ -22,7 +23,7 @@ const root = gql`
 
   type Mutation {
     root: String
-    uploadPhoto(upload: UploadPhotoInput!): PhotoResponse
+    uploadPhoto(upload: UploadPhotoInput!): UploadPhotoResponse
   }
 `;
 

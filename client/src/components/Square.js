@@ -6,13 +6,12 @@ export const squareProps = {
   h: '0px',
   bg: 'gunmetal',
   rounded: 'lg',
-  overflow: 'hidden',
   pb: '100%',
 };
 
-const Square = (props) => {
+export const Square = (props) => {
   return (
-    <Box {...squareProps} {...props}>
+    <Box {...squareProps} overflow="hidden" {...props}>
       <Box pos="absolute" top="0" bottom="0" right="0" left="0">
         {props.children}
       </Box>

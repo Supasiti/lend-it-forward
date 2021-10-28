@@ -20,6 +20,7 @@ const processPhoto = async (parent, { upload }, context) => {
     return {
       success: true,
       imageUrl,
+      _id,
     };
   }
   throw new AuthenticationError('you must be logged in');
@@ -28,19 +29,3 @@ const processPhoto = async (parent, { upload }, context) => {
 module.exports = {
   processPhoto,
 };
-
-// const { createReadStream, filename } = await args.photo;
-
-//   try {
-//     const stream = createReadStream();
-//     const out = require('fs').createWriteStream(`${filename}`);
-//     out.on('finish', () => {
-//       console.log('All writes are now complete.');
-
-//     });
-//     stream.pipe(out);
-//     return { message: 'upload completed' };
-//   } catch (e) {
-//     console.error(e.message);
-//     return { message: 'failed to upload the file' };
-//   }

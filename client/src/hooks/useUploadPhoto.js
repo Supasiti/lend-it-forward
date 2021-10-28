@@ -9,10 +9,10 @@ export const useUploadPhoto = () => {
   const [execMutation, { data, loading }] = useMutation(UPLOAD_PHOTO);
 
   // on successful upload
+  // return { success, imageUrl, _id }
   useEffect(() => {
-    if (data) {
-      console.log(data);
-      setRes(data);
+    if (data?.uploadPhoto) {
+      setRes(data.uploadPhoto);
     }
   }, [data]);
 
