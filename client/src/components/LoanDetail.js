@@ -74,7 +74,7 @@ const LoanDetail = ({ loanId }) => {
             <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
               <UploadImage id={loanId} model="loan" imageUrl={loan.imageUrl} />
 
-              {loan?.imageUrl && (
+              {!loan?.imageUrl && (
                 <Text {...helperProps} p="2">
                   Drag and drop the photo of the item here. We recommend
                   choosing square photo (Max size: 10Mb)

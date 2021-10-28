@@ -5,7 +5,6 @@ export const UPLOAD_PHOTO = gql`
     uploadPhoto(upload: $upload) {
       success
       imageUrl
-      _id
     }
   }
 `;

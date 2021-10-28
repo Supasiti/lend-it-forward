@@ -20,7 +20,6 @@ const processPhoto = async (parent, { upload }, context) => {
     return {
       success: true,
       imageUrl,
-      _id,
     };
   }
   throw new AuthenticationError('you must be logged in');

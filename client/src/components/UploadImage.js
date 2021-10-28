@@ -55,7 +55,7 @@ const UploadImage = ({ id, model, imageUrl }) => {
     setPhotoState(newState);
   }, [id, model]);
 
-  // handle when the photo is cre
+  // handle when the photo is uploaded successfully
   useEffect(() => {
     if (res?.success) {
       setImgSrc(res.imageUrl);

@@ -15,7 +15,6 @@ const root = gql`
   type UploadPhotoResponse {
     success: Boolean
     imageUrl: String
-    _id: ID
   }
   type Query {
     root: String
