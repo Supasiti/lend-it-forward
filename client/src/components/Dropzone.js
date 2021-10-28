@@ -36,7 +36,7 @@ const fileListToArray = (files) => {
 
 //render
 const Dropzone = ({ onFilesAdded, accept, disabled = false }) => {
-  const [highlight] = useState(false);
+  const [highlight, setHighlight] = useState(false);
   const fileInputRef = useRef(null);
 
   // when clicked it should open a filt dialog
@@ -55,9 +55,40 @@ const Dropzone = ({ onFilesAdded, accept, disabled = false }) => {
     }
   };
 
+  // handle drag over
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    if (disabled) return;
+    setHighlight(true);
+  };
+
+  // handle drag leave
+  const handleDragLeave = () => {
+    setHighlight(false);
+  };
+
+  // handle when drop file
+  const handleDrop = (e) => {
+    e.preventDefault();
+    if (disabled) return;
+
+    const files = e.dataTransfer.files;
+    if (onFilesAdded) {
+      const array = fileListToArray(files);
+      onFilesAdded(array);
+    }
+    setHighlight(false);
+  };
+
   return (
     <Box w="100%" h="100%">
-      <Center {...containerProps(highlight, disabled)} onClick={openFileDialog}>
+      <Center
+        {...containerProps(highlight, disabled)}
+        onClick={openFileDialog}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         <Center {...contentProps}>
           <FontAwesomeIcon icon="camera" size="3x" />
         </Center>
