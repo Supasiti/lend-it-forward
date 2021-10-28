@@ -1,4 +1,4 @@
-import { Center, Spinner, Box, Flex, VStack } from '@chakra-ui/react';
+import { Center, Spinner, Box, Flex, VStack, Text } from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
@@ -11,6 +11,8 @@ import { squareProps } from '../staticProps/div';
 import CollectLoan from './CollectLoan';
 import LoanDescription from './LoanDescription';
 import LoanBorrower from './LoanBorrower';
+import UploadImage from './UploadImage';
+import { helperProps } from './Input';
 
 const initialState = {
   title: '',
@@ -70,9 +72,14 @@ const LoanDetail = ({ loanId }) => {
         <Box {...cardProps}>
           <Flex wrap="wrap" justify="center">
             <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-              <Box {...squareProps}>
-                <div> image here</div>
-              </Box>
+              <UploadImage id={loanId} model="loan" imageUrl={loan.imageUrl} />
+
+              {!loan?.imageUrl && (
+                <Text {...helperProps} p="2">
+                  Drag and drop the photo of the item here. We recommend
+                  choosing square photo (Max size: 10Mb)
+                </Text>
+              )}
             </Box>
 
             <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">
@@ -93,7 +100,7 @@ const LoanDetail = ({ loanId }) => {
             <Flex wrap="wrap" justify="center">
               <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
                 <Box {...squareProps}>
-                  <div> image here</div>
+                  <UploadImage id={loanId} model="loan" />
                 </Box>
               </Box>
 

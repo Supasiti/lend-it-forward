@@ -11,6 +11,20 @@ const initialState = {
 };
 
 // keep track of all loans
+const updateOrAdd = (oldArr, newItem) => {
+  const oldItem = oldArr.find((item) => item._id === newItem._id);
+  if (oldItem) {
+    const result = oldArr.map((item) => {
+      if (item._id === newItem._id) {
+        return { ...oldItem, ...newItem };
+      }
+      return item;
+    });
+    return result;
+  } else {
+    return [...oldArr, newItem];
+  }
+};
 
 // jsx wrapper
 export const LoanProvider = (props) => {
@@ -34,8 +48,9 @@ export const LoanProvider = (props) => {
       throw Error('incorrect key');
     }
 
-    const tempArr = loans[key].filter((loan) => loan._id !== newLoan._id);
-    const newArr = [...tempArr, newLoan];
+    // const tempArr = loans[key].filter((loan) => loan._id !== newLoan._id);
+    // const newArr = [...tempArr, newLoan];
+    const newArr = updateOrAdd(loans[key], newLoan);
     const newState = { ...loans, [key]: newArr };
     return setGlobalLoans(newState);
   };
