@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
-import { useLoan } from '../dependecies/LoanContext';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLoan } from '../dependencies/LoanContext';
+import { useLogging } from '../dependencies/LoggingContext';
 import { GET_LOANS } from '../gql/loans';
 
 export const useGetBorrowedLoans = () => {

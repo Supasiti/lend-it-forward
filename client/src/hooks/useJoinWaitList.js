@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
 import { JOIN_WAIT_LIST } from '../gql/waitList';
-import { useLoan } from '../dependecies/LoanContext';
+import { useLoan } from '../dependencies/LoanContext';
 
 export const useJoinWaitList = () => {
   const [error, setError] = useState('');

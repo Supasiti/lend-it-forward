@@ -8,7 +8,7 @@ import { cardProps } from '../staticProps/card';
 import { squareProps } from '../staticProps/div';
 import LoanDescription from './LoanDescription';
 import JoinLoanWaitList from './JoinLoanWaitList';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 import { helperProps } from './Input';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import LeaveWaitList from './LeaveWaitList';

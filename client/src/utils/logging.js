@@ -1,4 +1,4 @@
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 
 export const redirectIfNotLoggedIn = () => {
   const { logging } = useLogging();

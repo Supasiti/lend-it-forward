@@ -18,7 +18,7 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { helperProps, TextArea } from './Input';
 import { useForm } from '../hooks/useForm';
 import { useJoinWaitList } from '../hooks/useJoinWaitList';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 import { useChakraToast } from '../hooks/useChakraToast';
 import BaseModal from './Modal';
 import LoginOrSignupForm from './LoginOrSignupForm';

@@ -1,7 +1,7 @@
 import { Box, Flex, VStack, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 
 // style
 const containerProps = {

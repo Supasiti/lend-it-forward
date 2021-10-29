@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import { useGetWaitList } from './useGetWaitList';
-import { useLoan } from '../dependecies/LoanContext';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLoan } from '../dependencies/LoanContext';
+import { useLogging } from '../dependencies/LoggingContext';
 
 export const useGetPendingLoans = () => {
   const { globalLoans, setLoans } = useLoan();
