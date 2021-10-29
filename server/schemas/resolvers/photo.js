@@ -9,7 +9,7 @@ const processPhoto = async (parent, { upload }, context) => {
   if (context.user) {
     const { photo, _id, model } = upload;
     const cloudRes = await services.processPhoto(photo);
-    const imageUrl = cloudRes.url;
+    const imageUrl = cloudRes.secure_url;
 
     const dataToUpdate = {
       user: context.user._id,
