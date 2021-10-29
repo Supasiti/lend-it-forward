@@ -40,22 +40,22 @@ const isReservedFor = (loan, userId) => {
 
 // render
 const BorrowerLoanDetail = ({ loanId }) => {
-  const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const [loan, setLoan] = useState(initialState);
+  const [queuer, setQueuer] = useState(null);
+  const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
   const { logging } = useLogging();
   const { waitList, getWaitList } = useGetWaitList();
-  // const [queuer, setQueuer] = useState({});
 
-  // // update on
-  // useEffect(() => {
-  //   if (waitList.length) {
-  //     setQueuer(waitList[0]);
-  //   }
-  // }, [waitList]);
+  // update on queuer
+  useEffect(() => {
+    if (waitList.length) {
+      setQueuer(waitList[0]);
+    }
+  }, [waitList]);
 
   // check if user is in a waiting list
   useEffect(() => {
-    if (logging.isLoggedIn) {
+    if (logging.isLoggedIn && !queuer) {
       getWaitList({ loan: loanId, user: logging.user._id });
     }
   }, [logging]);
@@ -69,8 +69,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
   // handle when user join a waiting list
   const handleJoinWaitList = (newQueuer) => {
-    // setQueuer(newQueuer);
-    console.log(newQueuer);
+    setQueuer(newQueuer);
   };
 
   // spinning wheel on loading
@@ -111,9 +110,9 @@ const BorrowerLoanDetail = ({ loanId }) => {
       )}
 
       {/* show when you have joined the waiting list but is not reserved for you */}
-      {waitList[0] && !waitList[0].selected && (
+      {queuer && !queuer.selected && (
         <Box {...cardProps} py="4">
-          <LeaveWaitList queuer={waitList[0]} />
+          <LeaveWaitList queuer={queuer} />
         </Box>
       )}
 
@@ -138,7 +137,7 @@ const BorrowerLoanDetail = ({ loanId }) => {
       <Box {...cardProps} py="4">
         <JoinLoanWaitList
           loan={loan}
-          queuer={waitList[0]}
+          queuer={queuer}
           onJoinWaitList={handleJoinWaitList}
         />
       </Box>

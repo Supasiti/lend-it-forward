@@ -12,7 +12,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { primaryBtnColorProps } from '../staticProps/button';
 import { helperProps, TextArea } from './Input';
@@ -53,7 +52,6 @@ const JoinLoanWaitList = ({ loan, queuer, onJoinWaitList }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
   const { joinWaitList, newQueuer, error, setError } = useJoinWaitList();
   const { logging } = useLogging();
-  const history = useHistory();
   const { chakraToast } = useChakraToast(error, setError);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -76,7 +74,6 @@ const JoinLoanWaitList = ({ loan, queuer, onJoinWaitList }) => {
         'You are now on the waiting list!';
       chakraToast('success', message);
       if (onJoinWaitList) onJoinWaitList(newQueuer);
-      history.push('/Library');
     }
   }, [newQueuer]);
 
