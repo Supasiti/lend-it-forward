@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
-import { useLoan } from '../dependecies/LoanContext';
+import { useLoan } from '../dependencies/LoanContext';
 import { RETURN_LOAN } from '../gql/loans';
 
 export const useReturnLoan = () => {

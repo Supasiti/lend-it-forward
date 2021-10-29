@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import auth from '../utils/auth';
+import { useLoan } from './LoanContext';
 
 export const LoggingContext = React.createContext();
 
@@ -18,6 +19,7 @@ export const LoggingProvider = (props) => {
   const [logging, setLogging] = useState(initialState);
   const [timeoutId, setTimeoutId] = useState(null);
   const history = useHistory();
+  const { clearLoan } = useLoan();
 
   // set up a timeout for automatic logout
   useEffect(() => {
@@ -81,6 +83,7 @@ export const LoggingProvider = (props) => {
   //  user initiated log out
   const logout = () => {
     auth.logout();
+    clearLoan();
     clearTimeoutIfExist();
     history.push('/');
     return setLogging(initialState);

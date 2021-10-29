@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { darkBtnColorProps } from '../staticProps/button';
 import { cardProps } from '../staticProps/card';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 
 const navItemProps = {
   px: '4',

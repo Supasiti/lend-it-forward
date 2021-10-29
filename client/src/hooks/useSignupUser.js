@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { SIGNUP } from '../gql/users';
-import { useLogging } from '../dependecies/LoggingContext';
+import { useLogging } from '../dependencies/LoggingContext';
 
 // sign user  and save token
 export const useSignupUser = () => {

@@ -3,7 +3,7 @@ import '@fontsource/josefin-sans/200.css';
 import '@fontsource/montserrat/500.css';
 import { Box, Container } from '@chakra-ui/react';
 
-import Dependencies from './dependecies';
+import Dependencies from './dependencies';
 import Home from './pages/Home';
 import Library from './pages/Library';
 import Wave from './components/Wave';
