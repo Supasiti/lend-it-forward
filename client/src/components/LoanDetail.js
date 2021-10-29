@@ -71,7 +71,7 @@ const LoanDetail = ({ loanId }) => {
       {/* for available, reserved */}
       {['available', 'reserved'].includes(loan?.status) && (
         <Box {...cardProps}>
-          <ReserveLoanForm loan={loan} onLoanUpdated={handleLoanUpdate} />
+          <ReserveLoanForm loan={loan} onLoanReserved={handleLoanUpdate} />
         </Box>
       )}
 

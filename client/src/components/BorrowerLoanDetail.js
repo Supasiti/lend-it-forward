@@ -44,6 +44,14 @@ const BorrowerLoanDetail = ({ loanId }) => {
   const [loan, setLoan] = useState(initialState);
   const { logging } = useLogging();
   const { waitList, getWaitList } = useGetWaitList();
+  // const [queuer, setQueuer] = useState({});
+
+  // // update on
+  // useEffect(() => {
+  //   if (waitList.length) {
+  //     setQueuer(waitList[0]);
+  //   }
+  // }, [waitList]);
 
   // check if user is in a waiting list
   useEffect(() => {
@@ -58,6 +66,12 @@ const BorrowerLoanDetail = ({ loanId }) => {
       setLoan(data.loan);
     }
   }, [data]);
+
+  // handle when user join a waiting list
+  const handleJoinWaitList = (newQueuer) => {
+    // setQueuer(newQueuer);
+    console.log(newQueuer);
+  };
 
   // spinning wheel on loading
   if (loading) {
@@ -122,7 +136,11 @@ const BorrowerLoanDetail = ({ loanId }) => {
 
       {/* for contact */}
       <Box {...cardProps} py="4">
-        <JoinLoanWaitList loan={loan} queuer={waitList[0]} />
+        <JoinLoanWaitList
+          loan={loan}
+          queuer={waitList[0]}
+          onJoinWaitList={handleJoinWaitList}
+        />
       </Box>
     </VStack>
   );

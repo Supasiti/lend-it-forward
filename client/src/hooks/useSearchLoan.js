@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SEARCH_LOAN } from '../gql/loans';
 import { useUrlQuery } from '../hooks/useUrlQuery';
 
-// use to reserve a loan for a borrower
+// use to search loans based on user input
 export const useSearchLoan = () => {
   const [loans, setLoans] = useState([]);
   const urlQuery = useUrlQuery({ status: 'available' }, ['owner']);

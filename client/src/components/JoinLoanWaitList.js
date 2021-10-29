@@ -49,7 +49,7 @@ const initialState = {
 };
 
 // render
-const JoinLoanWaitList = ({ loan, queuer }) => {
+const JoinLoanWaitList = ({ loan, queuer, onJoinWaitList }) => {
   const { formState, setFormState, handleChange } = useForm(initialState);
   const { joinWaitList, newQueuer, error, setError } = useJoinWaitList();
   const { logging } = useLogging();
@@ -75,6 +75,7 @@ const JoinLoanWaitList = ({ loan, queuer }) => {
         (queuer && 'Your contact details are updated!') ||
         'You are now on the waiting list!';
       chakraToast('success', message);
+      if (onJoinWaitList) onJoinWaitList(newQueuer);
       history.push('/Library');
     }
   }, [newQueuer]);

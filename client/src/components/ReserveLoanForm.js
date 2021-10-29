@@ -39,7 +39,7 @@ const initialState = {
 };
 
 // render
-const ReserveLoanForm = ({ loan }) => {
+const ReserveLoanForm = ({ loan, onLoanReserved }) => {
   const { formState, setFormState } = useForm(initialState);
   const { waitList, getWaitList } = useGetWaitList();
   const { reserveLoan, newLoan, error, setError } = useReserveLoan();
@@ -49,6 +49,9 @@ const ReserveLoanForm = ({ loan }) => {
   useEffect(() => {
     if (newLoan) {
       chakraToast('success', 'This item is now reserved!');
+      if (onLoanReserved) {
+        onLoanReserved(newLoan);
+      }
     }
   }, [newLoan]);
 
@@ -73,7 +76,7 @@ const ReserveLoanForm = ({ loan }) => {
     setFormState(newFormState);
   };
 
-  // handle form sumission
+  // handle form submission
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if (!formState.reservedFor) return;
@@ -85,7 +88,7 @@ const ReserveLoanForm = ({ loan }) => {
       <Flex wrap="wrap">
         <Box {...containerProps}>
           <FormControl id="loanReserve">
-            <FormLabel color="peel">Reserved this item for</FormLabel>
+            <FormLabel color="peel">Reserve this item for</FormLabel>
 
             <Box w="100%" p="4" textAlign="center">
               <Avatar mx="auto" size="lg" />
@@ -136,7 +139,7 @@ const ReserveLoanForm = ({ loan }) => {
 
       <Box p="4" w="100%" textAlign="center">
         <Button {...primaryBtnColorProps} onClick={handleSubmitForm}>
-          Reserve the item for this borrower
+          Reserve this item for this borrower
         </Button>
       </Box>
     </>
