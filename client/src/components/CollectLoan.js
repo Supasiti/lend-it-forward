@@ -29,7 +29,7 @@ const initialState = {
 };
 
 //render
-const CollectLoan = ({ loan }) => {
+const CollectLoan = ({ loan, onLoanUpdated }) => {
   const [loanState, setLoanState] = useState(initialState);
   const { updateLoan, newLoan, error, setError } = useUpdateLoan();
   const { chakraToast } = useChakraToast(error, setError);
@@ -38,6 +38,9 @@ const CollectLoan = ({ loan }) => {
   useEffect(() => {
     if (newLoan) {
       chakraToast('success', `Your item has been collected`);
+      if (onLoanUpdated) {
+        onLoanUpdated(newLoan);
+      }
     }
   }, [newLoan]);
 

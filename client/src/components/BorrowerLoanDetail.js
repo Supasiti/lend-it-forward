@@ -1,17 +1,25 @@
-import { Center, Spinner, VStack, Box, Flex, Text } from '@chakra-ui/react';
+import {
+  Center,
+  Spinner,
+  VStack,
+  Box,
+  Flex,
+  Text,
+  Image,
+} from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
 import { spinnerProps } from '../staticProps/spinner';
 import { GET_LOAN } from '../gql/loans';
 import { cardProps } from '../staticProps/card';
-import { squareProps } from '../staticProps/div';
 import LoanDescription from './LoanDescription';
 import JoinLoanWaitList from './JoinLoanWaitList';
 import { useLogging } from '../dependencies/LoggingContext';
 import { helperProps } from './Input';
 import { useGetWaitList } from '../hooks/useGetWaitList';
 import LeaveWaitList from './LeaveWaitList';
+import Square from './Square';
 
 const initialState = {
   title: '',
@@ -99,9 +107,11 @@ const BorrowerLoanDetail = ({ loanId }) => {
       <Box {...cardProps}>
         <Flex wrap="wrap" justify="center">
           <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-            <Box {...squareProps}>
-              <div> image here</div>
-            </Box>
+            <Square>
+              {loan?.imageUrl && (
+                <Image h="100%" objectFit="cover" src={loan.imageUrl} />
+              )}
+            </Square>
           </Box>
 
           <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">

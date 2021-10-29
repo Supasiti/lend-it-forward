@@ -12,6 +12,7 @@ const response = `
     title
     status
     category
+    imageUrl
     holder {
       _id
     }

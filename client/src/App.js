@@ -12,6 +12,7 @@ import OwnerLoanView from './pages/OwnerLoanView';
 import SearchResult from './pages/SearchResult';
 import BorrowerLoanView from './pages/BorrowerLoanView';
 import MobileNavbar from './components/MobileNavbar';
+import Footer from './components/Footer';
 
 const containerProps = {
   pos: 'relative',
@@ -49,6 +50,7 @@ const App = () => (
           <Route exact path="/search" component={SearchResult} />
           <Route exact path="/items/:loanId" component={BorrowerLoanView} />
         </Switch>
+        <Footer />
       </Container>
     </Box>
     <MobileNavbar />

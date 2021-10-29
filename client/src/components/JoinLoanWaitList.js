@@ -68,6 +68,7 @@ const JoinLoanWaitList = ({ loan, queuer }) => {
   }, [loan, queuer]);
 
   // when the form is successfully submitted
+  //
   useEffect(() => {
     if (newQueuer) {
       const message =
@@ -89,7 +90,6 @@ const JoinLoanWaitList = ({ loan, queuer }) => {
       return;
     }
     if (formState.loan && formState.contact) {
-      console.log('joining...');
       joinWaitList(formState);
     }
   };

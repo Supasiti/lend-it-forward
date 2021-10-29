@@ -29,7 +29,7 @@ const headerProps = {
 };
 
 //render
-const LoanBorrower = ({ loan }) => {
+const LoanBorrower = ({ loan, onLoanUpdated }) => {
   const [loanId, setLoanId] = useState('');
   const { waitList, getWaitList } = useGetWaitList();
   const { returnLoan, newLoan, error, setError } = useReturnLoan();
@@ -39,6 +39,9 @@ const LoanBorrower = ({ loan }) => {
   useEffect(() => {
     if (newLoan) {
       chakraToast('success', 'This item is now back in your library!');
+      if (onLoanUpdated) {
+        onLoanUpdated(newLoan);
+      }
     }
   }, [newLoan]);
 

@@ -16,6 +16,7 @@ export const useGetWaitList = () => {
   }, [data]);
 
   // for executing lazy query
+  // expect {loan : Id }
   const getWaitList = (input) => {
     const filter = { filter: { ...input } };
     try {

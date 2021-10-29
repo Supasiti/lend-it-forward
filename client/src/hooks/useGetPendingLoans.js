@@ -17,7 +17,8 @@ export const useGetPendingLoans = () => {
     }
   }, [logging]);
 
-  // get more details loand
+  // get more details loan
+  // filter out loan that you own
   useEffect(() => {
     if (waitList?.length) {
       const newLoans = waitList.map(({ loan }) => loan);

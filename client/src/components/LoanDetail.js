@@ -1,4 +1,12 @@
-import { Center, Spinner, Box, Flex, VStack, Text } from '@chakra-ui/react';
+import {
+  Center,
+  Spinner,
+  Box,
+  Flex,
+  VStack,
+  Text,
+  Image,
+} from '@chakra-ui/react';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
@@ -7,12 +15,12 @@ import { GET_LOAN } from '../gql/loans';
 import UpdateLoanForm from './UpdateLoanForm';
 import ReserveLoanForm from './ReserveLoanForm';
 import { cardProps } from '../staticProps/card';
-import { squareProps } from '../staticProps/div';
 import CollectLoan from './CollectLoan';
 import LoanDescription from './LoanDescription';
 import LoanBorrower from './LoanBorrower';
 import UploadImage from './UploadImage';
 import { helperProps } from './Input';
+import Square from './Square';
 
 const initialState = {
   title: '',
@@ -56,7 +64,7 @@ const LoanDetail = ({ loanId }) => {
       {/* for reserved */}
       {['reserved'].includes(loan?.status) && (
         <Box {...cardProps}>
-          <CollectLoan loan={loan} />
+          <CollectLoan loan={loan} onLoanUpdated={handleLoanUpdate} />
         </Box>
       )}
 
@@ -99,9 +107,11 @@ const LoanDetail = ({ loanId }) => {
           <Box {...cardProps}>
             <Flex wrap="wrap" justify="center">
               <Box flexBasis="0 0" w={{ base: '100%', sm: '50%' }} p="4">
-                <Box {...squareProps}>
-                  <UploadImage id={loanId} model="loan" />
-                </Box>
+                <Square>
+                  {loan?.imageUrl && (
+                    <Image h="100%" objectFit="cover" src={loan.imageUrl} />
+                  )}
+                </Square>
               </Box>
 
               <Box flexBasis="0 0" w={{ base: '100%', md: '50%' }} p="4">
