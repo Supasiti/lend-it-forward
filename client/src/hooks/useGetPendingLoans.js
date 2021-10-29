@@ -10,7 +10,6 @@ export const useGetPendingLoans = () => {
   const { waitList, getWaitList, loading } = useGetWaitList();
   const loans = globalLoans.pending;
 
-  console.log(loans);
   // when it is logged
   useEffect(() => {
     if (logging.isLoggedIn) {

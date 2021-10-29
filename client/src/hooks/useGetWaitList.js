@@ -6,7 +6,10 @@ import { GET_WAIT_LIST } from '../gql/waitList';
 export const useGetWaitList = () => {
   const [error, setError] = useState('');
   const [waitList, setWaitList] = useState([]);
-  const [execQuery, { data, loading }] = useLazyQuery(GET_WAIT_LIST);
+  const [execQuery, { data, loading }] = useLazyQuery(GET_WAIT_LIST, {
+    pollInterval: 10000,
+    fetchPolicy: 'no-cache',
+  });
 
   // set waiting list
   useEffect(() => {
@@ -20,7 +23,9 @@ export const useGetWaitList = () => {
   const getWaitList = (input) => {
     const filter = { filter: { ...input } };
     try {
-      execQuery({ variables: filter });
+      execQuery({
+        variables: filter,
+      });
     } catch (e) {
       setError(e.message);
     }

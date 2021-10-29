@@ -15,10 +15,8 @@ const cloudUploadStream = (stream) => {
     return new Promise((resolve, reject) => {
       const streamUpload = uploader.upload_stream(options, (error, result) => {
         if (result) {
-          console.log(result);
           return resolve(result);
         }
-        console.log(error);
         return reject(error);
       });
       stream.pipe(streamUpload);
@@ -31,7 +29,6 @@ const cloudUploadStream = (stream) => {
 const validateMimetype = (mimetype) => {
   const acceptedMimetype = ['image/jpeg', 'image/png'];
   const result = acceptedMimetype.includes(mimetype);
-  console.log(mimetype);
   return result;
 };
 
@@ -39,7 +36,6 @@ const validateMimetype = (mimetype) => {
 const processPhoto = async (photo) => {
   const { createReadStream, mimetype } = await photo;
 
-  console.log(photo);
   if (!validateMimetype(mimetype)) return null;
 
   try {

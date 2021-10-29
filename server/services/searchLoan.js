@@ -14,7 +14,6 @@ const searchLoan = async ({ status, owner }) => {
         path: 'reservedFor',
         populate: { path: 'user' },
       });
-    console.log(result);
     return result;
   }
 

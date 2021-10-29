@@ -6,7 +6,7 @@ export const toastParams = (status, message) => ({
   description: message,
   position: 'top-right',
   status: status,
-  duration: 4000,
+  duration: 2000,
   isClosable: true,
 });
 
