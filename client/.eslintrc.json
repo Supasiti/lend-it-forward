@@ -10,8 +10,6 @@
   },
   "plugins": ["react", "prettier", "react-hooks"],
   "extends": [
-    "prettier",
-    "prettier/react"
   ],
   "rules": {
     // Allow Prettier to throw errors via ESLint
