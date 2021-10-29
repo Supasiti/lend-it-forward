@@ -13,6 +13,37 @@ import { primaryBtnColorProps } from '../staticProps/button';
 import { useForm } from '../hooks/useForm';
 import { toUrlQuery } from '../utils/object';
 
+//  style
+const containerProps = {
+  color: 'blackPearl',
+  p: { base: '1', sm: '2' },
+  alignItems: 'center',
+};
+
+const inputProps = {
+  w: '75%',
+  fontSize: { base: 'sm', sm: 'md' },
+  h: { base: '8', sm: '10' },
+  // size: 'sm',
+  rounded: 'lg',
+  variant: 'filled',
+  bg: 'sidecar',
+  color: 'blackPearl',
+  type: 'text',
+  placeholder: '',
+  _hover: { opacity: 0.5 },
+};
+
+const btnProps = {
+  ...primaryBtnColorProps,
+  size: { base: 8, sm: 12 },
+};
+
+const iconProps = {
+  w: { base: '4', sm: '6' },
+  h: { base: '4', sm: '6' },
+};
+
 const initialState = {
   owner: '',
 };
@@ -33,29 +64,23 @@ const SearchForm = () => {
   };
 
   return (
-    <Flex color="blackPearl" p="2" alignItems="center">
+    <Flex {...containerProps}>
       <Spacer />
       <FormControl id="userSearch" px="3">
         <HStack spacing="0px">
-          <FormLabel w="20%" m="0px" textAlign="right" pr="2">
+          <FormLabel w="25%" m="0px" textAlign="right" pr="2">
             User
           </FormLabel>
           <Input
-            w="80%"
-            variant="filled"
-            bg="sidecar"
-            color="blackPearl"
-            type="text"
-            placeholder=""
+            {...inputProps}
             value={formState.owner || ''}
-            _hover={{ opacity: 0.5 }}
             onChange={(e) => handleChange(e, 'owner')}
           />
         </HStack>
       </FormControl>
       <Spacer />
-      <Circle size="12" {...primaryBtnColorProps} onClick={handleSearch}>
-        <Search2Icon w="6" h="6" />
+      <Circle {...btnProps} onClick={handleSearch}>
+        <Search2Icon {...iconProps} />
       </Circle>
     </Flex>
   );

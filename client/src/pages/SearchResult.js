@@ -1,13 +1,14 @@
-import { VStack, Heading } from '@chakra-ui/react';
+import { VStack, Box } from '@chakra-ui/react';
 
 import SearchList from '../components/SearchList';
+import SearchForm from '../components/SearchForm';
 
 const SearchResult = () => {
   return (
     <VStack w="100%" spacing="2">
-      <Heading as="h1" fontSize={{ base: '2xl', sm: '5xl' }} color="peel">
-        Search
-      </Heading>
+      <Box bg="bermuda" borderRadius="full" w="fit-content" mx="auto">
+        <SearchForm />
+      </Box>
 
       <SearchList />
     </VStack>
