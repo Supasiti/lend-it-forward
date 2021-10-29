@@ -12,7 +12,7 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build",
-    "heroku-prebuild": "cd client && npm i -D"
+    "heroku-prebuild": "cd client && npm i --save-dev"
   },
   "keywords": [],
   "author": "",
