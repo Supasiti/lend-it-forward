@@ -30,6 +30,13 @@ const NavList = () => {
           >
             Your Library
           </MenuItem>
+          <MenuItem
+            {...darkBtnColorProps}
+            {...navItemProps}
+            onClick={() => handleLinkClick('/search')}
+          >
+            Start Your Search
+          </MenuItem>
         </MenuGroup>
 
         <MenuDivider />

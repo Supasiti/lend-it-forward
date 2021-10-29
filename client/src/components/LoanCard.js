@@ -1,7 +1,7 @@
-import { Box, VStack, HStack, Text, Badge } from '@chakra-ui/react';
+import { Box, VStack, HStack, Text, Badge, Image } from '@chakra-ui/react';
 import { cardProps, clickableProps } from '../staticProps/card';
 import StatusBadge from './StatusBadge';
-import { squareProps } from '../staticProps/div';
+import Square from './Square';
 
 // render
 const LoanCard = ({ loan, onClick }) => {
@@ -17,9 +17,11 @@ const LoanCard = ({ loan, onClick }) => {
     <Box p="2" {...cardProps} {...clickableProps} onClick={handleClick}>
       <VStack spacing="2">
         {/* image */}
-        <Box {...squareProps}>
-          {loan?.imageUrl && <img src={loan.imageUrl} />}
-        </Box>
+        <Square>
+          {loan?.imageUrl && (
+            <Image h="100%" objectFit="cover" src={loan.imageUrl} />
+          )}
+        </Square>
 
         {/* info */}
         <VStack w="100%" px="3" align="left">
