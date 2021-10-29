@@ -24,7 +24,6 @@ const inputProps = {
   w: '75%',
   fontSize: { base: 'sm', sm: 'md' },
   h: { base: '8', sm: '10' },
-  // size: 'sm',
   rounded: 'lg',
   variant: 'filled',
   bg: 'sidecar',
