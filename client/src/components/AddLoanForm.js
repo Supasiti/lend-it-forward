@@ -22,8 +22,6 @@ const initialState = {
   category: '',
 };
 
-// TODO : Suggest categories as you type
-
 const AddLoanForm = ({ isOpen, onClose }) => {
   const { formState, handleChange } = useForm(initialState);
   const { addLoan, data, error, setError } = useAddLoan();

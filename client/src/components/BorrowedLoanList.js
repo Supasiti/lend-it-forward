@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 import LoanCard from './LoanCard';
 import { spinnerProps } from '../staticProps/spinner';
-
 import { useGetBorrowedLoans } from '../hooks/useGetBorrowedLoans';
 
 const BorrowedLoanList = () => {
