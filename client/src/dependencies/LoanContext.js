@@ -73,9 +73,20 @@ export const LoanProvider = (props) => {
     return setGlobalLoans(newState);
   };
 
+  const clearLoan = () => {
+    return setGlobalLoans(initialState);
+  };
+
   return (
     <LoanContext.Provider
-      value={{ globalLoans, setLoans, addLoan, updateLoan, removeLoan }}
+      value={{
+        globalLoans,
+        setLoans,
+        addLoan,
+        updateLoan,
+        removeLoan,
+        clearLoan,
+      }}
       {...props}
     />
   );
