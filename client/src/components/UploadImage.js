@@ -37,7 +37,6 @@ const UploadImage = ({ id, model, imageUrl }) => {
   const [imgSrc, setImgSrc] = useState('');
   const { uploadPhoto, res } = useUploadPhoto();
 
-  console.log(photoState);
   // set image source
   useEffect(() => {
     if (imageUrl) {

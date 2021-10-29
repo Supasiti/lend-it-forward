@@ -31,8 +31,6 @@ export const LoanProvider = (props) => {
   const [loans, setGlobalLoans] = useState(initialState);
   const globalLoans = loans;
 
-  console.log(loans);
-
   // add to loans
   const addLoan = (newLoan, key) => {
     if (!(key in initialState)) {
