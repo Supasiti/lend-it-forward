@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import OwnerLoanView from './pages/OwnerLoanView';
 import SearchResult from './pages/SearchResult';
 import BorrowerLoanView from './pages/BorrowerLoanView';
+import MobileNavbar from './components/MobileNavbar';
 
 const containerProps = {
   pos: 'relative',
@@ -27,12 +28,20 @@ const containerProps = {
   color: 'sidecar',
 };
 
+const mainContainerProps = {
+  w: '100%',
+  minH: '100vh',
+  bgGradient: 'linear(to-r, blackPearl, lagoon)',
+  overflow: 'hidden',
+};
+
+// render
 const App = () => (
   <Dependencies>
-    <Box w="100%" minH="100vh" bgGradient="linear(to-r, blackPearl, lagoon)">
+    <Box {...mainContainerProps}>
       <Wave />
+      <Navbar />
       <Container {...containerProps}>
-        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/library" component={Library} />
@@ -42,6 +51,7 @@ const App = () => (
         </Switch>
       </Container>
     </Box>
+    <MobileNavbar />
   </Dependencies>
 );
 

@@ -1,6 +1,7 @@
 import {
   Avatar,
-  Flex,
+  Box,
+  // Flex,
   Heading,
   HStack,
   Spacer,
@@ -21,25 +22,40 @@ const navProps = {
   rounded: 'full',
 };
 
+const containerProps = {
+  display: { base: 'none', sm: 'flex' },
+  alignItems: 'center',
+  pos: 'fixed',
+  bgGradient: 'linear(to-b, blackPearl, lagoon)',
+  w: '100%',
+  p: '3',
+  justify: 'space-between',
+  zIndex: '50',
+};
+
 // render
 const Navbar = () => (
-  <Flex pos="relative" w="100%" p="5" justify="space-between">
-    <Heading as="h3" size="lg" color="sidecar">
-      <Link to="/">Lend It Forward </Link>
-    </Heading>
-    <Spacer />
+  <>
+    <Box {...containerProps}>
+      <Heading as="h3" size="lg" color="sidecar">
+        <Link to="/">Lend It Forward </Link>
+      </Heading>
+      <Spacer />
 
-    {/* nav bar  */}
-    <Menu>
-      <MenuButton {...primaryBtnColorProps} {...navProps}>
-        <HStack spacing="3">
-          <HamburgerIcon w={4} h={4} />
-          <Avatar size="sm" />
-        </HStack>
-      </MenuButton>
-      <NavList />
-    </Menu>
-  </Flex>
+      {/* nav bar  */}
+      <Menu>
+        <MenuButton {...primaryBtnColorProps} {...navProps}>
+          <HStack spacing="3">
+            <HamburgerIcon w={4} h={4} />
+            <Avatar size="sm" />
+          </HStack>
+        </MenuButton>
+        <NavList />
+      </Menu>
+    </Box>
+
+    <Box p={{ base: '3', sm: '10' }} />
+  </>
 );
 
 export default Navbar;

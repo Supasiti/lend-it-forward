@@ -4,9 +4,15 @@ import ApolloContainer from './Apollo';
 import { LoanProvider } from './LoanContext';
 import { LoggingProvider } from './LoggingContext';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCamera, faSave } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCamera,
+  faSave,
+  faSearch,
+  faBook,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCamera, faSave);
+library.add(faCamera, faSave, faSearch, faBook, faUserCircle);
 
 const Dependencies = (props) => {
   return (

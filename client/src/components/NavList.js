@@ -1,4 +1,4 @@
-import { MenuList, MenuItem, MenuDivider } from '@chakra-ui/react';
+import { MenuList, MenuItem, MenuDivider, MenuGroup } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 
 import { darkBtnColorProps } from '../staticProps/button';
@@ -18,17 +18,20 @@ const NavList = () => {
     history.push(location);
   };
 
+  //  if login
   if (logging.isLoggedIn) {
-    // if login
     return (
       <MenuList {...cardProps}>
-        <MenuItem
-          {...darkBtnColorProps}
-          {...navItemProps}
-          onClick={() => handleLinkClick('/library')}
-        >
-          Your Library
-        </MenuItem>
+        <MenuGroup title={`Welcome, ${logging.user.username}`} color="sidecar">
+          <MenuItem
+            {...darkBtnColorProps}
+            {...navItemProps}
+            onClick={() => handleLinkClick('/library')}
+          >
+            Your Library
+          </MenuItem>
+        </MenuGroup>
+
         <MenuDivider />
         <MenuItem
           {...darkBtnColorProps}
