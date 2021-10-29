@@ -14,7 +14,7 @@
     "eslint:recommended", 
     "plugin:react/recommended",
     "prettier",
-    "prettiier/react"
+    "prettier/react"
   ],
   "rules": {
     // Allow Prettier to throw errors via ESLint
