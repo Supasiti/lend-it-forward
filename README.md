@@ -1,5 +1,5 @@
 # lend-it-forward
-Give your stuff second lives
+Give your stuff a second life
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,6 +34,7 @@ The final application is deployed on [Heroku](https://lend-it-forward.herokuapp.
 - [Instruction for Use](#instruction-for-use)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Technologies Used](#technologies)
 - [Future Directions](#future)
 - [License](#license)
 
@@ -112,6 +113,25 @@ The access point for the appliction is in the main folder. The application can b
 
 The main application is deployed in Heroku, [here](https://lend-it-forward.herokuapp.com) 
 
+## <h2 id="technologies"> Technologies Used</h2>
+[(Back to top)](#table-of-content)
+
+Frontend
+- ReactJS
+- Chakra UI
+- Apollo Client (GraphQL)
+- JWT
+
+Backend
+- NodeJS
+- ExpressJS
+- Apollo Server (GraphQL)
+- graphql-upload
+- Cloudinary
+- Bcrypt
+- JWT
+- Mongoose + MongoDb
+
 ## <h2 id="future"> Future Directions </h2>
 [(Back to top)](#table-of-content)
 
@@ -125,7 +145,7 @@ We would like to implement the following features:
 - option for deposit
 - condition check 
 - user verification
-- two factor authentification
+- two factor authentication
 
 ## <h2 id="license"> License </h2>
 [(Back to top)](#table-of-content)
