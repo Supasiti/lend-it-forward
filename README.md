@@ -1,5 +1,5 @@
 # lend-it-forward
-Give your stuff second lives
+Give your stuff a second life
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,6 +34,8 @@ The final application is deployed on [Heroku](https://lend-it-forward.herokuapp.
 - [Instruction for Use](#instruction-for-use)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Technologies Used](#technologies)
+- [Future Directions](#future)
 - [License](#license)
 
 ## <h2 id="instruction-for-use"> Instruction for use </h2>
@@ -110,6 +112,40 @@ The access point for the appliction is in the main folder. The application can b
     npm start
 
 The main application is deployed in Heroku, [here](https://lend-it-forward.herokuapp.com) 
+
+## <h2 id="technologies"> Technologies Used</h2>
+[(Back to top)](#table-of-content)
+
+Frontend
+- ReactJS
+- Chakra UI
+- Apollo Client (GraphQL)
+- JWT
+
+Backend
+- NodeJS
+- ExpressJS
+- Apollo Server (GraphQL)
+- graphql-upload
+- Cloudinary
+- Bcrypt
+- JWT
+- Mongoose + MongoDb
+
+## <h2 id="future"> Future Directions </h2>
+[(Back to top)](#table-of-content)
+
+We would like to implement the following features:
+- `lend it forward` option for owner so that items don't need to come back to the owner
+- profile page
+- chat functionality
+- more responsive data (subscription base)
+- better notification pattern when a borrower joins a waiting list
+- location tracking for each item with map
+- option for deposit
+- condition check 
+- user verification
+- two factor authentication
 
 ## <h2 id="license"> License </h2>
 [(Back to top)](#table-of-content)
