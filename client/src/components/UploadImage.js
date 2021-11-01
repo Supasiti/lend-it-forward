@@ -1,4 +1,4 @@
-import { Image, Circle, Box, HStack } from '@chakra-ui/react';
+import { Image, Circle, Box, HStack, Center, Spinner } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,7 @@ import Dropzone from './Dropzone';
 import { squareProps, Square } from './Square';
 import { useEffect } from 'react';
 import { useUploadPhoto } from '../hooks/useUploadPhoto';
+import { spinnerProps } from '../staticProps/spinner';
 
 // style
 const btnProps = {
@@ -35,7 +36,7 @@ const initialPhotoState = {
 const UploadImage = ({ id, model, imageUrl }) => {
   const [photoState, setPhotoState] = useState(initialPhotoState);
   const [imgSrc, setImgSrc] = useState('');
-  const { uploadPhoto, res } = useUploadPhoto();
+  const { uploadPhoto, res, loading } = useUploadPhoto();
 
   // set image source
   useEffect(() => {
@@ -89,6 +90,14 @@ const UploadImage = ({ id, model, imageUrl }) => {
 
     uploadPhoto(photoState);
   };
+
+  if (loading) {
+    return (
+      <Center minH="64">
+        <Spinner {...spinnerProps} />
+      </Center>
+    );
+  }
 
   return (
     <Box {...squareProps}>
