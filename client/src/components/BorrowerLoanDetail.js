@@ -42,7 +42,10 @@ const isReservedFor = (loan, userId) => {
 const BorrowerLoanDetail = ({ loanId }) => {
   const [loan, setLoan] = useState(initialState);
   const [queuer, setQueuer] = useState(null);
-  const { data, loading } = useQuery(GET_LOAN, { variables: { id: loanId } });
+  const { data, loading } = useQuery(GET_LOAN, {
+    variables: { id: loanId },
+    pollInterval: 10000,
+  });
   const { logging } = useLogging();
   const { waitList, getWaitList } = useGetWaitList();
 
